@@ -1,0 +1,8 @@
+.DS_Store
+.nodemonignore
+.sass-cache/
+.bower-*/
+.idea/
+node_modules/
+bower_components/
+test/coverage/
