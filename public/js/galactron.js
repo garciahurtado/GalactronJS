@@ -1,11 +1,14 @@
 (function () {
 	var game = new Phaser.Game(380, 260, Phaser.CANVAS, 'canvasWrapper', { preload: preload, create: create, update: update });
-	var cursors; // keep track of the cursor keys
+	var controls; // keep track of the cursor keys
+
 	var player; // the main player sprite
+	var bullets; // player bullets
 	 
 	function preload() {
 		 game.load.spritesheet('alien', 'galactron/images/alien.png', 20, 20, 4);
 		 game.load.spritesheet('player', 'galactron/images/player_ship.png', 33, 24, 3);
+		 game.load.spritesheet('laser_blue', 'galactron/images/laser_blue.png', 16, 3, 1);
 	}
 	 
 	function create() {
@@ -26,7 +29,9 @@
 	 	player = createPlayer();
 	 	//createAliens();
 
-	 	cursors = game.input.keyboard.createCursorKeys();
+	 	controls = game.input.keyboard.createCursorKeys();
+	 	controls.fire = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
 	}
 
 	/**
@@ -36,6 +41,10 @@
 		player = new Player(game, 50, 50);
  		game.physics.enable(player, Phaser.Physics.ARCADE);
     game.add.existing(player);	
+
+ 		// prevent player from going outside the viewport bounds
+  	player.body.collideWorldBounds = true;
+
     return player;
 	}
 
@@ -71,19 +80,23 @@
 	 */
 	function handleInput(elapsed){
 		// up & down
-		if (cursors.up.isDown){
+		if (controls.up.isDown){
 			player.moveUp(elapsed);
-		} else if(cursors.down.isDown){
+		} else if(controls.down.isDown){
 			player.moveDown(elapsed);
 		} else {
 			player.stopMovement();
 		}
 
 		// left & right
-		if(cursors.left.isDown){
+		if(controls.left.isDown){
 			player.moveLeft(elapsed);
-		} else if(cursors.right.isDown) {
+		} else if(controls.right.isDown) {
 			player.moveRight(elapsed);
+		}
+
+		if(controls.fire.isDown){
+			player.fire();
 		}
 	}
 })();
