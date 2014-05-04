@@ -1,0 +1,19 @@
+== Remove visibility keywords
+(override\s)|(public\s)|(private\s)|(protected\s)
+
+== Remove types:
+
+search
+(\w*)\s(\w*):(\w*)
+
+replace
+var $2
+
+== Update functions:
+
+search
+function\s(\w*)
+
+replace
+this.$1 = function
+

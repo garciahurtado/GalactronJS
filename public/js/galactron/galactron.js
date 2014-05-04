@@ -28,13 +28,11 @@
 	 	game.scale.setScreenSize(true);
 
 	 	// Add game states
-	 	game.state.add('Level1', PlayState);
+	 	game.state.add('Level1', Level1);
 	 	game.state.start('Level1');
 
 	 	return true; // DEBUG
 
-	 	player = createPlayer();
-	 	addSprite(player);
 	 	//createAliens();
 
 	 	enemies = game.add.group();
@@ -51,19 +49,6 @@
 	function addSprite(sprite) {
 		game.add.existing(sprite);
 		//game.add.existing(sprite.subSprites);
-	}
-
-	/**
-	 * Creates and returns the player sprite
-	 */
-	function createPlayer() {
-		player = new PlayerShip(game, 50, 50);
- 		game.physics.enable(player, Phaser.Physics.ARCADE);
-
- 		// prevent player from going outside the viewport bounds
-  	player.body.collideWorldBounds = true;
-
-    return player;
 	}
 
 	function createAliens() {
