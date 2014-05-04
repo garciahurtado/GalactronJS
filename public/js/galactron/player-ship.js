@@ -1,7 +1,7 @@
 /**
  * Player spaceship
  */
-var Player = function(game, x, y){
+var PlayerShip = function(game, x, y){
 	// Inherits from Sprite
 	Phaser.Sprite.call(this, game, x, y, 'player');
 
@@ -17,6 +17,10 @@ var Player = function(game, x, y){
 	this.animations.add('down', [1], 1, false);
 	this.animations.add('up', [2], 1, false);
   this.play('normal');
+
+  // Physics
+  this.enableBody = true;
+  game.physics.enable(this, Phaser.Physics.ARCADE);
 
  	// Create player bullets
   this.bullets = game.add.group();
@@ -61,11 +65,11 @@ var Player = function(game, x, y){
     {
         this.nextBullet = this.game.time.now + this.shootDelay;
         var bullet = this.bullets.getFirstDead();
-        bullet.reset(this.x + 32, this.y + 14);
+        bullet.reset(this.x + 32, this.y + 14); // spawn coords of bullet relative to player
         bullet.body.velocity.x = this.bulletSpeed;
     }
   }
 }
 
-Player.prototype = Object.create(Phaser.Sprite.prototype);
-Player.prototype.constructor = Player;
+PlayerShip.prototype = Object.create(Phaser.Sprite.prototype);
+PlayerShip.prototype.constructor = PlayerShip;

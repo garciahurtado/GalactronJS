@@ -8,6 +8,7 @@ var Alien = function(game, x, y){
 	this.x = x;
 	this.y = y;
 
+	game.physics.enable(this, Phaser.Physics.ARCADE);
 	anim = this.animations.add('wiggle', [0, 1, 2, 3, 2], 6, true);
   anim.play('wiggle');
 }

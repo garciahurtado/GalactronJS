@@ -4,11 +4,12 @@
 
 	var player; // the main player sprite
 	var bullets; // player bullets
+	var enemies; // anything that can kill the player
 	 
 	function preload() {
-		 game.load.spritesheet('alien', 'galactron/images/alien.png', 20, 20, 4);
-		 game.load.spritesheet('player', 'galactron/images/player_ship.png', 33, 24, 3);
-		 game.load.spritesheet('laser_blue', 'galactron/images/laser_blue.png', 16, 3, 1);
+		 game.load.spritesheet('alien', 'images/galactron/alien.png', 20, 20, 4);
+		 game.load.spritesheet('player', 'images/galactron/player_ship.png', 33, 24, 3);
+		 game.load.spritesheet('laser_blue', 'images/galactron/laser_blue.png', 16, 3, 1);
 	}
 	 
 	function create() {
@@ -26,21 +27,38 @@
 	  game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 	 	game.scale.setScreenSize(true);
 
+	 	// Add game states
+	 	game.state.add('Level1', PlayState);
+	 	game.state.start('Level1');
+
+	 	return true; // DEBUG
+
 	 	player = createPlayer();
+	 	addSprite(player);
 	 	//createAliens();
 
-	 	controls = game.input.keyboard.createCursorKeys();
-	 	controls.fire = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+	 	enemies = game.add.group();
+	 	var alien = new Alien(game, 200, 100);
+	 	enemies.add(alien);
+		game.add.existing(alien, 10, 10);	
 
+
+	}
+
+	/**
+	 * Adds a previously created sprite, its subsprites and bullets, to the game
+	 */
+	function addSprite(sprite) {
+		game.add.existing(sprite);
+		//game.add.existing(sprite.subSprites);
 	}
 
 	/**
 	 * Creates and returns the player sprite
 	 */
 	function createPlayer() {
-		player = new Player(game, 50, 50);
+		player = new PlayerShip(game, 50, 50);
  		game.physics.enable(player, Phaser.Physics.ARCADE);
-    game.add.existing(player);	
 
  		// prevent player from going outside the viewport bounds
   	player.body.collideWorldBounds = true;
@@ -52,7 +70,6 @@
 		// add Aliens
 		var alien = new Alien(game, 20, 10);
 		game.add.existing(alien, 10, 10);	
-		game.physics.enable(alien, Phaser.Physics.ARCADE);
 		alien.body.velocity.x = 3;
 
 		var alien2;
