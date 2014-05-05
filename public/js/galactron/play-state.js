@@ -44,9 +44,8 @@ function PlayState(game) {
 }
 
 PlayState.prototype.preload = function(){
-	this.game.load.spritesheet('player_life', 'images/galactron/player_life.png', 13, 10, 1);
+	this.game.load.image('player_life', 'images/galactron/player_life.png', 13, 10, 1);
 
-	// [Embed(source = "../../../assets/player_life.png")] private var imgPlayerLife;
 	// [Embed(source = "../../../assets/sounds/music.mp3")] private var music;
 	
 	// Free font from http//mfs.sub.jp/font.html
@@ -55,7 +54,6 @@ PlayState.prototype.preload = function(){
 }
 
 PlayState.prototype.create = function(){
-		console.log("in parent create");
 		
 	//super.create();
 //		events = new ActionChain();
@@ -124,10 +122,9 @@ PlayState.prototype.createHud = function() {
 	
 	// creates the "lives" display
 	for (var i = 0; i < this.lives; i++) {
-		// var life = new FlxSprite(5 + offset, 5, imgPlayerLife);
-		// livesSprites.add(life);
-		// addStatic(life);
-		offset += 18 ;
+		var life = new Phaser.Sprite(this.game, 5 + offset, 5, 'player_life');
+		this.livesSprites.add(life);
+		offset += 18;
 	}
 	
 	// creates the score display

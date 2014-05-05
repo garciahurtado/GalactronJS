@@ -22,6 +22,9 @@ Level1.prototype = Object.create(PlayState.prototype);
 Level1.prototype.constructor = Level1;
 
 Level1.prototype.preload = function(){
+	// super();
+	PlayState.prototype.preload.call(this);
+
 	// [Embed(source = "../../../assets/terrain.png")] var groundSprite;
 	// [Embed(source = "../../../assets/data/level1_ground.csv", mimeType="application/octet-stream")] var groundTilemap;
 
