@@ -66,14 +66,15 @@ PlayState.prototype.create = function(){
 	this.lives = 3;
 	this.isGameOver = false;
 	
-	// create sprite groups / layers
+	// create sprite groups / layers in order of Z display (background layers first)
 	// spriteFactory = new SpriteFactory();
+	this.background = this.game.add.group();
 	this.waves = this.game.add.group();
 	this.enemies = this.game.add.group();
 	this.enemyBullets = this.game.add.group();
+	this.playerBullets = this.game.add.group();
 	this.player;
 	this.playerLayer = this.game.add.group();
-	this.playerBullets = this.game.add.group();
 	this.powerups = this.game.add.group();
 	this.fx = this.game.add.group();
 	this.gui = this.game.add.group();

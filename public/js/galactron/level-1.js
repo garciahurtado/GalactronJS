@@ -16,7 +16,6 @@ function Level1(game){
 	var starfield2;
 	var starfield3;
 	var ground;
-	
 }
 
 Level1.prototype = Object.create(PlayState.prototype);
@@ -26,16 +25,16 @@ Level1.prototype.preload = function(){
 	// [Embed(source = "../../../assets/terrain.png")] var groundSprite;
 	// [Embed(source = "../../../assets/data/level1_ground.csv", mimeType="application/octet-stream")] var groundTilemap;
 
-	this.game.load.image('starfield1', 'images/galactron/starfield1.png');
-	this.game.load.image('starfield2', 'images/galactron/starfield2.png');
-	this.game.load.image('starfield3', 'images/galactron/starfield3.png');
+	this.game.load.spritesheet('starfield1', 'images/galactron/starfield1.png', 1920, 240);
+	this.game.load.spritesheet('starfield2', 'images/galactron/starfield2.png', 960, 240);
+	this.game.load.spritesheet('starfield3', 'images/galactron/starfield3.png', 960, 240);
 }
 
 Level1.prototype.create = function()
 {
 	PlayState.prototype.create.call(this);
 	this.createBackground();
-		console.log("Created starfield");
+
 	// cheat :)
 	//player.changeWeapon(new LaserGunQuad());
 	
@@ -76,12 +75,21 @@ Level1.prototype.create = function()
  */
 Level1.prototype.createBackground = function()
 {
-	// we will use several starfield sprites to create a parallax effect
-	//var background = this.game.add.group();
-	var starfield1 = this.game.add.tileSprite(0, 0, 1280, 240, 'starfield1');
-	starfield1.autoScroll(-10, 0);
+	var width = this.game.stage.bounds.width;
+	var height = this.game.stage.bounds.height;
 
-	console.log("Created starfield");
+	// we will use several starfield sprites to create a parallax effect
+	var starfield1 = this.game.add.tileSprite(0, 0, width, height, 'starfield1');
+	var starfield2 = this.game.add.tileSprite(0, 0, width, height, 'starfield2');
+	var starfield3 = this.game.add.tileSprite(0, 0, width, height, 'starfield3');
+
+	this.background.add(starfield1);
+	this.background.add(starfield2);
+	this.background.add(starfield3);
+
+	starfield1.autoScroll(-110, 0);
+	starfield2.autoScroll(-130, 0);
+	starfield3.autoScroll(-150, 0);
 
 	// var starfield1 = new LoopingTilemap(); 
 	// starfield1.loadMap("1,2,3,2,1,4", starfieldSprite1, 320, 240);

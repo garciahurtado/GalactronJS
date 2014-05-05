@@ -11,7 +11,7 @@ var PlayerShip = function(game, x, y){
 	this.maxSpeed = 150;
 	this.shootDelay = 200; // in millis
 	this.nextBullet = 0;
-	this.bulletSpeed = 270;
+	this.bulletSpeed = 360;
 
 	this.animations.add('normal', [0], 1, false);
 	this.animations.add('down', [1], 1, false);
