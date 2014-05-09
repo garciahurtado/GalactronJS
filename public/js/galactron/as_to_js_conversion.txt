@@ -4,10 +4,10 @@
 == Remove types:
 
 search
-(\w*)\s(\w*):(\w*)
+((\w*)\s)*(\w*):(\w*)
 
 replace
-var $2
+var $3
 
 == Update functions:
 
@@ -16,4 +16,12 @@ function\s(\w*)
 
 replace
 this.$1 = function
+
+== Function return values
+
+search
+\)\:(\w*)
+
+replace
+)
 

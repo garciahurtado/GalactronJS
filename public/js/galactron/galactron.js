@@ -7,7 +7,6 @@
 	var enemies; // anything that can kill the player
 	 
 	function preload() {
-		 game.load.spritesheet('alien', 'images/galactron/alien.png', 20, 20, 4);
 		 game.load.spritesheet('player', 'images/galactron/player_ship.png', 33, 24, 3);
 		 game.load.spritesheet('laser_blue', 'images/galactron/laser_blue.png', 16, 3, 1);
 	}

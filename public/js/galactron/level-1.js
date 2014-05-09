@@ -28,6 +28,8 @@ Level1.prototype.preload = function(){
 	// [Embed(source = "../../../assets/terrain.png")] var groundSprite;
 	// [Embed(source = "../../../assets/data/level1_ground.csv", mimeType="application/octet-stream")] var groundTilemap;
 
+	this.game.load.spritesheet('alien', 'images/galactron/enemies/alien.png', 20, 20);
+
 	this.game.load.spritesheet('starfield1', 'images/galactron/starfield1.png', 1920, 240);
 	this.game.load.spritesheet('starfield2', 'images/galactron/starfield2.png', 960, 240);
 	this.game.load.spritesheet('starfield3', 'images/galactron/starfield3.png', 960, 240);
@@ -48,27 +50,31 @@ Level1.prototype.create = function()
 	
 	// add(scorpion);
 	
-	// events.addAction( new WaitAction(0.5) )
-	// 	//.chainAction( new SpawnWaveAction(this, AlienRedWave, FlxG.width, 150, 20, 0.2))
-	// 	//.chainAction( new WaitAction(5) )
-	// 	.chainAction( new SpawnWaveAction(this, Scorpion1, FlxG.width, 150, 3, 5))
-	// 	.chainAction( new WaitAction(10) )
-	// 	.chainAction( new SpawnWaveAction(this, ArrowShipGreen, FlxG.width, 150, 12, 0.3))
-	// 	.chainAction( new WaitAction(5) )
-	// 	.chainAction( new SpawnWaveAction(this, ArrowShipRed1, FlxG.width, 150, 12, 0.5))
-	// 	.chainAction( new WaitAction(10) )
-	// 	.chainAction( new SpawnWaveAction(this, CannonDrone1, FlxG.width, 40, 1, 0))
-	// 	.chainAction( new WaitAction(1) )
-	// 	.chainAction( new SpawnWaveAction(this, CannonDrone1, FlxG.width, 80, 1, 0))
-	// 	.chainAction( new WaitAction(1) )
-	// 	.chainAction( new SpawnWaveAction(this, CannonDrone1, FlxG.width, 120, 1, 0))
-	// 	.chainAction( new WaitAction(1) )
-	// 	.chainAction( new SpawnWaveAction(this, CannonDrone1, FlxG.width, 160, 1, 0))
-	// 	.chainAction( new SpawnWaveAction(this, Freighter1, FlxG.width - 50, -30, 1, 0))
-	// 	.chainAction( new WaitAction(3) )
-	// 	.chainAction( new SpawnWaveAction(this, Scorpion1, FlxG.width, 100, 4, 2))
-	// 	.chainAction( new WaitAction(2))
-	// 	.start();
+	var width = this.game.stage.bounds.width;
+
+	this.events.addAction( new WaitAction(0.5) )
+	//	.chainAction( new SpawnWaveAction(this, Alien1, width, 150, 20, 0.2))
+		.chainAction( new WaitAction(2) )
+		//.chainAction( new SpawnWaveAction(this, AlienRedWave, width, 150, 20, 0.2))
+		// .chainAction( new WaitAction(5) )
+		// .chainAction( new SpawnWaveAction(this, Scorpion1, width, 150, 3, 5))
+		// .chainAction( new WaitAction(10) )
+		// .chainAction( new SpawnWaveAction(this, ArrowShipGreen, width, 150, 12, 0.3))
+		// .chainAction( new WaitAction(5) )
+		// .chainAction( new SpawnWaveAction(this, ArrowShipRed1, width, 150, 12, 0.5))
+		// .chainAction( new WaitAction(10) )
+		// .chainAction( new SpawnWaveAction(this, CannonDrone1, width, 40, 1, 0))
+		// .chainAction( new WaitAction(1) )
+		// .chainAction( new SpawnWaveAction(this, CannonDrone1, width, 80, 1, 0))
+		// .chainAction( new WaitAction(1) )
+		// .chainAction( new SpawnWaveAction(this, CannonDrone1, width, 120, 1, 0))
+		// .chainAction( new WaitAction(1) )
+		// .chainAction( new SpawnWaveAction(this, CannonDrone1, width, 160, 1, 0))
+		// .chainAction( new SpawnWaveAction(this, Freighter1, width - 50, -30, 1, 0))
+		// .chainAction( new WaitAction(3) )
+		// .chainAction( new SpawnWaveAction(this, Scorpion1, width, 100, 4, 2))
+		// .chainAction( new WaitAction(2))
+		.start();
 }
 
 /**
