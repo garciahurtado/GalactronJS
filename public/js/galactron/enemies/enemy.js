@@ -2,7 +2,7 @@
  * Represents a generic type of enemy which has a life meter and can be programmed to follow paths and attack the player.
  * @author Garcia
  */
-class Enemy extends Sprite {
+class Enemy extends Phaser.Sprite {
 	/*
 	sparks;
 	bullets;
@@ -15,10 +15,10 @@ class Enemy extends Sprite {
 	[Embed(source="../../../../assets/sounds/dent.mp3")] dentSound;
 	*/
 
-	Enemy(x = 0,y = 0) 
+	Enemy(game, x = 0,y = 0) 
 	{
-		bullets = new FlxGroup();
-		super(x, y);
+		super(game, x, y);
+		// bullets = new FlxGroup();
 	}
 	
 	/**
@@ -39,8 +39,8 @@ class Enemy extends Sprite {
 	{
 		super.kill();
 		
-		if (wave) {
-			wave.onEnemyKill(this);
+		if (this.wave) {
+			this.wave.onEnemyKill(this);
 		}
 	}
 	
@@ -49,7 +49,7 @@ class Enemy extends Sprite {
 	 */
 	deathAnimation() {
 		// locate the explosion in the middle of the sprite
-		explosion = recycle(Explosion);
+		var explosion = recycle(Explosion);
 		addSubSprite(explosion);
 		explosion.centerAt(this);
 		explosion.velocity.x = velocity.x;
@@ -61,18 +61,18 @@ class Enemy extends Sprite {
 	 * Custom hurt animation. Plays a sound and flashes the sprite with a quick white fill
 	 */
 	hurtAnimation() {
-		FlxG.play(dentSound);
-		this.addColorFill(0xFFFFFF);
-		self = this;
-		Utils.doLater(30, function(){
-			self.removeColorFill(); 
-		});
-		Utils.doLater(60, function(){
-			self.addColorFill(0xFFFFFF);
-		});
-		Utils.doLater(90, function(){
-			self.removeColorFill(); 
-		});
+		//FlxG.play(dentSound);
+		// this.addColorFill(0xFFFFFF);
+		// self = this;
+		// Utils.doLater(30, function(){
+		// 	self.removeColorFill(); 
+		// });
+		// Utils.doLater(60, function(){
+		// 	self.addColorFill(0xFFFFFF);
+		// });
+		// Utils.doLater(90, function(){
+		// 	self.removeColorFill(); 
+		// });
 	}
 	
 	update() {

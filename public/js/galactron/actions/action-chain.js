@@ -58,9 +58,9 @@ class ActionChain extends Action {
 	 * @return
 	 */
 	addAction(newAction, name){
-		// Only add the target from the ActionChain if no target was previously set
-		if (!newAction.target && target) {
-			newAction.target = target;
+		// Only assume the target from the ActionChain if no target was explicitly set in the Action
+		if (!newAction.target && this.target) {
+			newAction.target = this.target;
 		}
 		
 		this.actions.push(newAction);

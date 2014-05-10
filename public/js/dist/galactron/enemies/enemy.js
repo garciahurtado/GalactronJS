@@ -5,11 +5,10 @@ var Enemy = function Enemy() {
 };
 var $Enemy = Enemy;
 ($traceurRuntime.createClass)(Enemy, {
-  Enemy: function() {
-    var x = arguments[0] !== (void 0) ? arguments[0] : 0;
-    var y = arguments[1] !== (void 0) ? arguments[1] : 0;
-    bullets = new FlxGroup();
-    $traceurRuntime.superCall(this, $Enemy.prototype, "Enemy", [x, y]);
+  Enemy: function(game) {
+    var x = arguments[1] !== (void 0) ? arguments[1] : 0;
+    var y = arguments[2] !== (void 0) ? arguments[2] : 0;
+    $traceurRuntime.superCall(this, $Enemy.prototype, "Enemy", [game, x, y]);
   },
   init: function() {
     $traceurRuntime.superCall(this, $Enemy.prototype, "init", []);
@@ -19,32 +18,19 @@ var $Enemy = Enemy;
   },
   kill: function() {
     $traceurRuntime.superCall(this, $Enemy.prototype, "kill", []);
-    if (wave) {
-      wave.onEnemyKill(this);
+    if (this.wave) {
+      this.wave.onEnemyKill(this);
     }
   },
   deathAnimation: function() {
-    explosion = recycle(Explosion);
+    var explosion = recycle(Explosion);
     addSubSprite(explosion);
     explosion.centerAt(this);
     explosion.velocity.x = velocity.x;
     explosion.velocity.y = velocity.y;
     explosion.explode();
   },
-  hurtAnimation: function() {
-    FlxG.play(dentSound);
-    this.addColorFill(0xFFFFFF);
-    self = this;
-    Utils.doLater(30, function() {
-      self.removeColorFill();
-    });
-    Utils.doLater(60, function() {
-      self.addColorFill(0xFFFFFF);
-    });
-    Utils.doLater(90, function() {
-      self.removeColorFill();
-    });
-  },
+  hurtAnimation: function() {},
   update: function() {
     $traceurRuntime.superCall(this, $Enemy.prototype, "update", []);
     lastShot += FlxG.elapsed;
@@ -63,6 +49,6 @@ var $Enemy = Enemy;
     weapon.bullets = this.bullets;
     weapon.spriteFactory = spriteFactory;
   }
-}, {}, Sprite);
+}, {}, Phaser.Sprite);
 
 //# sourceMappingURL=enemy.js.map

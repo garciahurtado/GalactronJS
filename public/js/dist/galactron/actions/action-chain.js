@@ -26,8 +26,8 @@ var $ActionChain = ActionChain;
     return this;
   },
   addAction: function(newAction, name) {
-    if (!newAction.target && target) {
-      newAction.target = target;
+    if (!newAction.target && this.target) {
+      newAction.target = this.target;
     }
     this.actions.push(newAction);
     if (name) {

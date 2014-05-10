@@ -5,9 +5,9 @@
  */
 class SpawnWaveAction extends Action 
 {
-	constructor(playState,enemyClass,x = 0,y = 0,waveSize = 1,delay = 0){
+	constructor(game, enemyClass, x = 0, y = 0, waveSize = 1, delay = 0){
 		super(null);
-		this.playState = playState;
+		this.game = game;
 		this.enemyClass = enemyClass;
 		this.x = x;
 		this.y = y;
@@ -17,8 +17,9 @@ class SpawnWaveAction extends Action
 	
 	start(){
 		super.start();
-		var wave = playState.spriteFactory.recycle(EnemyWave);
-		playState.addWave(wave, x, y, enemyClass, waveSize, delay);
+		// var wave = game.spriteFactory.recycle(EnemyWave); // TODO: add recycling!
+		var wave = new Phaser.Group();
+		game.addWave(wave, x, y, enemyClass, waveSize, delay);
 	}
 	
 	update(){

@@ -1,7 +1,7 @@
 /**
  * Green alien enemy with the wiggly tentacles (inherits from Phaser Sprite)
  */
-class Alien extends Phaser.Sprite {
+class Alien extends Enemy {
 	constructor(game, x, y){
 		super(game, x, y, 'alien');
 

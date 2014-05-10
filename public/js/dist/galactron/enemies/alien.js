@@ -11,6 +11,6 @@ var Alien = function Alien(game, x, y) {
   anim.play('wiggle');
 };
 var $Alien = Alien;
-($traceurRuntime.createClass)(Alien, {}, {}, Phaser.Sprite);
+($traceurRuntime.createClass)(Alien, {}, {}, Enemy);
 
 //# sourceMappingURL=alien.js.map
