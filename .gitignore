@@ -3,6 +3,7 @@
 .sass-cache/
 .bower-*/
 .idea/
+*.js.map
 node_modules/
 bower_components/
 test/coverage/
