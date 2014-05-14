@@ -1,64 +1,81 @@
 ﻿	/**
 	 * Moves a sprite in a circular motion
-	 * 
+	 *
 	 * @author Garcia
 	 */
-	class CircleMotionAction extends Action
-	{
+
+	class CircleMotionAction extends Action {
 		// angle;
 		//speed;
 		//repeat;
 		//direction;
-		//CLOCKWISE = 1;
-		// COUNTERCLOCKWISE = 2;
+
 		//baseVelocity;
-		// 
-		
+
 		/**
-		 * 
+		 *
 		 * @param	target Target sprite whose motion will be altered
-		 * @param	speed Speed of the rotation
-		 * @param	repeat Number of revolutions after which the action will stop. 0 = continue indefinitely
+		 * @param	speed Speed at which the target velocity vector will be rotated
+		 * @param	circles Number of circles after which the action will stop. 0 = continue indefinitely
 		 * @param	direction Either CLOCKWISE or COUNTERCLOCKWISE
 		 */
-		CircleMotionAction(speed,repeat = 0,direction = CircleMotionAction.CLOCKWISE) {
+		constructor(speed, circles = 0, direction = 1) {
 			super();
 			this.speed = speed;
-			this.repeat = repeat;
+			this.circles = circles;
 			this.direction = direction;
-			this.angle = 0;
 			this.TWO_PI = 2 * Math.PI;
+			this.DIR_CLOCKWISE = 1;
+			this.COUNTER_CLOCKWISE = 2;
+
+			this.init();
 		}
-		
+
+		init(){
+			this.angle = 0;
+			this.baseVelocity = {x: 0, y: 0};
+		}
+
 		/**
 		 * Stores the original velocity of the target sprite before starting to change it
 		 */
 		start() {
 			super.start();
-			baseVelocity = new FlxPoint;
-			baseVelocity.x = target.velocity.x;
-			baseVelocity.y = target.velocity.y;
+
+			if(this.target){
+				this.baseVelocity = {
+					x: this.target.body.velocity.x,
+					y: this.target.body.velocity.y
+				}
+			}
 		}
-		
+
 		/**
 		 * Rotate the sprite
 		 */
 		update() {
-			super.update();
-			
-			if(direction == CircleMotionAction.CLOCKWISE){
-				angle -= (FlxG.elapsed * speed);
+			var elapsed = this.game.time.elapsed / 1000;
+
+			if (this.direction == this.DIR_CLOCKWISE) {
+				this.angle -= (elapsed * this.speed);
 			} else {
-				angle += (FlxG.elapsed * speed);
+				this.angle += (elapsed * this.speed);
 			}
-			
-			this.target.velocity.x = (baseVelocity.x * Math.cos(angle)) - (baseVelocity.y * Math.sin(angle));
-			this.target.velocity.y = (baseVelocity.y * Math.cos(angle)) - (baseVelocity.x * Math.sin(angle));
-			
+
+			var base = this.baseVelocity;
+			var angle = this.angle;
+
+			this.target.body.velocity = {
+				x: (base.x * Math.cos(angle)) - (base.y * Math.sin(angle)),
+				y: (base.y * Math.cos(angle)) - (base.x * Math.sin(angle))
+			}
+
 			// stop the action if we've reached the maximum number of cycles
-			if (repeat) {
-				if ( (Math.abs(angle) / (TWO_PI)) > repeat) {
-					finish();
+			if (this.circles) {
+				if ((Math.abs(angle) / this.TWO_PI) > this.circles) {
+		//			this.angle = this.circles * this.TWO_PI;
+		console.log("Circle finish");
+					this.finish();
 				}
 			}
 		}

@@ -17,8 +17,7 @@ var $SpawnWaveAction = SpawnWaveAction;
 ($traceurRuntime.createClass)(SpawnWaveAction, {
   start: function() {
     $traceurRuntime.superCall(this, $SpawnWaveAction.prototype, "start", []);
-    var wave = new Phaser.Group();
-    game.addWave(wave, x, y, enemyClass, waveSize, delay);
+    this.game.state.current.addWave(x, y, enemyClass, waveSize, delay);
   },
   update: function() {
     $traceurRuntime.superCall(this, $SpawnWaveAction.prototype, "update", []);

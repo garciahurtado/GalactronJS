@@ -1,6 +1,7 @@
 ﻿/**
- * Base Playstate class. Provides base functionality used by all playable levels in the game. It
- * is meant to be extended by individual levels to provide custom functionality such as
+ * Base Playstate class. Provides base functionality used by all "playable" levels in the game. It
+ * is meant to be extended by individual levels to provide custom functionality and level content such as:
+ *
  * - Level backgrounds and graphics
  * - Level specific enemies and waves
  * - Final boss for each level
@@ -11,7 +12,6 @@ class PlayState {
 
 	constructor(game){
 		this.camera;
-		this.spriteFactory;
 		this.player;
 		this.playerLayer;
 		this.playerBullets;
@@ -55,9 +55,7 @@ class PlayState {
 	}
 
 	create(){
-			
-		//super.create();
-		this.events = new ActionChain();
+		this.events = new ActionChain(this.game);
 		
 		// set start game configuration
 		this.score = 0;
@@ -69,9 +67,17 @@ class PlayState {
 		// spriteFactory = new SpriteFactory();
 		this.background = this.game.add.group();
 		this.waves = this.game.add.group();
+
 		this.enemies = this.game.add.group();
 		this.enemyBullets = this.game.add.group();
+
 		this.playerBullets = this.game.add.group();
+		this.playerBullets.physicsBodyType = Phaser.Physics.ARCADE;
+		this.game.physics.arcade.enable(this.playerBullets);
+
+		// check whether any player bullets hit an enemy
+		// this.playerBullets.overlap(this.enemies, this.enemyHit, this);
+
 		this.player;
 		this.playerLayer = this.game.add.group();
 		this.powerups = this.game.add.group();
@@ -112,6 +118,9 @@ class PlayState {
 	 	this.controls.fire = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 		
 		// FlxG.play(music, 1, false);
+
+		// collission checks and callbacks
+
 	};
 		
 	/**
@@ -172,9 +181,6 @@ class PlayState {
 		if (this.isGameOver) {
 			return;
 		}
-		
-		// check whether any player bullets hit an enemy
-		// FlxG.overlap(player.bullets, enemies, enemyHit);
 		
 		// // did we pick up a powerup?
 		// FlxG.overlap(player, powerups, powerUp);
@@ -237,25 +243,33 @@ class PlayState {
 	 * 
 	 * @param	wave
 	 */
-	addWave(wave, x, y, enemyType, count, delay)	{
+	addWave(x, y, enemyType, count, delay)	{
 		// defaults
 		delay = typeof delay !== 'undefined' ? delay : 0;
 		count = typeof count !== 'undefined' ? count : 1;
 
-		// waves.add(wave);
+		// TODO: Extract to SpriteFactory (also in enemy-wave.js)
+		var wave = this.waves.getFirstExists(false);
+		if(!wave){
+			wave = new EnemyWave(this.game, x, y, enemyType, count, delay);
+			this.waves.add(wave);
+		}
+
 		wave.reset(x, y);
-		wave.enemyType = enemyType;
-		wave.waveSize = count;
-		wave.spawnDelay = delay;
+		// wave.enemyType = enemyType;
+		// wave.waveSize = count;
+		// wave.spawnDelay = delay;
 		
 		wave.player = this.player;
-		wave.spriteFactory = spriteFactory;
+//		wave.spriteFactory = spriteFactory;
 		// add(wave.fx);
 		
 		// enemies.add(wave.enemies);
 		// enemyBullets.add(wave.bullets);
 
 		// powerups.add(wave.powerups);
+
+		return wave;
 	};
 
 	/**
@@ -333,7 +347,7 @@ class PlayState {
 		//player.changeMissileWeapon(missile1);
 		//player.changeWeapon(new LaserGun());
 		
-		//playerBullets.add(player.bullets);
+		this.playerBullets = this.player.bullets;
 
 			// prevent player from going outside the viewport bounds
 		this.player.body.collideWorldBounds = true;

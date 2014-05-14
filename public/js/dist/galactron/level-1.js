@@ -17,10 +17,10 @@ var $Level1 = Level1;
     this.game.load.spritesheet('starfield3', 'images/galactron/starfield3.png', 960, 240);
   },
   create: function() {
-    PlayState.prototype.create.call(this);
+    $traceurRuntime.superCall(this, $Level1.prototype, "create", []);
     this.createBackground();
+    var wave = this.addWave(this.game.width, 150, Alien1, 20, 0.3);
     var width = this.game.stage.bounds.width;
-    this.events.addAction(new WaitAction(0.5)).chainAction(new SpawnWaveAction(this, Alien1, width, 150, 20, 0.2)).chainAction(new WaitAction(2)).start();
   },
   createBackground: function() {
     var width = this.game.stage.bounds.width;

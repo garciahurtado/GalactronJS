@@ -8,7 +8,7 @@ class WaitAction extends Action {
 	// timer;
 	// timeout;
 	
-	WaitAction(timeout = 0){
+	constructor(timeout = 0){
 		super();
 		this.timeout = timeout;
 	}
@@ -26,9 +26,9 @@ class WaitAction extends Action {
 	 * Check whether enough time has passed to finish the wait
 	 */
 	update()	{
-		timer += FlxG.elapsed;
-		if (timer > timeout) { 
-			finish();
+		this.timer += this.game.time.elapsed / 1000;
+		if (this.timer > this.timeout) { 
+			this.finish();
 		}
 	}
 	

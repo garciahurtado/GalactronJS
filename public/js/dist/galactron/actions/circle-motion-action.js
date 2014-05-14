@@ -1,38 +1,52 @@
 "use strict";
 var __moduleName = "public/js/dist/galactron/actions/circle-motion-action";
-var CircleMotionAction = function CircleMotionAction() {
-  $traceurRuntime.defaultSuperCall(this, $CircleMotionAction.prototype, arguments);
+var CircleMotionAction = function CircleMotionAction(speed) {
+  var circles = arguments[1] !== (void 0) ? arguments[1] : 0;
+  var direction = arguments[2] !== (void 0) ? arguments[2] : 1;
+  $traceurRuntime.superCall(this, $CircleMotionAction.prototype, "constructor", []);
+  this.speed = speed;
+  this.circles = circles;
+  this.direction = direction;
+  this.TWO_PI = 2 * Math.PI;
+  this.DIR_CLOCKWISE = 1;
+  this.COUNTER_CLOCKWISE = 2;
+  this.init();
 };
 var $CircleMotionAction = CircleMotionAction;
 ($traceurRuntime.createClass)(CircleMotionAction, {
-  CircleMotionAction: function(speed) {
-    var repeat = arguments[1] !== (void 0) ? arguments[1] : 0;
-    var direction = arguments[2] !== (void 0) ? arguments[2] : $CircleMotionAction.CLOCKWISE;
-    $traceurRuntime.superCall(this, $CircleMotionAction.prototype, "CircleMotionAction", []);
-    this.speed = speed;
-    this.repeat = repeat;
-    this.direction = direction;
+  init: function() {
     this.angle = 0;
-    this.TWO_PI = 2 * Math.PI;
+    this.baseVelocity = {
+      x: 0,
+      y: 0
+    };
   },
   start: function() {
     $traceurRuntime.superCall(this, $CircleMotionAction.prototype, "start", []);
-    baseVelocity = new FlxPoint;
-    baseVelocity.x = target.velocity.x;
-    baseVelocity.y = target.velocity.y;
+    if (this.target) {
+      this.baseVelocity = {
+        x: this.target.body.velocity.x,
+        y: this.target.body.velocity.y
+      };
+    }
   },
   update: function() {
-    $traceurRuntime.superCall(this, $CircleMotionAction.prototype, "update", []);
-    if (direction == $CircleMotionAction.CLOCKWISE) {
-      angle -= (FlxG.elapsed * speed);
+    var elapsed = this.game.time.elapsed / 1000;
+    if (this.direction == this.DIR_CLOCKWISE) {
+      this.angle -= (elapsed * this.speed);
     } else {
-      angle += (FlxG.elapsed * speed);
+      this.angle += (elapsed * this.speed);
     }
-    this.target.velocity.x = (baseVelocity.x * Math.cos(angle)) - (baseVelocity.y * Math.sin(angle));
-    this.target.velocity.y = (baseVelocity.y * Math.cos(angle)) - (baseVelocity.x * Math.sin(angle));
-    if (repeat) {
-      if ((Math.abs(angle) / (TWO_PI)) > repeat) {
-        finish();
+    var base = this.baseVelocity;
+    var angle = this.angle;
+    this.target.body.velocity = {
+      x: (base.x * Math.cos(angle)) - (base.y * Math.sin(angle)),
+      y: (base.y * Math.cos(angle)) - (base.x * Math.sin(angle))
+    };
+    if (this.circles) {
+      if ((Math.abs(angle) / this.TWO_PI) > this.circles) {
+        console.log("Circle finish");
+        this.finish();
       }
     }
   }

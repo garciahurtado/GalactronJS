@@ -3,11 +3,11 @@
  * - Backgrounds
  * - Enemies and waves
  * - Level boss
- * 
+ *
  * @author Garcia Hurtado
  */
 class Level1 extends PlayState {
-	constructor(game){
+	constructor(game) {
 		super(game);
 
 		this.starfield1;
@@ -16,7 +16,7 @@ class Level1 extends PlayState {
 		this.ground;
 	}
 
-	preload(){
+	preload() {
 		super();
 
 		// [Embed(source = "../../../assets/terrain.png")] var groundSprite;
@@ -29,53 +29,60 @@ class Level1 extends PlayState {
 		this.game.load.spritesheet('starfield3', 'images/galactron/starfield3.png', 960, 240);
 	}
 
-	create(){
-		PlayState.prototype.create.call(this);
+	create() {
+		super.create();
 		this.createBackground();
+
+		// var alien = new Alien(this.game, 20, 10);
+		// this.game.add.existing(alien, 10, 10);	
+		// alien.body.velocity.x = 3;
+
+		var wave = this.addWave(this.game.width, 150, Alien1, 20, 0.3);
+		//wave.body.velocity.x = -20;
 
 		// cheat :)
 		//player.changeWeapon(new LaserGunQuad());
-		
+
 		// configure level content and events -------------------------------------------
 		// var scorpion = new Scorpion1();
 		// scorpion.x = 100;
 		// scorpion.y = 100;
-		
+
 		// add(scorpion);
-		
+
 		var width = this.game.stage.bounds.width;
 
-		this.events.addAction( new WaitAction(0.5) )
-			.chainAction( new SpawnWaveAction(this, Alien1, width, 150, 20, 0.2))
-			.chainAction( new WaitAction(2) )
-			// .chainAction( new SpawnWaveAction(this, AlienRedWave, width, 150, 20, 0.2))
-			// .chainAction( new WaitAction(5) )
-			// .chainAction( new SpawnWaveAction(this, Scorpion1, width, 150, 3, 5))
-			// .chainAction( new WaitAction(10) )
-			// .chainAction( new SpawnWaveAction(this, ArrowShipGreen, width, 150, 12, 0.3))
-			// .chainAction( new WaitAction(5) )
-			// .chainAction( new SpawnWaveAction(this, ArrowShipRed1, width, 150, 12, 0.5))
-			// .chainAction( new WaitAction(10) )
-			// .chainAction( new SpawnWaveAction(this, CannonDrone1, width, 40, 1, 0))
-			// .chainAction( new WaitAction(1) )
-			// .chainAction( new SpawnWaveAction(this, CannonDrone1, width, 80, 1, 0))
-			// .chainAction( new WaitAction(1) )
-			// .chainAction( new SpawnWaveAction(this, CannonDrone1, width, 120, 1, 0))
-			// .chainAction( new WaitAction(1) )
-			// .chainAction( new SpawnWaveAction(this, CannonDrone1, width, 160, 1, 0))
-			// .chainAction( new SpawnWaveAction(this, Freighter1, width - 50, -30, 1, 0))
-			// .chainAction( new WaitAction(3) )
-			// .chainAction( new SpawnWaveAction(this, Scorpion1, width, 100, 4, 2))
-			// .chainAction( new WaitAction(2))
-			.start();
+		//this.events.addAction(new WaitAction(0.5))
+			// .chainAction(new SpawnWaveAction(this, Alien1, width, 150, 20, 0.2))
+			// .chainAction(new WaitAction(2))
+		// .chainAction( new SpawnWaveAction(this, AlienRedWave, width, 150, 20, 0.2))
+		// .chainAction( new WaitAction(5) )
+		// .chainAction( new SpawnWaveAction(this, Scorpion1, width, 150, 3, 5))
+		// .chainAction( new WaitAction(10) )
+		// .chainAction( new SpawnWaveAction(this, ArrowShipGreen, width, 150, 12, 0.3))
+		// .chainAction( new WaitAction(5) )
+		// .chainAction( new SpawnWaveAction(this, ArrowShipRed1, width, 150, 12, 0.5))
+		// .chainAction( new WaitAction(10) )
+		// .chainAction( new SpawnWaveAction(this, CannonDrone1, width, 40, 1, 0))
+		// .chainAction( new WaitAction(1) )
+		// .chainAction( new SpawnWaveAction(this, CannonDrone1, width, 80, 1, 0))
+		// .chainAction( new WaitAction(1) )
+		// .chainAction( new SpawnWaveAction(this, CannonDrone1, width, 120, 1, 0))
+		// .chainAction( new WaitAction(1) )
+		// .chainAction( new SpawnWaveAction(this, CannonDrone1, width, 160, 1, 0))
+		// .chainAction( new SpawnWaveAction(this, Freighter1, width - 50, -30, 1, 0))
+		// .chainAction( new WaitAction(3) )
+		// .chainAction( new SpawnWaveAction(this, Scorpion1, width, 100, 4, 2))
+		// .chainAction( new WaitAction(2))
+		//.start();
 	}
 
 	/**
 	 * Custom level background and terrain layers
-	 * 
+	 *
 	 * @return
 	 */
-	createBackground(){
+	createBackground() {
 		var width = this.game.stage.bounds.width;
 		var height = this.game.stage.bounds.height;
 
@@ -95,15 +102,15 @@ class Level1 extends PlayState {
 		// var starfield1 = new LoopingTilemap(); 
 		// starfield1.loadMap("1,2,3,2,1,4", starfieldSprite1, 320, 240);
 		// starfield1.scrollFactor.x = 0.17;
-			
+
 		// var starfield2 = new LoopingTilemap(); 
 		// starfield2.loadMap("2,1,2,1,3", starfieldSprite2, 320, 240);
 		// starfield2.scrollFactor.x = 0.2;
-		
+
 		// var starfield3 = new LoopingTilemap(); 
 		// starfield3.loadMap("1,2,3", starfieldSprite3, 320, 240);
 		// starfield3.scrollFactor.x = 0.23;
-		
+
 		// // Add the ground tilemap
 		// ground = new FlxTilemap();
 		// ground.solid = true;
@@ -111,7 +118,7 @@ class Level1 extends PlayState {
 		// ground.y = 0;
 		// ground.loadMap( new groundTilemap, groundSprite, 32, 32, FlxTilemap.OFF, 0, 1, 1 );
 		// ground.scrollFactor.x = 0.25;
-		
+
 		// background.add(starfield1);
 		// background.add(starfield2);
 		// background.add(starfield3);

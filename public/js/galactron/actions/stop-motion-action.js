@@ -2,18 +2,15 @@
  * ...
  * @author Garcia Hurtado
  */
-class StopMotionAction extends Action 
-{
-	StopMotionAction() 
-	{
+class StopMotionAction extends Action {
+	constructor() {
 		super();
 	}
-	
-	start()
-	{
-		target.velocity.x = 0;
-		target.velocity.y = 0;
-		finish();
+
+	start() {
+		this.target.body.velocity.x = 0;
+		this.target.body.velocity.y = 0;
+		this.finish();
 	}
-	
+
 }

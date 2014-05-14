@@ -8,7 +8,7 @@ class TweenAction extends Action
 {
 	// properties;
 	
-	TweenAction(target, properties, time, transition = null) 
+	constructor(target, properties, time, transition = null) 
 	{
 		super(target);
 		if (transition == null) {

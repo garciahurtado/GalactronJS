@@ -2,7 +2,6 @@
 var __moduleName = "public/js/dist/galactron/play-state";
 var PlayState = function PlayState(game) {
   this.camera;
-  this.spriteFactory;
   this.player;
   this.playerLayer;
   this.playerBullets;
@@ -27,7 +26,7 @@ var PlayState = function PlayState(game) {
     this.game.load.image('player_life', 'images/galactron/player_life.png', 13, 10, 1);
   },
   create: function() {
-    this.events = new ActionChain();
+    this.events = new ActionChain(this.game);
     this.score = 0;
     this.scoreDisplay;
     this.lives = 3;
@@ -37,6 +36,8 @@ var PlayState = function PlayState(game) {
     this.enemies = this.game.add.group();
     this.enemyBullets = this.game.add.group();
     this.playerBullets = this.game.add.group();
+    this.playerBullets.physicsBodyType = Phaser.Physics.ARCADE;
+    this.game.physics.arcade.enable(this.playerBullets);
     this.player;
     this.playerLayer = this.game.add.group();
     this.powerups = this.game.add.group();
@@ -92,15 +93,17 @@ var PlayState = function PlayState(game) {
       }
     } else {}
   },
-  addWave: function(wave, x, y, enemyType, count, delay) {
+  addWave: function(x, y, enemyType, count, delay) {
     delay = typeof delay !== 'undefined' ? delay : 0;
     count = typeof count !== 'undefined' ? count : 1;
+    var wave = this.waves.getFirstExists(false);
+    if (!wave) {
+      wave = new EnemyWave(this.game, x, y, enemyType, count, delay);
+      this.waves.add(wave);
+    }
     wave.reset(x, y);
-    wave.enemyType = enemyType;
-    wave.waveSize = count;
-    wave.spawnDelay = delay;
     wave.player = this.player;
-    wave.spriteFactory = spriteFactory;
+    return wave;
   },
   enemyHit: function(bullet, enemy) {
     bullet.kill();
@@ -137,6 +140,7 @@ var PlayState = function PlayState(game) {
   spawnPlayer: function() {
     this.player = new PlayerShip(this.game, 0, 100);
     this.player.body.velocity.x = 100;
+    this.playerBullets = this.player.bullets;
     this.player.body.collideWorldBounds = true;
     this.playerLayer.add(this.player);
   },

@@ -1,41 +1,44 @@
 "use strict";
 var __moduleName = "public/js/dist/galactron/actions/wave-motion-action";
-var WaveMotionAction = function WaveMotionAction() {
-  $traceurRuntime.defaultSuperCall(this, $WaveMotionAction.prototype, arguments);
+var WaveMotionAction = function WaveMotionAction(target, amplitude, speed) {
+  var repeat = arguments[3] !== (void 0) ? arguments[3] : 0;
+  $traceurRuntime.superCall(this, $WaveMotionAction.prototype, "constructor", [target]);
+  this.amplitude = amplitude;
+  this.amplitudeX = this.amplitudeY = 0;
+  this.speed = speed;
+  this.repeat = repeat;
+  this.currentAngle = 0;
 };
 var $WaveMotionAction = WaveMotionAction;
 ($traceurRuntime.createClass)(WaveMotionAction, {
-  WaveMotionAction: function(target, amplitude, speed) {
-    var repeat = arguments[3] !== (void 0) ? arguments[3] : 0;
-    $traceurRuntime.superCall(this, $WaveMotionAction.prototype, "WaveMotionAction", [target]);
-    this.amplitude = amplitude;
-    this.speed = speed;
-    this.repeat = repeat;
-    this.TWO_PI = 2 * Math.PI;
-  },
   start: function() {
     $traceurRuntime.superCall(this, $WaveMotionAction.prototype, "start", []);
-    currentAngle = 0;
-    baseVelocity = new FlxPoint;
-    baseVelocity.x = target.velocity.x;
-    baseVelocity.y = target.velocity.y;
-    amplitudeX = baseVelocity.x * amplitude;
-    amplitudeY = baseVelocity.y * amplitude;
+    this.currentAngle = 0;
+    this.baseVelocity = {
+      x: this.target.body.velocity.x,
+      y: this.target.body.velocity.y
+    };
+    this.amplitudeX = this.baseVelocity.x * this.amplitude;
+    this.amplitudeY = this.baseVelocity.y * this.amplitude;
   },
   update: function() {
-    $traceurRuntime.superCall(this, $WaveMotionAction.prototype, "update", []);
-    currentAngle += (FlxG.elapsed * speed);
-    this.target.velocity.y = (Math.sin(currentAngle) * amplitudeX) + baseVelocity.y;
-    this.target.velocity.x = (Math.cos(currentAngle) * amplitudeY) + baseVelocity.x;
-    if (repeat) {
-      if ((currentAngle / (TWO_PI)) > repeat) {
+    var TWO_PI = 2 * Math.PI;
+    this.currentAngle += ((this.game.time.elapsed / 1000) * this.speed);
+    var base = this.baseVelocity;
+    var angle = this.currentAngle;
+    this.target.body.velocity = {
+      y: (Math.sin(angle) * this.amplitudeX) + base.y,
+      x: (Math.cos(angle) * this.amplitudeY) + base.x
+    };
+    if (this.repeat) {
+      if ((this.currentAngle / (TWO_PI)) > this.repeat) {
         finish();
       }
     }
   },
   finish: function() {
     $traceurRuntime.superCall(this, $WaveMotionAction.prototype, "finish", []);
-    target.velocity = baseVelocity;
+    this.target.body.velocity = baseVelocity;
   }
 }, {}, Action);
 

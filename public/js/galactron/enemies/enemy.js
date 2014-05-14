@@ -15,21 +15,29 @@ class Enemy extends Phaser.Sprite {
 	[Embed(source="../../../../assets/sounds/dent.mp3")] dentSound;
 	*/
 
-	Enemy(game, x = 0,y = 0) 
+	constructor(game, x = 0, y = 0, graphic) 
 	{
-		super(game, x, y);
-		// bullets = new FlxGroup();
+		super(game, x, y, graphic);
+		this.actions = new ActionChain(game, this);
+		game.add.existing(this.actions);
+		this.bullets = game.add.group();
 	}
 	
 	/**
-	 * Called automatically from parent constructor when the object is instantiated and when it is recycled
+	 * Called automatically from parent constructor when the object is instantiated and when it is recycled.
+	 * It enables Physics on the sprite, and starts the actions chain.
 	 */
 	init() 
 	{
-		super.init();
-		lastShot = 0;
-		score = 0;
-		offscreenLifespan = 2;
+		this.game.physics.enable(this, Phaser.Physics.ARCADE);
+
+		if(this.actions){
+			this.actions.start();
+		}
+
+		this.lastShot = 0;
+		this.score = 0;
+		this.offscreenLifespan = 2;
 	}
 	
 	/**
@@ -77,7 +85,7 @@ class Enemy extends Phaser.Sprite {
 	
 	update() {
 		super.update();
-		lastShot += FlxG.elapsed;
+		this.lastShot += this.game.time.delta;
 	}
 	
 	shoot() {
@@ -110,6 +118,11 @@ class Enemy extends Phaser.Sprite {
 	{
 		weapon.bullets = this.bullets;
 		weapon.spriteFactory = spriteFactory;
+	}
+
+	reset(x, y, health) {
+		super.reset(x, y, health);
+		this.init();
 	}
 }
 

@@ -15,36 +15,23 @@ module.exports = function(grunt) {
       js: {
         files: ['public/js/galactron/**/*.js'],
         tasks: ['traceur']
-      }
+      },
+      options: {
+        spawn: false
+      },
     },
 
     compass: {
       dist: {
-      options: {
-        sassDir: 'public/sass',
-        cssDir: 'public/css',
-        imagesDir: 'public/images'
-      }
-      }
-    },
-
-    transpile: {
-      main: {
-        type: "yui", // or "amd" or "yui"
-        files: [{
-          expand: true,
-          cwd: 'public/js/galactron/',
-          src: ['**/*.js'],
-          dest: 'public/js/dist/'
-        }]
+        options: {
+          sassDir: 'public/sass',
+          cssDir: 'public/css',
+          imagesDir: 'public/images'
+        }
       }
     },
 
     traceur: {
-      options: {
-        maps: false 
-      },
-
       custom: {
         files:[{
           expand: true,
@@ -128,6 +115,11 @@ module.exports = function(grunt) {
         NODE_ENV: 'test'
       }
     }
+  });
+
+  // Force Traceur to only update changed JS files
+  grunt.event.on('watch', function(action, filepath) {
+    grunt.config('traceur.custom.files.src', filepath);
   });
 
   //Making grunt default to force in order not to break the project.

@@ -3,29 +3,26 @@
 	 *
 	 * @author Garcia Hurtado
 	 */
-	class FollowAction extends Action 
-	{
+	class FollowAction extends Action {
 		//followed;minDist;maxDist;
-		
+
 		//followElapsed = 0;
-		
+
 		// time to wait between two trajectory adjustments (in seconds)followDelay = 0.2; 
-		
-		FollowAction(target,followed,minDist = 0,maxDist = 0) 
-		{
+
+		constructor(target, followed, minDist = 0, maxDist = 0) {
 			this.target = target;
 			this.followed = followed;
 		}
-		
-		update()
-		{
+
+		update() {
 			// only turn every certain number of update cycles
 			if (followElapsed < followDelay) {
-				followElapsed += FlxG.elapsed;
+				followElapsed += this.game.time.delta;
 				return;
 			}
 			myTarget = target;
-			
+
 			if (myTarget.distanceTo(followed) < minDist) {
 				//target.speed = 20;
 			} else {
@@ -34,47 +31,47 @@
 				//target.x = followed.x + 10;
 			}
 			angleToTarget = target.angleTo(followed);
-			maxTurn = target.maxAngular * FlxG.elapsed;
-			
+			maxTurn = target.maxAngular * this.game.time.delta;
+
 			// always turn to face the sprite we are following
 			if (maxTurn > angleToTarget) {
 				target.turn(angleToTarget);
 			} else {
 				target.turn(maxTurn);
 			}
-			
+
 			followElapsed = 0;
 			return;
 		}
-		
-		turnTarget(){
+
+		turnTarget() {
 			angleToTarget = target.angleTo(followed);
-			angleToTarget = angleToTarget % (2 * Math.PI); // limit angle to +PI / -turnAngle = target.maxAngular * FlxG.elapsed;
-			
+			angleToTarget = angleToTarget % (2 * Math.PI); // limit angle to +PI / -turnAngle = target.maxAngular * this.game.time.delta;
+
 			// do not modify the trajectory if the difference is too small, to avoid jitter
-			if (Math.abs(turnAngle) < 0.1) { 
+			if (Math.abs(turnAngle) < 0.1) {
 				return;
 			}
-			
-			if (angleToTarget > Math.PI){
+
+			if (angleToTarget > Math.PI) {
 				//angleToTarget -= 2*Math.PI;
 			} else if (angleToTarget < -Math.PI) {
 				//angleToTarget += 2*Math.PI;
 			}
-			
-			
+
+
 			// avoid overshooting the turn
-			if (turnAngle > Math.abs(angleToTarget)) { 
+			if (turnAngle > Math.abs(angleToTarget)) {
 				turnAngle = Math.abs(angleToTarget);
 			}
-						
+
 			if (target.facingAngle > angleToTarget) { // we must increase the angle to face the target
 				FlxG.log("facing angle > target");
 				target.turn(target.facingAngle - turnAngle);
-			}  else { // we must decrease the angle to face the target
+			} else { // we must decrease the angle to face the target
 				FlxG.log("facing angle < target");
 				target.turn(target.facingAngle + turnAngle);
 			}
-			
+
 		}
 	}

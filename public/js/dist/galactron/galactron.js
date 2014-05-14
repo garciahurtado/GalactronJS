@@ -25,16 +25,11 @@ var __moduleName = "public/js/dist/galactron/galactron";
     game.scale.setScreenSize(true);
     game.state.add('Level1', Level1);
     game.state.start('Level1');
-    return true;
-    enemies = game.add.group();
-    var alien = new Alien(game, 200, 100);
-    enemies.add(alien);
-    game.add.existing(alien, 10, 10);
   }
   function addSprite(sprite) {
     game.add.existing(sprite);
   }
-  function createAliens() {
+  function createRandomAliens() {
     var alien = new Alien(game, 20, 10);
     game.add.existing(alien, 10, 10);
     alien.body.velocity.x = 3;

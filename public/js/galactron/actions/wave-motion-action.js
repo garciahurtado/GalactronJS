@@ -27,14 +27,14 @@ class WaveMotionAction extends Action
 	 * @param	speed Speed at which the wave cycles
 	 * @param	repeat Maximum number of cycles after which the action will stop. 0 = infinite cycles
 	 */
-	WaveMotionAction(target, amplitude, speed, repeat = 0) {
+	constructor(target, amplitude, speed, repeat = 0) {
 		super(target);
 		
 		this.amplitude = amplitude;
+		this.amplitudeX = this.amplitudeY = 0;
 		this.speed = speed;
 		this.repeat = repeat;
-
-		this.TWO_PI = 2 * Math.PI;
+		this.currentAngle = 0;
 	}
 	
 	/**
@@ -42,39 +42,44 @@ class WaveMotionAction extends Action
 	 */
 	start() {
 		super.start();
+		this.currentAngle = 0;
+
+		this.baseVelocity = {
+			x: this.target.body.velocity.x,
+			y: this.target.body.velocity.y
+		}
 		
-		currentAngle = 0;
-		baseVelocity = new FlxPoint;
-		baseVelocity.x = target.velocity.x;
-		baseVelocity.y = target.velocity.y;
-		
-		amplitudeX = baseVelocity.x * amplitude;
-		amplitudeY = baseVelocity.y * amplitude;
+		this.amplitudeX = this.baseVelocity.x * this.amplitude;
+		this.amplitudeY = this.baseVelocity.y * this.amplitude;
 	}
 	
 	/**
 	 * Called to update the actions of the controlled sprite once per game update cycle
 	 */
 	update() {
-		super.update();
+		var TWO_PI = 2 * Math.PI;
 		
-		currentAngle += (FlxG.elapsed * speed);
+		this.currentAngle += ((this.game.time.elapsed / 1000 )* this.speed);
 		
-		this.target.velocity.y = (Math.sin(currentAngle) * amplitudeX) + baseVelocity.y;
-		this.target.velocity.x = (Math.cos(currentAngle) * amplitudeY) + baseVelocity.x;
+		var base = this.baseVelocity;
+		var angle = this.currentAngle;
+		this.target.body.velocity = {
+			y: (Math.sin(angle) * this.amplitudeX) + base.y,
+			x: (Math.cos(angle) * this.amplitudeY) + base.x
+		}
 		
 		// stop the action if we've reached the maximum number of cycles
-		if (repeat) {
-			if ( (currentAngle / (TWO_PI)) > repeat) {
+		if (this.repeat) {
+			if ( (this.currentAngle / (TWO_PI)) > this.repeat) {
 				finish();
 			}
 		}
 	}
 	
 	finish() {
-		super.finish();
+		super();
 		
 		// restore the velocity vector of the affected sprite to its original values
-		target.velocity = baseVelocity;
+		this.target.body.velocity = baseVelocity;
 	}
 }

@@ -27,19 +27,8 @@
 	 	game.scale.setScreenSize(true);
 
 	 	// Add game states
-	 	game.state.add('Level1', Level1);
+		game.state.add('Level1', Level1);
 	 	game.state.start('Level1');
-
-	 	return true; // DEBUG
-
-	 	//createAliens();
-
-	 	enemies = game.add.group();
-	 	var alien = new Alien(game, 200, 100);
-	 	enemies.add(alien);
-		game.add.existing(alien, 10, 10);	
-
-
 	}
 
 	/**
@@ -50,7 +39,7 @@
 		//game.add.existing(sprite.subSprites);
 	}
 
-	function createAliens() {
+	function createRandomAliens() {
 		// add Aliens
 		var alien = new Alien(game, 20, 10);
 		game.add.existing(alien, 10, 10);	
