@@ -50061,7 +50061,9 @@ Phaser.Physics.Arcade.Body.prototype = {
     * @param {number} y - The new y position of the Body.
     */
     reset: function (x, y) {
-
+        if(!this.velocity){
+            this.velocity;
+        }
         this.velocity.set(0);
         this.acceleration.set(0);
 

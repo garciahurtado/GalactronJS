@@ -22,9 +22,7 @@ var PlayState = function PlayState(game) {
   this.game = game;
 };
 ($traceurRuntime.createClass)(PlayState, {
-  preload: function() {
-    this.game.load.image('player_life', 'images/galactron/player_life.png', 13, 10, 1);
-  },
+  preload: function() {},
   create: function() {
     this.events = new ActionChain(this.game);
     this.score = 0;
@@ -48,6 +46,7 @@ var PlayState = function PlayState(game) {
     this.createHud();
     this.controls = this.game.input.keyboard.createCursorKeys();
     this.controls.fire = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    this.game.physics.startSystem(Phaser.Physics.ARCADE);
   },
   createHud: function() {
     var offset = 0;
@@ -71,6 +70,7 @@ var PlayState = function PlayState(game) {
     if (this.isGameOver) {
       return;
     }
+    this.game.physics.arcade.overlap(this.playerBullets, this.enemies.children[0], this.enemyHit, null, this);
     if (this.player.flickering == false) {}
   },
   playerInput: function(elapsed) {
@@ -103,14 +103,13 @@ var PlayState = function PlayState(game) {
     }
     wave.reset(x, y);
     wave.player = this.player;
+    this.enemies.add(wave.enemies);
+    this.enemyBullets.add(wave.bullets);
     return wave;
   },
   enemyHit: function(bullet, enemy) {
     bullet.kill();
-    enemy.hurt(bullet.power);
-    if (!enemy.alive) {
-      this.addScore(enemy.score);
-    }
+    enemy.damage(bullet.power);
   },
   playerHit: function(player, enemy) {
     this.player.kill();

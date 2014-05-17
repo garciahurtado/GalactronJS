@@ -11,7 +11,6 @@ var $Level1 = Level1;
 ($traceurRuntime.createClass)(Level1, {
   preload: function() {
     $traceurRuntime.superCall(this, $Level1.prototype, "preload", []);
-    this.game.load.spritesheet('alien', 'images/galactron/enemies/alien.png', 20, 20);
     this.game.load.spritesheet('starfield1', 'images/galactron/starfield1.png', 1920, 240);
     this.game.load.spritesheet('starfield2', 'images/galactron/starfield2.png', 960, 240);
     this.game.load.spritesheet('starfield3', 'images/galactron/starfield3.png', 960, 240);
@@ -20,6 +19,7 @@ var $Level1 = Level1;
     $traceurRuntime.superCall(this, $Level1.prototype, "create", []);
     this.createBackground();
     var wave = this.addWave(this.game.width, 150, Alien1, 20, 0.3);
+    this.enemies.add(wave.enemies);
     var width = this.game.stage.bounds.width;
   },
   createBackground: function() {

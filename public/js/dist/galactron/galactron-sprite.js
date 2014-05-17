@@ -1,5 +1,5 @@
 "use strict";
-var __moduleName = "public/js/dist/galactron/sprite";
+var __moduleName = "public/js/dist/galactron/galactron-sprite";
 var GalactronSprite = function GalactronSprite() {
   $traceurRuntime.defaultSuperCall(this, $GalactronSprite.prototype, arguments);
 };
@@ -13,12 +13,15 @@ var $GalactronSprite = GalactronSprite;
   },
   kill: function() {
     $traceurRuntime.superCall(this, $GalactronSprite.prototype, "kill", []);
-    if (parentGroup != null) {
-      parentGroup.remove(this);
+    if (this.inWorld) {
+      this.deathAnimation();
     }
-    if (onScreen()) {
-      deathAnimation();
-    }
+  },
+  centerAt: function(target) {
+    this.x = target.x + Math.round(target.width * .5);
+    this.y = target.y + Math.round(target.height * .5);
+    this.x -= Math.round(this.width / 2);
+    this.y -= Math.round(this.height / 2);
   },
   hurtAnimation: function() {
     return;
@@ -28,4 +31,4 @@ var $GalactronSprite = GalactronSprite;
   }
 }, {}, Phaser.Sprite);
 
-//# sourceMappingURL=sprite.js.map
+//# sourceMappingURL=galactron-sprite.js.map

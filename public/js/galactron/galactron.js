@@ -7,8 +7,11 @@
 	var enemies; // anything that can kill the player
 	 
 	function preload() {
-		 game.load.spritesheet('player', 'images/galactron/player_ship.png', 33, 24, 3);
-		 game.load.spritesheet('laser_blue', 'images/galactron/laser_blue.png', 16, 3, 1);
+		game.load.image('player_life', 'images/galactron/player_life.png', 13, 10, 1);
+		game.load.spritesheet('player', 'images/galactron/player_ship.png', 33, 24, 3);
+		game.load.spritesheet('laser_blue', 'images/galactron/laser_blue.png', 16, 3, 1);
+		game.load.spritesheet('explosion', 'images/galactron/explosion.png', 35, 35, 6);
+		game.load.spritesheet('alien', 'images/galactron/enemies/alien.png', 20, 20);
 	}
 	 
 	function create() {

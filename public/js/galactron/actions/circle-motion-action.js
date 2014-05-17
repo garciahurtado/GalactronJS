@@ -65,16 +65,13 @@
 			var base = this.baseVelocity;
 			var angle = this.angle;
 
-			this.target.body.velocity = {
-				x: (base.x * Math.cos(angle)) - (base.y * Math.sin(angle)),
-				y: (base.y * Math.cos(angle)) - (base.x * Math.sin(angle))
-			}
+			this.target.body.velocity.x = (base.x * Math.cos(angle)) - (base.y * Math.sin(angle));
+			this.target.body.velocity.y = (base.y * Math.cos(angle)) - (base.x * Math.sin(angle));
 
 			// stop the action if we've reached the maximum number of cycles
 			if (this.circles) {
 				if ((Math.abs(angle) / this.TWO_PI) > this.circles) {
-		//			this.angle = this.circles * this.TWO_PI;
-		console.log("Circle finish");
+					this.angle = this.circles * this.TWO_PI; // correct back to max value of angle
 					this.finish();
 				}
 			}

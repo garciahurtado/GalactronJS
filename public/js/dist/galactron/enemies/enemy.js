@@ -8,6 +8,9 @@ var Enemy = function Enemy(game) {
   this.actions = new ActionChain(game, this);
   game.add.existing(this.actions);
   this.bullets = game.add.group();
+  this.explosions = game.add.group();
+  this.explosions.classType = Explosion;
+  this.explosions.createMultiple(5);
 };
 var $Enemy = Enemy;
 ($traceurRuntime.createClass)(Enemy, {
@@ -27,11 +30,9 @@ var $Enemy = Enemy;
     }
   },
   deathAnimation: function() {
-    var explosion = recycle(Explosion);
-    addSubSprite(explosion);
+    var explosion = this.explosions.getFirstDead();
+    explosion.reset();
     explosion.centerAt(this);
-    explosion.velocity.x = velocity.x;
-    explosion.velocity.y = velocity.y;
     explosion.explode();
   },
   hurtAnimation: function() {},
@@ -42,13 +43,6 @@ var $Enemy = Enemy;
   shoot: function() {
     lastShot = 0;
   },
-  createBullet: function(bulletType, x, y) {
-    var bullet = spriteFactory.recycle(bulletType);
-    bullet.reset(x, y);
-    bullet.parentGroup = bullets;
-    bullets.add(bullet);
-    return bullet;
-  },
   addWeapon: function(weapon) {
     weapon.bullets = this.bullets;
     weapon.spriteFactory = spriteFactory;
@@ -57,6 +51,6 @@ var $Enemy = Enemy;
     $traceurRuntime.superCall(this, $Enemy.prototype, "reset", [x, y, health]);
     this.init();
   }
-}, {}, Phaser.Sprite);
+}, {}, GalactronSprite);
 
 //# sourceMappingURL=enemy.js.map

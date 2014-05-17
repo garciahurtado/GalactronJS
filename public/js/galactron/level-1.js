@@ -22,15 +22,13 @@ class Level1 extends PlayState {
 		// [Embed(source = "../../../assets/terrain.png")] var groundSprite;
 		// [Embed(source = "../../../assets/data/level1_ground.csv", mimeType="application/octet-stream")] var groundTilemap;
 
-		this.game.load.spritesheet('alien', 'images/galactron/enemies/alien.png', 20, 20);
-
 		this.game.load.spritesheet('starfield1', 'images/galactron/starfield1.png', 1920, 240);
 		this.game.load.spritesheet('starfield2', 'images/galactron/starfield2.png', 960, 240);
 		this.game.load.spritesheet('starfield3', 'images/galactron/starfield3.png', 960, 240);
 	}
 
 	create() {
-		super.create();
+		super();
 		this.createBackground();
 
 		// var alien = new Alien(this.game, 20, 10);
@@ -38,6 +36,8 @@ class Level1 extends PlayState {
 		// alien.body.velocity.x = 3;
 
 		var wave = this.addWave(this.game.width, 150, Alien1, 20, 0.3);
+		this.enemies.add(wave.enemies);
+
 		//wave.body.velocity.x = -20;
 
 		// cheat :)

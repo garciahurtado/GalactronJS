@@ -16,6 +16,8 @@ var EnemyWave = function EnemyWave(game) {
   this.waveSize = waveSize;
   this.spawnDelay = spawnDelay;
   this.enemies = game.add.group();
+  this.enemies.physicsBodyType = Phaser.Physics.ARCADE;
+  this.enemies.enableBody = true;
   this.bullets = game.add.group();
   this.powerups = game.add.group();
   this.fx = game.add.group();
@@ -23,9 +25,9 @@ var EnemyWave = function EnemyWave(game) {
 var $EnemyWave = EnemyWave;
 ($traceurRuntime.createClass)(EnemyWave, {
   reset: function(x, y) {
+    $traceurRuntime.superCall(this, $EnemyWave.prototype, "reset", [x, y]);
     this.spawnTimer = 0;
     this.spawnCounter = 0;
-    this.enemies.removeAll(true);
   },
   update: function() {
     $traceurRuntime.superCall(this, $EnemyWave.prototype, "update", []);
@@ -40,21 +42,14 @@ var $EnemyWave = EnemyWave;
       enemy = new this.enemyType(this.game, 0, 0);
       this.enemies.add(enemy);
     }
-    enemy.bullets = this.bullets;
     enemy.reset(this.x, this.y);
+    enemy.bullets = this.bullets;
     enemy.player = this.player;
     enemy.wave = this;
     this.spawnTimer = 0;
     this.spawnCounter++;
   },
-  onEnemyKill: function(enemy) {
-    enemies.remove(enemy);
-    bullets.remove(enemy.bullets);
-    if (enemies.countLiving() <= 0) {
-      kill();
-      dropPowerUp(enemy.x, enemy.y);
-    }
-  },
+  onEnemyKill: function(enemy) {},
   kill: function() {
     $traceurRuntime.superCall(this, $EnemyWave.prototype, "kill", []);
     if (playState) {}

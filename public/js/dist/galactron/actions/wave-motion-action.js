@@ -26,10 +26,8 @@ var $WaveMotionAction = WaveMotionAction;
     this.currentAngle += ((this.game.time.elapsed / 1000) * this.speed);
     var base = this.baseVelocity;
     var angle = this.currentAngle;
-    this.target.body.velocity = {
-      y: (Math.sin(angle) * this.amplitudeX) + base.y,
-      x: (Math.cos(angle) * this.amplitudeY) + base.x
-    };
+    this.target.body.velocity.y = (Math.sin(angle) * this.amplitudeX) + base.y;
+    this.target.body.velocity.x = (Math.cos(angle) * this.amplitudeY) + base.x;
     if (this.repeat) {
       if ((this.currentAngle / (TWO_PI)) > this.repeat) {
         finish();

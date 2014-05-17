@@ -2,7 +2,7 @@
  * Represents a generic type of enemy which has a life meter and can be programmed to follow paths and attack the player.
  * @author Garcia
  */
-class Enemy extends Phaser.Sprite {
+class Enemy extends GalactronSprite {
 	/*
 	sparks;
 	bullets;
@@ -20,7 +20,12 @@ class Enemy extends Phaser.Sprite {
 		super(game, x, y, graphic);
 		this.actions = new ActionChain(game, this);
 		game.add.existing(this.actions);
+
 		this.bullets = game.add.group();
+
+		this.explosions = game.add.group();
+		this.explosions.classType = Explosion;
+	  this.explosions.createMultiple(5);
 	}
 	
 	/**
@@ -56,12 +61,10 @@ class Enemy extends Phaser.Sprite {
 	 * Custom death animation (explosion)
 	 */
 	deathAnimation() {
-		// locate the explosion in the middle of the sprite
-		var explosion = recycle(Explosion);
-		addSubSprite(explosion);
-		explosion.centerAt(this);
-		explosion.velocity.x = velocity.x;
-		explosion.velocity.y = velocity.y;
+		var explosion = this.explosions.getFirstDead();
+    explosion.reset(); // spawn explosion in the middle of the enemy sprite
+    explosion.centerAt(this);
+    //explosion.body.velocity = this.body.velocity;
 		explosion.explode();
 	}
 	
@@ -90,24 +93,6 @@ class Enemy extends Phaser.Sprite {
 	
 	shoot() {
 		lastShot = 0;
-	}
-	
-	
-	/**
-	 * Create a bullet from the Sprite factory, position it, and reference the bullets group from it
-	 * @param	bulletType
-	 * @param	x
-	 * @param	y
-	 * @return
-	 */
-	createBullet(bulletType,x,y)
-	{
-		var bullet = spriteFactory.recycle(bulletType);
-		bullet.reset(x, y);
-		bullet.parentGroup = bullets;
-		
-		bullets.add(bullet);
-		return bullet;
 	}
 	
 	/**

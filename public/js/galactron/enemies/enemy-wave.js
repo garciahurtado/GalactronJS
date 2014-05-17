@@ -35,6 +35,8 @@ class EnemyWave extends Phaser.Sprite {
 		this.spawnDelay = spawnDelay;
 
 		this.enemies = game.add.group();
+		this.enemies.physicsBodyType = Phaser.Physics.ARCADE;
+		this.enemies.enableBody = true;
 		//this.enemies.createMultiple(10, enemyType);
 
 		this.bullets = game.add.group();
@@ -43,10 +45,10 @@ class EnemyWave extends Phaser.Sprite {
 	}
 
 	reset(x, y) {
-		//super.reset(x, y);
+		super.reset(x, y);
 		this.spawnTimer = 0;
 		this.spawnCounter = 0;
-		this.enemies.removeAll(true);
+		//this.enemies.removeAll(true);
 	}
 
 	/**
@@ -66,16 +68,17 @@ class EnemyWave extends Phaser.Sprite {
 	 */
 	spawnEnemy() {
 		var enemy = this.enemies.getFirstExists(false);
+		
 		if (!enemy) {
 			enemy = new this.enemyType(this.game, 0, 0);
 			this.enemies.add(enemy);
 		}
+		enemy.reset(this.x, this.y);
 
 		// to avoid bullets diying with the enemy, we make the enemy use the bullet array in the wave
 		// TODO: refactor
 		enemy.bullets = this.bullets;
 
-		enemy.reset(this.x, this.y);
 		enemy.player = this.player;
 		enemy.wave = this;
 
@@ -90,13 +93,13 @@ class EnemyWave extends Phaser.Sprite {
 	 */
 	onEnemyKill(enemy) {
 		// remove enemy sprite from the group, so it doesn't continue to update after death
-		enemies.remove(enemy);
-		bullets.remove(enemy.bullets); // same for bullets
+		// enemies.remove(enemy);
+		// bullets.remove(enemy.bullets); // same for bullets
 
-		if (enemies.countLiving() <= 0) {
-			kill();
-			dropPowerUp(enemy.x, enemy.y);
-		}
+		// if (enemies.countLiving() <= 0) {
+		// 	kill();
+		// 	dropPowerUp(enemy.x, enemy.y);
+		// }
 	}
 
 	/**

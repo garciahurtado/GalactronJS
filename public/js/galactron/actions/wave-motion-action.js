@@ -63,10 +63,8 @@ class WaveMotionAction extends Action
 		
 		var base = this.baseVelocity;
 		var angle = this.currentAngle;
-		this.target.body.velocity = {
-			y: (Math.sin(angle) * this.amplitudeX) + base.y,
-			x: (Math.cos(angle) * this.amplitudeY) + base.x
-		}
+		this.target.body.velocity.y = (Math.sin(angle) * this.amplitudeX) + base.y;
+		this.target.body.velocity.x = (Math.cos(angle) * this.amplitudeY) + base.x;
 		
 		// stop the action if we've reached the maximum number of cycles
 		if (this.repeat) {

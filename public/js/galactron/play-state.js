@@ -45,8 +45,6 @@ class PlayState {
 	}
 
 	preload(){
-		this.game.load.image('player_life', 'images/galactron/player_life.png', 13, 10, 1);
-
 		// [Embed(source = "../../../assets/sounds/music.mp3")] private var music;
 		
 		// Free font from http//mfs.sub.jp/font.html
@@ -74,9 +72,6 @@ class PlayState {
 		this.playerBullets = this.game.add.group();
 		this.playerBullets.physicsBodyType = Phaser.Physics.ARCADE;
 		this.game.physics.arcade.enable(this.playerBullets);
-
-		// check whether any player bullets hit an enemy
-		// this.playerBullets.overlap(this.enemies, this.enemyHit, this);
 
 		this.player;
 		this.playerLayer = this.game.add.group();
@@ -119,9 +114,8 @@ class PlayState {
 		
 		// FlxG.play(music, 1, false);
 
-		// collission checks and callbacks
-
-	};
+ 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
+	}
 		
 	/**
 	 * Creates the lives / score display on the top layer of the screen
@@ -140,7 +134,7 @@ class PlayState {
 		// creates the score display
 		this.scoreDisplay = this.createText("00000000", 320, 5);
 		this.addStatic(this.scoreDisplay);			
-	};
+	}
 		
 	/**
 	 * Adds a certain number of points to the current score
@@ -149,7 +143,7 @@ class PlayState {
 	addScore(points) {
 		this.score += points;
 		this.scoreDisplay.text = Utils.padString(this.score.toString(), 8, 0);
-	};
+	}
 		
 	/**
 	 * Adds a sprite to the display list which is not meant to scroll, such as interface 
@@ -161,7 +155,7 @@ class PlayState {
 		// sprite.scrollFactor.x = 0;
 		// sprite.scrollFactor.y = 0;
 		this.gui.add(sprite);
-	};
+	}
 		
 	/**
 	 * The main update loop. Does collision checks between player and enemies and viceversa.
@@ -184,13 +178,19 @@ class PlayState {
 		
 		// // did we pick up a powerup?
 		// FlxG.overlap(player, powerups, powerUp);
+
+		// check whether any player bullets hit an enemy
+		// this.playerBullets.overlap(this.enemies, this.enemyHit, this);
+
+		// TODO: figure out how to do collision detection with nested groups
+		this.game.physics.arcade.overlap(this.playerBullets, this.enemies.children[0], this.enemyHit, null, this);
 		
 		if(this.player.flickering == false){ // player is not immune
 			// check whether the player was hit by enemies or enemy bullets
 			// FlxG.overlap(player, enemies, playerHit);
 			// FlxG.overlap(player, enemyBullets, playerHit);
 		}
-	};
+	}
 
 	/**
 	 * Handle the player input events and control the player sprite accordingly.
@@ -235,7 +235,7 @@ class PlayState {
 			// 	return;
 			// }
 		}
-	};
+	}
 
 	/**
 	 * Adds a new wave to the game, adds the wave's bullets to the collision array, and the wave's enemies
@@ -264,13 +264,14 @@ class PlayState {
 //		wave.spriteFactory = spriteFactory;
 		// add(wave.fx);
 		
-		// enemies.add(wave.enemies);
-		// enemyBullets.add(wave.bullets);
+		this.enemies.add(wave.enemies);
+		this.enemyBullets.add(wave.bullets);
 
-		// powerups.add(wave.powerups);
+	
+	// powerups.add(wave.powerups);
 
 		return wave;
-	};
+	}
 
 	/**
 	 * A player bullet hits an enemy
@@ -279,12 +280,12 @@ class PlayState {
 	 */
 	enemyHit(bullet, enemy) {
 		bullet.kill();
-		enemy.hurt(bullet.power);
+		enemy.damage(bullet.power);
 		
-		if (!enemy.alive) { // the enemy was killed by the bullet
-			this.addScore(enemy.score);
-		}
-	};
+		// if (!enemy.alive) { // the enemy was killed by the bullet
+		// 	this.addScore(enemy.score);
+		// }
+	}
 
 	/**
 	 * Called when any enemies, enemy bullets or objects hit the player
@@ -309,7 +310,7 @@ class PlayState {
 				this.gameOver();
 			});
 		}
-	};
+	}
 
 	/**
 	 * Called when a powerup is picked up
@@ -330,7 +331,7 @@ class PlayState {
 		if(newWeapon){
 			player.changeWeapon(newWeapon);
 		}
-	};
+	}
 
 	/**
 	 * Create the player spaceship and its initial weapons
@@ -352,7 +353,7 @@ class PlayState {
 			// prevent player from going outside the viewport bounds
 		this.player.body.collideWorldBounds = true;
 		this.playerLayer.add(this.player);
-	};
+	}
 
 	/**
 	 * Draw the Game Over screen
@@ -388,8 +389,11 @@ class PlayState {
 
 		//FlxDisplay.alphaMask(gradientSprite.pixels, txt.pixels, maskedGradient);
 		FlxGradient.overlayGradientOnBitmapData(this.player.pixels, 100, 100, gradientColors);
-	};
+	}
 
+	/**
+	 * Add dynamic text to the screen in a specified position, and return it
+	 */
 	createText(text, x, y, color, width) {
 		x = typeof x !== 'undefined' ? x : 0;
 		y = typeof y !== 'undefined' ? y : 0;
@@ -404,5 +408,5 @@ class PlayState {
 		// txt.scrollFactor.x = 0;
 		// txt.scrollFactor.y = 0;
 		return txt;
-	};
+	}
 }

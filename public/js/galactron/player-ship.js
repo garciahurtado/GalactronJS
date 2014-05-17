@@ -24,10 +24,11 @@ var PlayerShip = function(game, x, y) {
 
   // Create player bullets
   this.bullets = game.add.group();
+  this.bullets.classType = BlueLaser;
   this.bullets.enableBody = true;
   this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
 
-  this.bullets.createMultiple(50, 'laser_blue');
+  this.bullets.createMultiple(50);
   this.bullets.setAll('checkWorldBounds', true);
   this.bullets.setAll('outOfBoundsKill', true);
 
