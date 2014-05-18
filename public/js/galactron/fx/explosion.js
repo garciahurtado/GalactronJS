@@ -9,5 +9,8 @@ class Explosion extends GalactronSprite {
 
 	explode(){
 	  this.play('explode');
+	  this.events.onAnimationComplete.add(function(){
+	  	this.kill()
+	  }, this);
 	}
 }

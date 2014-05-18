@@ -7,6 +7,9 @@ var Explosion = function Explosion(game, x, y) {
 var $Explosion = Explosion;
 ($traceurRuntime.createClass)(Explosion, {explode: function() {
     this.play('explode');
+    this.events.onAnimationComplete.add(function() {
+      this.kill();
+    }, this);
   }}, {}, GalactronSprite);
 
 //# sourceMappingURL=explosion.js.map
