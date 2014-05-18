@@ -11,7 +11,7 @@ var $Alien = Alien;
 ($traceurRuntime.createClass)(Alien, {init: function() {
     $traceurRuntime.superCall(this, $Alien.prototype, "init", []);
     this.score = 100;
-    this.health = 20;
+    this.health = 10;
     this.body.velocity.x = -50;
     this.animations.play('wiggle');
   }}, {}, Enemy);

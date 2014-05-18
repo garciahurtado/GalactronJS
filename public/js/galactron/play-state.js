@@ -282,9 +282,9 @@ class PlayState {
 		bullet.kill();
 		enemy.damage(bullet.power);
 		
-		// if (!enemy.alive) { // the enemy was killed by the bullet
-		// 	this.addScore(enemy.score);
-		// }
+		if (!enemy.alive) { // the enemy was killed by the bullet
+			this.addScore(enemy.score);
+		}
 	}
 
 	/**

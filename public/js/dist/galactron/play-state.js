@@ -110,6 +110,9 @@ var PlayState = function PlayState(game) {
   enemyHit: function(bullet, enemy) {
     bullet.kill();
     enemy.damage(bullet.power);
+    if (!enemy.alive) {
+      this.addScore(enemy.score);
+    }
   },
   playerHit: function(player, enemy) {
     this.player.kill();
