@@ -18,8 +18,8 @@ var $Level1 = Level1;
   create: function() {
     $traceurRuntime.superCall(this, $Level1.prototype, "create", []);
     this.createBackground();
-    var wave = this.addWave(this.game.width, 150, Alien1, 20, 0.3);
-    this.enemies.add(wave.enemies);
+    var wave1 = this.addWave(this.game.width - 50, 150, Alien1, 20, 0.3);
+    var wave2 = this.addWave(this.game.width - 50, 100, Alien1, 20, 0.3);
     var width = this.game.stage.bounds.width;
   },
   createBackground: function() {

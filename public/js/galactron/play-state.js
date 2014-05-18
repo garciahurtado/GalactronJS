@@ -1,4 +1,5 @@
-﻿/**
+﻿
+/**
  * Base Playstate class. Provides base functionality used by all "playable" levels in the game. It
  * is meant to be extended by individual levels to provide custom functionality and level content such as:
  *
@@ -92,14 +93,8 @@ class PlayState {
 		
 		// add(createBackground());
 		// add(waves);
-		// add(enemies);
 		// add(playerBullets);
 		// add(enemyBullets);
-		// add(playerLayer);
-		// add(fx);
-		// add(powerups);
-		// add(camera);
-		//this.game.add(gui);
 		
 		this.spawnPlayer();
 		this.createHud(); // creating the HUD at the end allows it to sit on the top layer
@@ -132,7 +127,7 @@ class PlayState {
 		}
 		
 		// creates the score display
-		this.scoreDisplay = this.createText("00000000", 320, 5);
+		this.scoreDisplay = this.createText("00000000", 370, 16, 8, 'FirewireBlack', '#FFFFFF', 'right');
 		this.addStatic(this.scoreDisplay);			
 	}
 		
@@ -182,58 +177,14 @@ class PlayState {
 		// check whether any player bullets hit an enemy
 		// this.playerBullets.overlap(this.enemies, this.enemyHit, this);
 
-		// TODO: figure out how to do collision detection with nested groups
-		this.game.physics.arcade.overlap(this.playerBullets, this.enemies.children[0], this.enemyHit, null, this);
+		// TODO: figure out how to do collision detection with nested groups (this.enemies instead of this.enemies.children)
+		this.game.physics.arcade.overlap(this.playerBullets, this.enemies.children, this.enemyHit, null, this);
+		this.game.physics.arcade.overlap(this.enemies.children[0], this.player, this.playerHit, null, this);
 		
 		if(this.player.flickering == false){ // player is not immune
 			// check whether the player was hit by enemies or enemy bullets
 			// FlxG.overlap(player, enemies, playerHit);
 			// FlxG.overlap(player, enemyBullets, playerHit);
-		}
-	}
-
-	/**
-	 * Handle the player input events and control the player sprite accordingly.
-	 */
-	playerInput(elapsed)	{
-		var keys = this.controls;
-
-		if (!this.isGameOver) {
-			// up & down
-		if (keys.up.isDown){
-			this.player.moveUp(elapsed);
-		} else if(keys.down.isDown){
-			this.player.moveDown(elapsed);
-		} else {
-			this.player.stopMovement();
-		}
-
-		// left & right
-		if(keys.left.isDown){
-			this.player.moveLeft(elapsed);
-		} else if(keys.right.isDown) {
-			this.player.moveRight(elapsed);
-		}
-
-		if(keys.fire.isDown){
-			this.player.fire();
-		}
-			
-			// if (FlxG.keys.SPACE) {
-			// 	player.shoot();
-			// }
-			// if (FlxG.keys.justPressed("C")) {
-			// 	player.cycleWeapon();
-			// }
-			// // Pause game
-			// if (FlxG.keys.justPressed("P")) {
-			// 	FlxG.paused = !FlxG.paused;
-			// }
-		} else { // Game Over state
-			// if(FlxG.keys.ENTER) {
-			// 	FlxG.switchState( new Level1() );
-			// 	return;
-			// }
 		}
 	}
 
@@ -297,18 +248,65 @@ class PlayState {
 		this.player.kill();
 		
 		// update the lives counter in the HUD
-			var lostLife = this.livesSprites.members[this.lives - 1];
+		var lostLife = this.livesSprites.children[this.lives - 1];
 		lostLife.kill();
 		this.lives--;
 		
+		var sec = Phaser.Timer.SECOND;
+		var self = this;
 		if (this.lives > 0) {
-			Utils.doLater(2000, function() {
+    	this.game.time.events.add(sec * 2, function() {
 				this.spawnPlayer(); // wait 2 seconds before respawn
-			}); 
+			}, this); 
 		} else {
-			Utils.doLater(600, function() {
+			this.game.time.events.add(sec * 0.6, function() {
 				this.gameOver();
-			});
+			}, this);
+		}
+	}
+
+	/**
+	 * Handle the player input events and control the player sprite accordingly.
+	 */
+	playerInput(elapsed)	{
+		var keys = this.controls;
+
+		if (!this.isGameOver) {
+			// up & down
+		if (keys.up.isDown){
+			this.player.moveUp(elapsed);
+		} else if(keys.down.isDown){
+			this.player.moveDown(elapsed);
+		} else {
+			this.player.stopMovement();
+		}
+
+		// left & right
+		if(keys.left.isDown){
+			this.player.moveLeft(elapsed);
+		} else if(keys.right.isDown) {
+			this.player.moveRight(elapsed);
+		}
+
+		if(keys.fire.isDown){
+			this.player.fire();
+		}
+			
+			// if (FlxG.keys.SPACE) {
+			// 	player.shoot();
+			// }
+			// if (FlxG.keys.justPressed("C")) {
+			// 	player.cycleWeapon();
+			// }
+			// // Pause game
+			// if (FlxG.keys.justPressed("P")) {
+			// 	FlxG.paused = !FlxG.paused;
+			// }
+		} else { // Game Over state
+			// if(FlxG.keys.ENTER) {
+			// 	FlxG.switchState( new Level1() );
+			// 	return;
+			// }
 		}
 	}
 
@@ -359,54 +357,63 @@ class PlayState {
 	 * Draw the Game Over screen
 	 */
 	gameOver() {
-		isGameOver = true;
+		this.isGameOver = true;
+
+		var left = Math.floor(this.game.width / 2);
+		var top = Math.floor(this.game.height / 2);
+		var txt = this.createText("GAME OVER", -400, top, 24, 'Firewire', '#FFFFFF', 'center');
+		var txt2 = this.createText("GAME OVER", -400, top, 24, 'FirewireBlack', '#FF0000', 'center');
 		
-		var txt = createText("GAME OVER", -400, Math.floor(FlxG.height / 2) - 20);
-		txt.setFormat("firewire", 24);
-		var txt2 = createText("GAME OVER", -400, Math.floor(FlxG.height / 2) - 20);
-		txt2.setFormat("firewire_black", 24, 0xFFFF0000); 
-		
+	 	this.game.add.tween(txt).to( { x: left }, 200, Phaser.Easing.Linear.None, true, 0, false);
+	 	this.game.add.tween(txt2).to( { x: left }, 200, Phaser.Easing.Linear.None, true, 0, false);
+
 		// Tweener.addTween(txt, { x, time.2, transition"linear" } );
 		// Tweener.addTween(txt2, { x, time.2, transition"linear" } );
 		
-		var moreTxt = createText("PRESS ENTER TO RESTART", 300, 200);
+		var moreTxt = this.createText("PRESS ENTER TO RESTART", 500, 200);
+	 	this.game.add.tween(moreTxt).to( { x: left }, 200, Phaser.Easing.Linear.None, true, 0, false);
+
 	//		Tweener.addTween(moreTxt, { x, time.2, transition"linear" } );
 		
-		var gradientColors = FlxGradient.createGradientArray(1, 20, [ 0xff0000ff, 0xffff00ff, 0xFFFFFF00, 0xFF00FF00 ], 1);
-		var gradientSprite = FlxGradient.createGradientFlxSprite(100, 100, [0xffff0000, 0xffffff00], 2 ); 
-		gradientSprite.scrollFactor.x = 0;
-		gradientSprite.scrollFactor.y = 0;
-		gradientSprite.x = 0;
-		gradientSprite.y = 0;
+		// var gradientColors = FlxGradient.createGradientArray(1, 20, [ 0xff0000ff, 0xffff00ff, 0xFFFFFF00, 0xFF00FF00 ], 1);
+		// var gradientSprite = FlxGradient.createGradientFlxSprite(100, 100, [0xffff0000, 0xffffff00], 2 ); 
+		// gradientSprite.scrollFactor.x = 0;
+		// gradientSprite.scrollFactor.y = 0;
+		// gradientSprite.x = 0;
+		// gradientSprite.y = 0;
 		//var grad = FlxGradient.overlayGradientOnBitmapData(txt.pixels, 50, 50, [0xFFFF0000, 0xFFFFFF00], 100);
 		//txt2.pixels = grad;
 		
 		
 		//	The final display
-		var maskedGradient = new FlxSprite(100, 100);
-		maskedGradient.scrollFactor = txt2.scrollFactor;
+		// var maskedGradient = new FlxSprite(100, 100);
+		// maskedGradient.scrollFactor = txt2.scrollFactor;
 		//add(maskedGradient);
 
 		//FlxDisplay.alphaMask(gradientSprite.pixels, txt.pixels, maskedGradient);
-		FlxGradient.overlayGradientOnBitmapData(this.player.pixels, 100, 100, gradientColors);
+		//FlxGradient.overlayGradientOnBitmapData(this.player.pixels, 100, 100, gradientColors);
 	}
 
 	/**
 	 * Add dynamic text to the screen in a specified position, and return it
 	 */
-	createText(text, x, y, color, width) {
-		x = typeof x !== 'undefined' ? x : 0;
-		y = typeof y !== 'undefined' ? y : 0;
-		color = typeof color !== 'undefined' ? color : 0xFFFFFFFF;
-		width = typeof width !== 'undefined' ? width : this.game.world.width;
+	createText(text, x, y, size = 8, font = 'FirewireBlack', color = "#FFFFFF", align = 'center') {
+		// width = typeof width !== 'undefined' ? width : this.game.world.width;
+
 		
 		//var txt = new FlxText(x, y, FlxG.width, text);
-		var style = { font: "8px FirewireBlack", fill: "#FFFFFF", align: "center" };
-	  var txt = this.game.add.text(x, y, text, style);
-	  txt.align = 'right';
+		var style = { font: size + "px " + font, fill: color, align: align};
 
-		// txt.scrollFactor.x = 0;
-		// txt.scrollFactor.y = 0;
+	  var txt = this.game.add.text(x, y, text, style);
+
+	 // txt.align = 'right';
+
+		if(align == 'center'){
+			txt.anchor.setTo(0.5, 0.5);
+		} else if(align == 'right'){
+			txt.anchor.setTo(1, 1);
+		}
+
 		return txt;
 	}
 }

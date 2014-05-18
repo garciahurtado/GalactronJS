@@ -5,8 +5,6 @@ var Enemy = function Enemy(game) {
   var y = arguments[2] !== (void 0) ? arguments[2] : 0;
   var graphic = arguments[3];
   $traceurRuntime.superCall(this, $Enemy.prototype, "constructor", [game, x, y, graphic]);
-  this.actions = new ActionChain(game, this);
-  game.add.existing(this.actions);
   this.bullets = game.add.group();
   this.explosions = game.add.group();
   this.explosions.classType = Explosion;
@@ -15,10 +13,8 @@ var Enemy = function Enemy(game) {
 var $Enemy = Enemy;
 ($traceurRuntime.createClass)(Enemy, {
   init: function() {
+    $traceurRuntime.superCall(this, $Enemy.prototype, "init", []);
     this.game.physics.enable(this, Phaser.Physics.ARCADE);
-    if (this.actions) {
-      this.actions.start();
-    }
     this.lastShot = 0;
     this.score = 0;
     this.offscreenLifespan = 2;
@@ -35,7 +31,9 @@ var $Enemy = Enemy;
     explosion.centerAt(this);
     explosion.explode();
   },
-  hurtAnimation: function() {},
+  hurtAnimation: function() {
+    deathAnimation();
+  },
   update: function() {
     $traceurRuntime.superCall(this, $Enemy.prototype, "update", []);
     this.lastShot += this.game.time.delta;

@@ -1,5 +1,12 @@
 (function () {
-	var game = new Phaser.Game(380, 260, Phaser.CANVAS, 'canvasWrapper', { preload: preload, create: create, update: update });
+	var game = new Phaser.Game(
+		380,
+		260,
+		Phaser.CANVAS,
+		'canvasWrapper',
+		{ preload: preload, create: create, update: update }
+	);
+
 	var controls; // keep track of the cursor keys
 
 	var player; // the main player sprite

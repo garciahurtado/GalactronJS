@@ -67,12 +67,14 @@ class EnemyWave extends Phaser.Sprite {
 	 * to the display list, and provides it with a reference to the player.
 	 */
 	spawnEnemy() {
-		var enemy = this.enemies.getFirstExists(false);
+		var enemy = this.enemies.getFirstDead(false);
 		
 		if (!enemy) {
+			//console.warn("Had to create new enemy!");
 			enemy = new this.enemyType(this.game, 0, 0);
 			this.enemies.add(enemy);
 		}
+		enemy.revive();
 		enemy.reset(this.x, this.y);
 
 		// to avoid bullets diying with the enemy, we make the enemy use the bullet array in the wave

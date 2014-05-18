@@ -28,6 +28,17 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'Firewire';
+    src: url('/fonts/firewire-webfont.eot');
+    src: url('/fonts/firewire-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/fonts/firewire-webfont.woff') format('woff'),
+         url('/fonts/firewire-webfont.ttf') format('truetype'),
+         url('/fonts/firewire-webfont.svg#m47_fire_wire_blackregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
 	font-family: "Verdana", sans-serif;
 	font-size: 16px;
@@ -88,6 +99,9 @@ canvas {
   font-size: 1px;
 }
 
+.Firewire {
+  font-family: "Firewire";
+}
 .FirewireBlack {
   font-family: "FirewireBlack";
 }

@@ -1,4 +1,6 @@
 /**
+ * 5 Frame explosion sprite. It kills itself on animation end
+ * 
  * @author Garcia Hurtado
  */
 class Explosion extends GalactronSprite {
@@ -9,6 +11,7 @@ class Explosion extends GalactronSprite {
 
 	explode(){
 	  this.play('explode');
+	  
 	  this.events.onAnimationComplete.add(function(){
 	  	this.kill()
 	  }, this);

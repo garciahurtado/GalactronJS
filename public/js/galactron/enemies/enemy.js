@@ -15,63 +15,56 @@ class Enemy extends GalactronSprite {
 	[Embed(source="../../../../assets/sounds/dent.mp3")] dentSound;
 	*/
 
-	constructor(game, x = 0, y = 0, graphic) 
-	{
+	constructor(game, x = 0, y = 0, graphic) {
 		super(game, x, y, graphic);
-		this.actions = new ActionChain(game, this);
-		game.add.existing(this.actions);
 
 		this.bullets = game.add.group();
 
 		this.explosions = game.add.group();
 		this.explosions.classType = Explosion;
-	  this.explosions.createMultiple(5);
+		this.explosions.createMultiple(5);
 	}
-	
+
 	/**
 	 * Called automatically from parent constructor when the object is instantiated and when it is recycled.
 	 * It enables Physics on the sprite, and starts the actions chain.
 	 */
-	init() 
-	{
+	init() {
+		super.init();
 		this.game.physics.enable(this, Phaser.Physics.ARCADE);
-
-		if(this.actions){
-			this.actions.start();
-		}
 
 		this.lastShot = 0;
 		this.score = 0;
 		this.offscreenLifespan = 2;
 	}
-	
+
 	/**
 	 * If this enemy belongs to a wave, notify the wave that this enemy has died
 	 */
-	kill() 
-	{
+	kill() {
 		super.kill();
-		
+
 		if (this.wave) {
 			this.wave.onEnemyKill(this);
 		}
 	}
-	
+
 	/**
 	 * Custom death animation (explosion)
 	 */
 	deathAnimation() {
 		var explosion = this.explosions.getFirstDead();
-    explosion.reset(); // spawn explosion in the middle of the enemy sprite
-    explosion.centerAt(this);
-    //explosion.body.velocity = this.body.velocity;
+		explosion.reset(); // spawn explosion in the middle of the enemy sprite
+		explosion.centerAt(this);
 		explosion.explode();
 	}
-	
+
 	/**
 	 * Custom hurt animation. Plays a sound and flashes the sprite with a quick white fill
 	 */
 	hurtAnimation() {
+		deathAnimation();
+
 		//FlxG.play(dentSound);
 		// this.addColorFill(0xFFFFFF);
 		// self = this;
@@ -85,22 +78,21 @@ class Enemy extends GalactronSprite {
 		// 	self.removeColorFill(); 
 		// });
 	}
-	
+
 	update() {
 		super.update();
 		this.lastShot += this.game.time.delta;
 	}
-	
+
 	shoot() {
 		lastShot = 0;
 	}
-	
+
 	/**
 	 * Add the bullets from this weapon to the enemy's bullet list and a reference to its spriteFactory
 	 * @param	weapon
 	 */
-	addWeapon(weapon)
-	{
+	addWeapon(weapon) {
 		weapon.bullets = this.bullets;
 		weapon.spriteFactory = spriteFactory;
 	}
@@ -110,4 +102,3 @@ class Enemy extends GalactronSprite {
 		this.init();
 	}
 }
-

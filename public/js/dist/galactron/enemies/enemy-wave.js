@@ -37,11 +37,12 @@ var $EnemyWave = EnemyWave;
     }
   },
   spawnEnemy: function() {
-    var enemy = this.enemies.getFirstExists(false);
+    var enemy = this.enemies.getFirstDead(false);
     if (!enemy) {
       enemy = new this.enemyType(this.game, 0, 0);
       this.enemies.add(enemy);
     }
+    enemy.revive();
     enemy.reset(this.x, this.y);
     enemy.bullets = this.bullets;
     enemy.player = this.player;

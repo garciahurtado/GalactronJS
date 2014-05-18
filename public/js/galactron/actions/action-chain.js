@@ -75,7 +75,7 @@ class ActionChain extends Action {
 	}
 
 	/**
-	 * Start the chain. If the action chain is currently stopped, it starts the first action in the chain. Otherwise, it has no effect
+	 * Start the chain from the very beginning
 	 */
 	start() {
 		this.reset();

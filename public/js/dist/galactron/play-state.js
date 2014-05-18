@@ -55,7 +55,7 @@ var PlayState = function PlayState(game) {
       this.livesSprites.add(life);
       offset += 18;
     }
-    this.scoreDisplay = this.createText("00000000", 320, 5);
+    this.scoreDisplay = this.createText("00000000", 370, 16, 8, 'FirewireBlack', '#FFFFFF', 'right');
     this.addStatic(this.scoreDisplay);
   },
   addScore: function(points) {
@@ -70,28 +70,9 @@ var PlayState = function PlayState(game) {
     if (this.isGameOver) {
       return;
     }
-    this.game.physics.arcade.overlap(this.playerBullets, this.enemies.children[0], this.enemyHit, null, this);
+    this.game.physics.arcade.overlap(this.playerBullets, this.enemies.children, this.enemyHit, null, this);
+    this.game.physics.arcade.overlap(this.enemies.children[0], this.player, this.playerHit, null, this);
     if (this.player.flickering == false) {}
-  },
-  playerInput: function(elapsed) {
-    var keys = this.controls;
-    if (!this.isGameOver) {
-      if (keys.up.isDown) {
-        this.player.moveUp(elapsed);
-      } else if (keys.down.isDown) {
-        this.player.moveDown(elapsed);
-      } else {
-        this.player.stopMovement();
-      }
-      if (keys.left.isDown) {
-        this.player.moveLeft(elapsed);
-      } else if (keys.right.isDown) {
-        this.player.moveRight(elapsed);
-      }
-      if (keys.fire.isDown) {
-        this.player.fire();
-      }
-    } else {}
   },
   addWave: function(x, y, enemyType, count, delay) {
     delay = typeof delay !== 'undefined' ? delay : 0;
@@ -116,18 +97,40 @@ var PlayState = function PlayState(game) {
   },
   playerHit: function(player, enemy) {
     this.player.kill();
-    var lostLife = this.livesSprites.members[this.lives - 1];
+    var lostLife = this.livesSprites.children[this.lives - 1];
     lostLife.kill();
     this.lives--;
+    var sec = Phaser.Timer.SECOND;
+    var self = this;
     if (this.lives > 0) {
-      Utils.doLater(2000, function() {
+      this.game.time.events.add(sec * 2, function() {
         this.spawnPlayer();
-      });
+      }, this);
     } else {
-      Utils.doLater(600, function() {
+      this.game.time.events.add(sec * 0.6, function() {
         this.gameOver();
-      });
+      }, this);
     }
+  },
+  playerInput: function(elapsed) {
+    var keys = this.controls;
+    if (!this.isGameOver) {
+      if (keys.up.isDown) {
+        this.player.moveUp(elapsed);
+      } else if (keys.down.isDown) {
+        this.player.moveDown(elapsed);
+      } else {
+        this.player.stopMovement();
+      }
+      if (keys.left.isDown) {
+        this.player.moveLeft(elapsed);
+      } else if (keys.right.isDown) {
+        this.player.moveRight(elapsed);
+      }
+      if (keys.fire.isDown) {
+        this.player.fire();
+      }
+    } else {}
   },
   powerUp: function(ship, powerup) {
     var explosion = new LaserExplosion(powerup.x, powerup.y);
@@ -147,34 +150,32 @@ var PlayState = function PlayState(game) {
     this.playerLayer.add(this.player);
   },
   gameOver: function() {
-    isGameOver = true;
-    var txt = createText("GAME OVER", -400, Math.floor(FlxG.height / 2) - 20);
-    txt.setFormat("firewire", 24);
-    var txt2 = createText("GAME OVER", -400, Math.floor(FlxG.height / 2) - 20);
-    txt2.setFormat("firewire_black", 24, 0xFFFF0000);
-    var moreTxt = createText("PRESS ENTER TO RESTART", 300, 200);
-    var gradientColors = FlxGradient.createGradientArray(1, 20, [0xff0000ff, 0xffff00ff, 0xFFFFFF00, 0xFF00FF00], 1);
-    var gradientSprite = FlxGradient.createGradientFlxSprite(100, 100, [0xffff0000, 0xffffff00], 2);
-    gradientSprite.scrollFactor.x = 0;
-    gradientSprite.scrollFactor.y = 0;
-    gradientSprite.x = 0;
-    gradientSprite.y = 0;
-    var maskedGradient = new FlxSprite(100, 100);
-    maskedGradient.scrollFactor = txt2.scrollFactor;
-    FlxGradient.overlayGradientOnBitmapData(this.player.pixels, 100, 100, gradientColors);
+    this.isGameOver = true;
+    var left = Math.floor(this.game.width / 2);
+    var top = Math.floor(this.game.height / 2);
+    var txt = this.createText("GAME OVER", -400, top, 24, 'Firewire', '#FFFFFF', 'center');
+    var txt2 = this.createText("GAME OVER", -400, top, 24, 'FirewireBlack', '#FF0000', 'center');
+    this.game.add.tween(txt).to({x: left}, 200, Phaser.Easing.Linear.None, true, 0, false);
+    this.game.add.tween(txt2).to({x: left}, 200, Phaser.Easing.Linear.None, true, 0, false);
+    var moreTxt = this.createText("PRESS ENTER TO RESTART", 500, 200);
+    this.game.add.tween(moreTxt).to({x: left}, 200, Phaser.Easing.Linear.None, true, 0, false);
   },
-  createText: function(text, x, y, color, width) {
-    x = typeof x !== 'undefined' ? x : 0;
-    y = typeof y !== 'undefined' ? y : 0;
-    color = typeof color !== 'undefined' ? color : 0xFFFFFFFF;
-    width = typeof width !== 'undefined' ? width : this.game.world.width;
+  createText: function(text, x, y) {
+    var size = arguments[3] !== (void 0) ? arguments[3] : 8;
+    var font = arguments[4] !== (void 0) ? arguments[4] : 'FirewireBlack';
+    var color = arguments[5] !== (void 0) ? arguments[5] : "#FFFFFF";
+    var align = arguments[6] !== (void 0) ? arguments[6] : 'center';
     var style = {
-      font: "8px FirewireBlack",
-      fill: "#FFFFFF",
-      align: "center"
+      font: size + "px " + font,
+      fill: color,
+      align: align
     };
     var txt = this.game.add.text(x, y, text, style);
-    txt.align = 'right';
+    if (align == 'center') {
+      txt.anchor.setTo(0.5, 0.5);
+    } else if (align == 'right') {
+      txt.anchor.setTo(1, 1);
+    }
     return txt;
   }
 }, {});
