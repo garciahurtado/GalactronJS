@@ -103,13 +103,27 @@ class PlayState {
 		//var fpsCounter = new FrameRateCounter(4, 200);
 		//addStatic(fpsCounter);
 
-		// create controls
-	 	this.controls = this.game.input.keyboard.createCursorKeys();
-	 	this.controls.fire = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-		
+		this.enableInput();
+				
 		// FlxG.play(music, 1, false);
 
  		this.game.physics.startSystem(Phaser.Physics.ARCADE);
+	}
+
+	/**
+	 * Wire up the keyboard controls 
+	 */
+	enableInput() {
+		// create controls
+	 	this.controls = this.game.input.keyboard.createCursorKeys();
+	 	this.controls.fire = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+	 	// Add Pause key
+	 	this.controls.pause = this.game.input.keyboard.addKey(Phaser.Keyboard.P);
+	 	this.controls.pause.onDown.add(function(){
+	 		console.log("Pause");
+		  this.game.paused = !this.game.paused;
+		}, this);
 	}
 		
 	/**
@@ -272,41 +286,40 @@ class PlayState {
 		var keys = this.controls;
 
 		if (!this.isGameOver) {
+			// Keys below are only valid when player is alive
+			if(!this.player.exists){
+				return false;
+			}
+
 			// up & down
-		if (keys.up.isDown){
-			this.player.moveUp(elapsed);
-		} else if(keys.down.isDown){
-			this.player.moveDown(elapsed);
-		} else {
-			this.player.stopMovement();
-		}
+			if (keys.up.isDown){
+				this.player.moveUp(elapsed);
+			} else if(keys.down.isDown){
+				this.player.moveDown(elapsed);
+			} else {
+				this.player.stopMovement();
+			}
 
-		// left & right
-		if(keys.left.isDown){
-			this.player.moveLeft(elapsed);
-		} else if(keys.right.isDown) {
-			this.player.moveRight(elapsed);
-		}
+			// left & right
+			if(keys.left.isDown){
+				this.player.moveLeft(elapsed);
+			} else if(keys.right.isDown) {
+				this.player.moveRight(elapsed);
+			}
 
-		if(keys.fire.isDown){
-			this.player.fire();
-		}
+			if(keys.fire.isDown){
+				this.player.fire();
+			}
 			
-			// if (FlxG.keys.SPACE) {
-			// 	player.shoot();
-			// }
 			// if (FlxG.keys.justPressed("C")) {
 			// 	player.cycleWeapon();
 			// }
-			// // Pause game
-			// if (FlxG.keys.justPressed("P")) {
-			// 	FlxG.paused = !FlxG.paused;
-			// }
+
 		} else { // Game Over state
-			// if(FlxG.keys.ENTER) {
-			// 	FlxG.switchState( new Level1() );
-			// 	return;
-			// }
+			if(keys.enter.isDown) {
+				game.state.start('Level1');
+				return;
+			}
 		}
 	}
 

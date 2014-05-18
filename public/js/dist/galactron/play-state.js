@@ -44,9 +44,17 @@ var PlayState = function PlayState(game) {
     this.livesSprites = this.game.add.group();
     this.spawnPlayer();
     this.createHud();
+    this.enableInput();
+    this.game.physics.startSystem(Phaser.Physics.ARCADE);
+  },
+  enableInput: function() {
     this.controls = this.game.input.keyboard.createCursorKeys();
     this.controls.fire = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-    this.game.physics.startSystem(Phaser.Physics.ARCADE);
+    this.controls.pause = this.game.input.keyboard.addKey(Phaser.Keyboard.P);
+    this.controls.pause.onDown.add(function() {
+      console.log("Pause");
+      this.game.paused = !this.game.paused;
+    }, this);
   },
   createHud: function() {
     var offset = 0;
@@ -115,6 +123,9 @@ var PlayState = function PlayState(game) {
   playerInput: function(elapsed) {
     var keys = this.controls;
     if (!this.isGameOver) {
+      if (!this.player.exists) {
+        return false;
+      }
       if (keys.up.isDown) {
         this.player.moveUp(elapsed);
       } else if (keys.down.isDown) {
@@ -130,7 +141,12 @@ var PlayState = function PlayState(game) {
       if (keys.fire.isDown) {
         this.player.fire();
       }
-    } else {}
+    } else {
+      if (keys.enter.isDown) {
+        game.state.start('Level1');
+        return;
+      }
+    }
   },
   powerUp: function(ship, powerup) {
     var explosion = new LaserExplosion(powerup.x, powerup.y);
