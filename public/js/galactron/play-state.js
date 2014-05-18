@@ -117,11 +117,11 @@ class PlayState {
 		// create controls
 	 	this.controls = this.game.input.keyboard.createCursorKeys();
 	 	this.controls.fire = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+	 	this.controls.enter = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
 
 	 	// Add Pause key
 	 	this.controls.pause = this.game.input.keyboard.addKey(Phaser.Keyboard.P);
 	 	this.controls.pause.onDown.add(function(){
-	 		console.log("Pause");
 		  this.game.paused = !this.game.paused;
 		}, this);
 	}
@@ -193,10 +193,10 @@ class PlayState {
 
 		// TODO: figure out how to do collision detection with nested groups (this.enemies instead of this.enemies.children)
 		this.game.physics.arcade.overlap(this.playerBullets, this.enemies.children, this.enemyHit, null, this);
-		this.game.physics.arcade.overlap(this.enemies.children[0], this.player, this.playerHit, null, this);
 		
-		if(this.player.flickering == false){ // player is not immune
-			// check whether the player was hit by enemies or enemy bullets
+		// check whether the player was hit by enemies or enemy bullets
+		if(!this.player.flickering){ // player is not immune
+			this.game.physics.arcade.overlap(this.enemies.children[0], this.player, this.playerHit, null, this);
 			// FlxG.overlap(player, enemies, playerHit);
 			// FlxG.overlap(player, enemyBullets, playerHit);
 		}
@@ -317,7 +317,7 @@ class PlayState {
 
 		} else { // Game Over state
 			if(keys.enter.isDown) {
-				game.state.start('Level1');
+				this.game.state.start('Level1');
 				return;
 			}
 		}
@@ -349,8 +349,9 @@ class PlayState {
 	 */
 	spawnPlayer() {
 		this.player = new PlayerShip(this.game, 0, 100);
-	//	player.flicker(3);
 		this.player.body.velocity.x = 100;
+		this.player.flicker(3);
+
 		// player.enemies = enemies; 
 		//player.spriteFactory = spriteFactory;
 		

@@ -50,9 +50,9 @@ var PlayState = function PlayState(game) {
   enableInput: function() {
     this.controls = this.game.input.keyboard.createCursorKeys();
     this.controls.fire = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    this.controls.enter = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
     this.controls.pause = this.game.input.keyboard.addKey(Phaser.Keyboard.P);
     this.controls.pause.onDown.add(function() {
-      console.log("Pause");
       this.game.paused = !this.game.paused;
     }, this);
   },
@@ -79,8 +79,9 @@ var PlayState = function PlayState(game) {
       return;
     }
     this.game.physics.arcade.overlap(this.playerBullets, this.enemies.children, this.enemyHit, null, this);
-    this.game.physics.arcade.overlap(this.enemies.children[0], this.player, this.playerHit, null, this);
-    if (this.player.flickering == false) {}
+    if (!this.player.flickering) {
+      this.game.physics.arcade.overlap(this.enemies.children[0], this.player, this.playerHit, null, this);
+    }
   },
   addWave: function(x, y, enemyType, count, delay) {
     delay = typeof delay !== 'undefined' ? delay : 0;
@@ -143,7 +144,7 @@ var PlayState = function PlayState(game) {
       }
     } else {
       if (keys.enter.isDown) {
-        game.state.start('Level1');
+        this.game.state.start('Level1');
         return;
       }
     }
@@ -161,6 +162,7 @@ var PlayState = function PlayState(game) {
   spawnPlayer: function() {
     this.player = new PlayerShip(this.game, 0, 100);
     this.player.body.velocity.x = 100;
+    this.player.flicker(3);
     this.playerBullets = this.player.bullets;
     this.player.body.collideWorldBounds = true;
     this.playerLayer.add(this.player);

@@ -3,6 +3,32 @@ class GalactronSprite extends Phaser.Sprite {
 		super(game, x, y, graphic);
 		this.actions = new ActionChain(game, this);
 		game.add.existing(this.actions);		
+
+		this.flickering = false;
+	}
+
+	/**
+	 * Flicker the sprite quickly for a certain amount of time, by turning the visibility on and off
+	 */
+	flicker(seconds = 0){
+		this.flickering = true;
+
+		if(seconds){
+			this.game.time.events.add(Phaser.Timer.SECOND * seconds, function() {
+				this.flickering = false;
+				this.alpha = 1;
+			}, this);
+		}
+	}
+
+	/**
+	 * Override to add flickering functionality
+	 */
+	update(){
+		super.update();
+		if(this.flickering){
+			this.alpha = this.alpha ? 0 : 1;
+		}
 	}
 
 	/**

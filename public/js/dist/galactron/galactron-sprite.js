@@ -7,9 +7,26 @@ var GalactronSprite = function GalactronSprite(game) {
   $traceurRuntime.superCall(this, $GalactronSprite.prototype, "constructor", [game, x, y, graphic]);
   this.actions = new ActionChain(game, this);
   game.add.existing(this.actions);
+  this.flickering = false;
 };
 var $GalactronSprite = GalactronSprite;
 ($traceurRuntime.createClass)(GalactronSprite, {
+  flicker: function() {
+    var seconds = arguments[0] !== (void 0) ? arguments[0] : 0;
+    this.flickering = true;
+    if (seconds) {
+      this.game.time.events.add(Phaser.Timer.SECOND * seconds, function() {
+        this.flickering = false;
+        this.alpha = 1;
+      }, this);
+    }
+  },
+  update: function() {
+    $traceurRuntime.superCall(this, $GalactronSprite.prototype, "update", []);
+    if (this.flickering) {
+      this.alpha = this.alpha ? 0 : 1;
+    }
+  },
   centerAt: function(target) {
     this.x = target.x + Math.round(target.width * .5);
     this.y = target.y + Math.round(target.height * .5);
