@@ -78,3 +78,17 @@ canvas {
 	-ms-interpolation-mode: nearest-neighbor;
 }
 
+/* Font preloading divs: In order to ensure the webfonts are ready by the time canvas is ready to used them,
+ * we force a preloading directly within a HTML tag before rendering the canvas element
+ */
+.fontPreload {
+  position: absolute;
+  float: left;
+  left: -100px;
+  font-size: 1px;
+}
+
+.FirewireBlack {
+  font-family: "FirewireBlack";
+}
+

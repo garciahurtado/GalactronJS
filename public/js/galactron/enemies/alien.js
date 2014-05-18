@@ -16,7 +16,7 @@ class Alien extends Enemy {
 		super.init();
 
 		this.score = 100;
-		this.health = 5;
+		this.health = 20;
 		this.body.velocity.x = -50;
 
 		// randomFrame(); // add a little interest to the aliens
