@@ -27,11 +27,10 @@ class Enemy extends GalactronSprite {
 
 	/**
 	 * Called automatically from parent constructor when the object is instantiated and when it is recycled.
-	 * It enables Physics on the sprite, and starts the actions chain.
+	 * It starts the actions chain.
 	 */
 	init() {
 		super.init();
-		this.game.physics.enable(this, Phaser.Physics.ARCADE);
 
 		this.lastShot = 0;
 		this.score = 0;

@@ -14,7 +14,6 @@ var $Enemy = Enemy;
 ($traceurRuntime.createClass)(Enemy, {
   init: function() {
     $traceurRuntime.superCall(this, $Enemy.prototype, "init", []);
-    this.game.physics.enable(this, Phaser.Physics.ARCADE);
     this.lastShot = 0;
     this.score = 0;
     this.offscreenLifespan = 2;

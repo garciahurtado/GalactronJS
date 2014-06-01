@@ -19,6 +19,8 @@
 		game.load.spritesheet('laser_blue', 'images/galactron/laser_blue.png', 16, 3, 1);
 		game.load.spritesheet('explosion', 'images/galactron/explosion.png', 35, 35, 6);
 		game.load.spritesheet('alien', 'images/galactron/enemies/alien.png', 20, 20);
+		game.load.spritesheet('white_snake_head', 'images/galactron/enemies/white_snake_head.png', 19, 24);
+		game.load.spritesheet('white_snake_body', 'images/galactron/enemies/white_snake_body.png', 16, 16);
 	}
 	 
 	function create() {
@@ -72,31 +74,6 @@
 	}
 	 
 	function update(game) {
-		handleInput(game.time.elapsed);
-	}
-
-	/**
-	 * Process user input (using the arrow keys)
-	 */
-	function handleInput(elapsed){
-		// up & down
-		if (controls.up.isDown){
-			player.moveUp(elapsed);
-		} else if(controls.down.isDown){
-			player.moveDown(elapsed);
-		} else {
-			player.stopMovement();
-		}
-
-		// left & right
-		if(controls.left.isDown){
-			player.moveLeft(elapsed);
-		} else if(controls.right.isDown) {
-			player.moveRight(elapsed);
-		}
-
-		if(controls.fire.isDown){
-			player.fire();
-		}
+		// Nothing actually happens here
 	}
 })();

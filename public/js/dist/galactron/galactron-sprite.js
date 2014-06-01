@@ -4,10 +4,12 @@ var GalactronSprite = function GalactronSprite(game) {
   var x = arguments[1] !== (void 0) ? arguments[1] : 0;
   var y = arguments[2] !== (void 0) ? arguments[2] : 0;
   var graphic = arguments[3];
+  this.math = game.math;
   $traceurRuntime.superCall(this, $GalactronSprite.prototype, "constructor", [game, x, y, graphic]);
   this.actions = new ActionChain(game, this);
   game.add.existing(this.actions);
   this.flickering = false;
+  this.game.physics.enable(this, Phaser.Physics.ARCADE);
 };
 var $GalactronSprite = GalactronSprite;
 ($traceurRuntime.createClass)(GalactronSprite, {
@@ -26,12 +28,6 @@ var $GalactronSprite = GalactronSprite;
     if (this.flickering) {
       this.alpha = this.alpha ? 0 : 1;
     }
-  },
-  centerAt: function(target) {
-    this.x = target.x + Math.round(target.width * .5);
-    this.y = target.y + Math.round(target.height * .5);
-    this.x -= Math.round(this.width / 2);
-    this.y -= Math.round(this.height / 2);
   },
   reset: function(x, y, health) {
     $traceurRuntime.superCall(this, $GalactronSprite.prototype, "reset", [x, y, health]);
@@ -59,6 +55,18 @@ var $GalactronSprite = GalactronSprite;
   },
   deathAnimation: function() {
     return;
+  },
+  angleTo: function(target) {
+    return this.math.angleBetweenPoints(this, target);
+  },
+  distanceTo: function(target) {
+    return this.math.distance(this.x, this.y, target.x, target.y);
+  },
+  centerAt: function(target) {
+    this.x = target.x + Math.round(target.width * .5);
+    this.y = target.y + Math.round(target.height * .5);
+    this.x -= Math.round(this.width / 2);
+    this.y -= Math.round(this.height / 2);
   }
 }, {}, Phaser.Sprite);
 

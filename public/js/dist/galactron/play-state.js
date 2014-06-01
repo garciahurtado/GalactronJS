@@ -49,7 +49,7 @@ var PlayState = function PlayState(game) {
   },
   enableInput: function() {
     this.controls = this.game.input.keyboard.createCursorKeys();
-    this.controls.fire = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    this.controls.fire = this.game.input.keyboard.addKey(Phaser.Keyboard.CONTROL);
     this.controls.enter = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
     this.controls.pause = this.game.input.keyboard.addKey(Phaser.Keyboard.P);
     this.controls.pause.onDown.add(function() {
