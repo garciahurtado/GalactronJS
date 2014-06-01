@@ -9,7 +9,6 @@ var GalactronSprite = function GalactronSprite(game) {
   this.actions = new ActionChain(game, this);
   game.add.existing(this.actions);
   this.flickering = false;
-  this.game.physics.enable(this, Phaser.Physics.ARCADE);
 };
 var $GalactronSprite = GalactronSprite;
 ($traceurRuntime.createClass)(GalactronSprite, {

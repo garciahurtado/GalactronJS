@@ -5,13 +5,8 @@ class Snake extends Enemy {
 	constructor(game, x, y) {
 		super(game, x, y);
 
-		this.partDistance = 15; // separation between the center of the segments
-		this.game.physics.enable(this, Phaser.Physics.ARCADE);
-
+		this.partDistance = 11; // separation between the center of the segments
 		this.createParts();
-
-		this.prevPos; // keep track of the position the enemy had in the last frame
-		this.parts;
 	}
 
 	init() {
@@ -45,6 +40,15 @@ class Snake extends Enemy {
 		// console.log("Remembering " + this.prevPos);
 	}
 
+	kill(){
+		super();
+		var count = this.parts.length;
+		while(i=0; i<count; i++){
+			this.parts.getAt(i).kill();
+			this.parts.getAt(i).destroy();
+		}
+	}
+
 	/**
 	 * This enemy is made up of multiple subprites representing the head and body parts.
 	 * Create them all at once and add them to the same group in the reverse order that they 
@@ -52,9 +56,8 @@ class Snake extends Enemy {
 	 */
 	createParts() {
 		this.parts = this.game.add.group();
-		//this.addChild(this.parts);
+
 		var head = new SnakeHead(this.game, this.x-1, this.y); // offset the head a tiny bit respect to the other body parts
-		//this.addChild(head);
 		head.leader = this;
 		this.parts.add(head); 
 
@@ -62,7 +65,7 @@ class Snake extends Enemy {
 		var nextLeader = head;
 
 		for(var i = 0; i < num; i++){
-			var part = new SnakeBody(this.game, head.x + (i+1) * this.partDistance, 4);
+			var part = new SnakeBody(this.game, head.x + (i+1) * this.partDistance, 20);
 			part.leaderDist = this.partDistance;
 			this.game.physics.enable(part, Phaser.Physics.ARCADE);
 			part.leader = nextLeader;
@@ -73,6 +76,7 @@ class Snake extends Enemy {
 		// Add each body part to the display list in reverse order they were created
 		this.parts.forEach(function(part) {
 			this.parts.sendToBack(part);
+			part.reset(this.x, this.y);
 		}, this);
 	}
 

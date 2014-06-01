@@ -85,7 +85,7 @@ class PlayState {
 		// camera.x = 160; // place the camera in the middle of the screen
 		// camera.y = 120; 
 		
-		// // start at high speed and gradually slow down
+		// // start level at high speed and gradually slow down
 		// //camera.velocity.x = 1000;
 		// camera.velocity.x = 300;
 		

@@ -23,6 +23,8 @@ class Enemy extends GalactronSprite {
 		this.explosions = game.add.group();
 		this.explosions.classType = Explosion;
 		this.explosions.createMultiple(5);
+
+		this.game.physics.enable(this, Phaser.Physics.ARCADE);
 	}
 
 	/**

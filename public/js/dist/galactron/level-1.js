@@ -25,14 +25,14 @@ var $Level1 = Level1;
     var width = this.game.stage.bounds.width;
     var height = this.game.stage.bounds.height;
     var starfield1 = this.game.add.tileSprite(0, 0, width, height, 'starfield1');
+    starfield1.autoScroll(-110, 0);
     var starfield2 = this.game.add.tileSprite(0, 0, width, height, 'starfield2');
+    starfield2.autoScroll(-125, 0);
     var starfield3 = this.game.add.tileSprite(0, 0, width, height, 'starfield3');
+    starfield3.autoScroll(-140, 0);
     this.background.add(starfield1);
     this.background.add(starfield2);
     this.background.add(starfield3);
-    starfield1.autoScroll(-110, 0);
-    starfield2.autoScroll(-125, 0);
-    starfield3.autoScroll(-140, 0);
   }
 }, {}, PlayState);
 

@@ -9,6 +9,7 @@ var Enemy = function Enemy(game) {
   this.explosions = game.add.group();
   this.explosions.classType = Explosion;
   this.explosions.createMultiple(5);
+  this.game.physics.enable(this, Phaser.Physics.ARCADE);
 };
 var $Enemy = Enemy;
 ($traceurRuntime.createClass)(Enemy, {

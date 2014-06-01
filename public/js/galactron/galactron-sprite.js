@@ -7,8 +7,6 @@ class GalactronSprite extends Phaser.Sprite {
 		game.add.existing(this.actions);		
 
 		this.flickering = false;
-
-		this.game.physics.enable(this, Phaser.Physics.ARCADE);
 	}
 
 	/**

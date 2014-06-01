@@ -87,18 +87,17 @@ class Level1 extends PlayState {
 		var width = this.game.stage.bounds.width;
 		var height = this.game.stage.bounds.height;
 
-		// we will use several starfield sprites to create a parallax effect
+		// we will use several starfield tileSprites to create a parallax effect
 		var starfield1 = this.game.add.tileSprite(0, 0, width, height, 'starfield1');
+				starfield1.autoScroll(-110, 0);
 		var starfield2 = this.game.add.tileSprite(0, 0, width, height, 'starfield2');
+				starfield2.autoScroll(-125, 0);
 		var starfield3 = this.game.add.tileSprite(0, 0, width, height, 'starfield3');
+				starfield3.autoScroll(-140, 0);
 
 		this.background.add(starfield1);
 		this.background.add(starfield2);
 		this.background.add(starfield3);
-
-		starfield1.autoScroll(-110, 0);
-		starfield2.autoScroll(-125, 0);
-		starfield3.autoScroll(-140, 0);
 
 		// var starfield1 = new LoopingTilemap(); 
 		// starfield1.loadMap("1,2,3,2,1,4", starfieldSprite1, 320, 240);

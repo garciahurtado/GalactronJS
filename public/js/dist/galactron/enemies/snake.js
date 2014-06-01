@@ -2,7 +2,7 @@
 var __moduleName = "public/js/dist/galactron/enemies/snake";
 var Snake = function Snake(game, x, y) {
   $traceurRuntime.superCall(this, $Snake.prototype, "constructor", [game, x, y]);
-  this.partDistance = 15;
+  this.partDistance = 11;
   this.game.physics.enable(this, Phaser.Physics.ARCADE);
   this.createParts();
   this.prevPos;
@@ -20,6 +20,10 @@ var $Snake = Snake;
   update: function() {
     $traceurRuntime.superCall(this, $Snake.prototype, "update", []);
   },
+  kill: function() {
+    $traceurRuntime.superCall(this, $Snake.prototype, "kill", []);
+    this.parts.getAt(0).kill();
+  },
   createParts: function() {
     this.parts = this.game.add.group();
     var head = new SnakeHead(this.game, this.x - 1, this.y);
@@ -28,7 +32,7 @@ var $Snake = Snake;
     var num = 10;
     var nextLeader = head;
     for (var i = 0; i < num; i++) {
-      var part = new SnakeBody(this.game, head.x + (i + 1) * this.partDistance, 4);
+      var part = new SnakeBody(this.game, head.x + (i + 1) * this.partDistance, 20);
       part.leaderDist = this.partDistance;
       this.game.physics.enable(part, Phaser.Physics.ARCADE);
       part.leader = nextLeader;
@@ -37,6 +41,7 @@ var $Snake = Snake;
     }
     this.parts.forEach(function(part) {
       this.parts.sendToBack(part);
+      part.reset(this.x, this.y);
     }, this);
   },
   reset: function(x, y) {
