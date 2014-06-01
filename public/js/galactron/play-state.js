@@ -116,7 +116,7 @@ class PlayState {
 	enableInput() {
 		// create controls
 	 	this.controls = this.game.input.keyboard.createCursorKeys();
-	 	this.controls.fire = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+	 	this.controls.fire = this.game.input.keyboard.addKey(Phaser.Keyboard.CONTROL);
 	 	this.controls.enter = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
 
 	 	// Add Pause key
