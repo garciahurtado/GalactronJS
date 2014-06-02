@@ -16,8 +16,8 @@ var __moduleName = "public/js/dist/galactron/galactron";
     game.load.spritesheet('laser_blue', 'images/galactron/laser_blue.png', 16, 3, 1);
     game.load.spritesheet('explosion', 'images/galactron/explosion.png', 35, 35, 6);
     game.load.spritesheet('alien', 'images/galactron/enemies/alien.png', 20, 20);
-    game.load.spritesheet('white_snake_head', 'images/galactron/enemies/white_snake_head.png', 19, 24);
-    game.load.spritesheet('white_snake_body', 'images/galactron/enemies/white_snake_body.png', 16, 16);
+    game.load.spritesheet('white_snake_head', 'images/galactron/enemies/red_snake_head.png', 19, 24);
+    game.load.spritesheet('white_snake_body', 'images/galactron/enemies/red_snake_body.png', 16, 16);
   }
   function create() {
     game.stage.scale.set(2);

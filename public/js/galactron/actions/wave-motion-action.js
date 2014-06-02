@@ -69,15 +69,16 @@ class WaveMotionAction extends Action
 		// stop the action if we've reached the maximum number of cycles
 		if (this.repeat) {
 			if ( (this.currentAngle / (TWO_PI)) > this.repeat) {
-				finish();
+				this.finish();
 			}
 		}
 	}
 	
+	/**
+	 * Overrides parent method to restore the velocity vector of the affected sprite to its original values
+	 */
 	finish() {
-		super();
-		
-		// restore the velocity vector of the affected sprite to its original values
-		this.target.body.velocity = baseVelocity;
+		super();		
+		this.target.body.velocity = this.baseVelocity;
 	}
 }

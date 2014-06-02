@@ -30,13 +30,13 @@ var $WaveMotionAction = WaveMotionAction;
     this.target.body.velocity.x = (Math.cos(angle) * this.amplitudeY) + base.x;
     if (this.repeat) {
       if ((this.currentAngle / (TWO_PI)) > this.repeat) {
-        finish();
+        this.finish();
       }
     }
   },
   finish: function() {
     $traceurRuntime.superCall(this, $WaveMotionAction.prototype, "finish", []);
-    this.target.body.velocity = baseVelocity;
+    this.target.body.velocity = this.baseVelocity;
   }
 }, {}, Action);
 

@@ -37,7 +37,7 @@ class Level1 extends PlayState {
 
 		// var wave1 = this.addWave(this.game.width - 50, 150, Alien1, 20, 0.3);
 		// var wave2 = this.addWave(this.game.width - 50, 100, Alien1, 20, 0.3);
-		var wave1 = this.addWave(this.game.width, 100, Snake, 1);
+		var wave1 = this.addWave(this.game.width, 130, Snake, 1);
 
 		//wave.body.velocity.x = -20;
 
