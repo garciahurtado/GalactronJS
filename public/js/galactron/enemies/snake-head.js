@@ -5,7 +5,7 @@ class SnakeHead extends Enemy {
 	constructor(game, x, y) {
 		super(game, x, y, 'white_snake_head');
 		this.game.physics.enable(this, Phaser.Physics.ARCADE);
-		this.anchor.setTo(0.5, 0.5);
+		// this.anchor.setTo(0.5, 0.5);
 	}
 
 	update(){

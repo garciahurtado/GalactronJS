@@ -18,6 +18,9 @@ var __moduleName = "public/js/dist/galactron/galactron";
     game.load.spritesheet('alien', 'images/galactron/enemies/alien.png', 20, 20);
     game.load.spritesheet('white_snake_head', 'images/galactron/enemies/red_snake_head.png', 19, 24);
     game.load.spritesheet('white_snake_body', 'images/galactron/enemies/red_snake_body.png', 16, 16);
+    game.load.audio('explosion1', 'sounds/explosion1.mp3');
+    game.load.audio('explosion2', 'sounds/explosion2.mp3');
+    game.load.audio('laser', 'sounds/laser.mp3');
   }
   function create() {
     game.stage.scale.set(2);

@@ -32,6 +32,10 @@ class Snake extends Enemy {
 			.start();
 	}
 
+	/**
+	 * When the snake is killed, we need to destroy each of the segments one by one, 
+	 * starting with the head.
+	 */
 	kill(){
 		super.kill();
 		var count = this.parts.length;

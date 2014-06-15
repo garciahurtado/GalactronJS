@@ -21,6 +21,8 @@ var PlayerShip = function PlayerShip(game, x, y) {
   this.bullets.createMultiple(50);
   this.bullets.setAll('checkWorldBounds', true);
   this.bullets.setAll('outOfBoundsKill', true);
+  this.sounds = {};
+  this.sounds.laser = game.add.audio('laser');
   this.explosions = game.add.group();
   this.explosions.classType = Explosion;
   this.explosions.createMultiple(5);
@@ -62,6 +64,7 @@ var $PlayerShip = PlayerShip;
       var bullet = this.bullets.getFirstDead();
       bullet.reset(this.x + 32, this.y + 14);
       bullet.body.velocity.x = this.bulletSpeed;
+      this.sounds.laser.play();
     }
   }
 }, {}, GalactronSprite);

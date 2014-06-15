@@ -32,6 +32,9 @@ class PlayerShip extends GalactronSprite {
     this.bullets.setAll('checkWorldBounds', true);
     this.bullets.setAll('outOfBoundsKill', true);
 
+    this.sounds = {};
+    this.sounds.laser = game.add.audio('laser');
+
     this.explosions = game.add.group();
     this.explosions.classType = Explosion;
     this.explosions.createMultiple(5);
@@ -88,6 +91,8 @@ class PlayerShip extends GalactronSprite {
       var bullet = this.bullets.getFirstDead();
       bullet.reset(this.x + 32, this.y + 14); // spawn coords of bullet relative to player
       bullet.body.velocity.x = this.bulletSpeed;
+
+      this.sounds.laser.play(); 
     }
   }
 }

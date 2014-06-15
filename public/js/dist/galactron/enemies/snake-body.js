@@ -7,7 +7,6 @@ var SnakeBody = function SnakeBody(game, x, y) {
   this.lastLeaderPos;
   this.lastElapsed;
   this.game.physics.enable(this, Phaser.Physics.ARCADE);
-  this.anchor.setTo(0.5, 0.5);
 };
 var $SnakeBody = SnakeBody;
 ($traceurRuntime.createClass)(SnakeBody, {update: function() {

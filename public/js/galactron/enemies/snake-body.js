@@ -9,7 +9,7 @@ class SnakeBody extends Enemy {
 		this.lastLeaderPos;
 		this.lastElapsed;
 		this.game.physics.enable(this, Phaser.Physics.ARCADE);
-		this.anchor.setTo(0.5, 0.5);
+		//this.anchor.setTo(0.5, 0.5);
 	}
 
 	update(){
