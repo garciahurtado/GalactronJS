@@ -26,7 +26,7 @@ var $Enemy = Enemy;
     }
   },
   deathAnimation: function() {
-    var explosion = this.explosions.getFirstDead();
+    var explosion = this.explosions.getRandom();
     explosion.reset();
     explosion.centerAt(this);
     explosion.explode();

@@ -8,11 +8,12 @@ class SnakeBody extends Enemy {
 		this.trackingDist = 10; // max distance to trail the leader sprite by
 		this.lastLeaderPos;
 		this.lastElapsed;
+		this.game.physics.enable(this, Phaser.Physics.ARCADE);
 		this.anchor.setTo(0.5, 0.5);
 	}
 
 	update(){
-		super();
+		super.update();
 
 		// ensure we keep within the max distance of the leader
 		if(this.leader && (this.distanceTo(this.leader) > this.trackingDist)){

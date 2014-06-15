@@ -20,9 +20,15 @@ var $Snake = Snake;
   kill: function() {
     $traceurRuntime.superCall(this, $Snake.prototype, "kill", []);
     var count = this.parts.length;
+    var delay = Phaser.Timer.SECOND * 0.15;
+    var part;
+    var index;
     for (var i = 0; i < count; i++) {
-      this.parts.getAt(i).kill();
-      this.parts.getAt(i).destroy();
+      index = count - i - 1;
+      part = this.parts.getAt(index);
+      this.game.time.events.add(delay * i, function() {
+        this.kill();
+      }, part);
     }
   },
   createParts: function() {
@@ -34,8 +40,8 @@ var $Snake = Snake;
     var nextLeader = head;
     for (var i = 0; i < num; i++) {
       var part = new SnakeBody(this.game, head.x + (i + 1) * this.partDistance, 20);
-      part.leaderDist = this.partDistance;
       this.game.physics.enable(part, Phaser.Physics.ARCADE);
+      part.leaderDist = this.partDistance;
       part.leader = nextLeader;
       nextLeader = part;
       this.parts.add(part);

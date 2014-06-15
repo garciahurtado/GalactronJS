@@ -54,7 +54,7 @@ class Enemy extends GalactronSprite {
 	 * Custom death animation (explosion)
 	 */
 	deathAnimation() {
-		var explosion = this.explosions.getFirstDead();
+		var explosion = this.explosions.getRandom();
 		explosion.reset(); // spawn explosion in the middle of the enemy sprite
 		explosion.centerAt(this);
 		explosion.explode();

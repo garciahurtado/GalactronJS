@@ -33,12 +33,20 @@ class Snake extends Enemy {
 	}
 
 	kill(){
-		super();
+		super.kill();
 		var count = this.parts.length;
+		var delay = Phaser.Timer.SECOND * 0.15;
+		var part;
+		var index;
 
 		for(var i=0; i<count; i++){
-			this.parts.getAt(i).kill();
-			this.parts.getAt(i).destroy();
+			index = count - i - 1;  // reverse the order in which we destroy the parts
+			part = this.parts.getAt(index);
+
+			// Space out the explosion of each body part by a small amount to simulate a chain reaction
+			this.game.time.events.add(delay * i, function() {
+				this.kill();
+			}, part);
 		}
 	}
 

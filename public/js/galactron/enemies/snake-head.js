@@ -8,7 +8,6 @@ class SnakeHead extends Enemy {
 		this.anchor.setTo(0.5, 0.5);
 	}
 
-
 	update(){
 		super.update();
 		if(this.leader){

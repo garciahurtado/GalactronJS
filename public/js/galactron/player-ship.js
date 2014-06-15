@@ -37,6 +37,9 @@ class PlayerShip extends GalactronSprite {
     this.explosions.createMultiple(5);
   }
 
+  /**
+   * Handle movement and animations
+   */
   moveUp(elapsed) {
     this.play('up');
     this.body.velocity.y = -this.maxSpeed;
