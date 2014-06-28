@@ -30,7 +30,6 @@ var PlayerShip = function PlayerShip(game, x, y) {
   flame.animations.add('burn', [0, 1], 20, true);
   flame.play('burn');
   this.addChild(flame);
-  flame.anchor.setTo(0, 0);
 };
 var $PlayerShip = PlayerShip;
 ($traceurRuntime.createClass)(PlayerShip, {
@@ -71,6 +70,11 @@ var $PlayerShip = PlayerShip;
       bullet.body.velocity.x = this.bulletSpeed;
       this.sounds.laser.play();
     }
+  },
+  update: function() {
+    $traceurRuntime.superCall(this, $PlayerShip.prototype, "update", []);
+    this.body.position.x = Math.round(this.body.position.x);
+    this.body.position.y = Math.round(this.body.position.y);
   }
 }, {}, GalactronSprite);
 

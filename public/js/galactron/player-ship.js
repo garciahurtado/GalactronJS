@@ -39,11 +39,11 @@ class PlayerShip extends GalactronSprite {
     this.explosions.classType = Explosion;
     this.explosions.createMultiple(5);
 
+    // Add the engine flame FX
     var flame = new GalactronSprite(game, -12, 0, 'player_flame');
     flame.animations.add('burn', [0,1], 20, true);
     flame.play('burn');
     this.addChild(flame);
-    flame.anchor.setTo(0, 0);
   }
 
   /**
@@ -100,5 +100,15 @@ class PlayerShip extends GalactronSprite {
 
       this.sounds.laser.play(); 
     }
+  }
+
+  /**
+   * Rounds the x,y position of the Physics body. This is done to avoid subpixel rendering artifacts,
+   * caused by the fact that we are rendering sprites at 2x zoom for retro effect.
+   */
+  update(){
+    super.update();
+    this.body.position.x = Math.round(this.body.position.x);
+    this.body.position.y = Math.round(this.body.position.y);
   }
 }
