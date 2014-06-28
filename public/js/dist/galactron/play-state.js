@@ -75,6 +75,7 @@ var PlayState = function PlayState(game) {
   },
   update: function() {
     this.playerInput(this.game.time.elapsed);
+    this.events.update();
     if (this.isGameOver) {
       return;
     }
@@ -195,6 +196,9 @@ var PlayState = function PlayState(game) {
       txt.anchor.setTo(1, 1);
     }
     return txt;
+  },
+  doLater: function(action, seconds) {
+    this.game.time.events.add(Phaser.Timer.SECOND * seconds, action, this);
   }
 }, {});
 

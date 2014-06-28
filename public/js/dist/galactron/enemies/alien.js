@@ -1,7 +1,8 @@
 "use strict";
 var __moduleName = "public/js/dist/galactron/enemies/alien";
-var Alien = function Alien(game, x, y) {
-  $traceurRuntime.superCall(this, $Alien.prototype, "constructor", [game, x, y, 'alien']);
+var Alien = function Alien(game, x, y, sprite) {
+  sprite = sprite || 'alien';
+  $traceurRuntime.superCall(this, $Alien.prototype, "constructor", [game, x, y, sprite]);
   this.x = x;
   this.y = y;
   this.animations.add('wiggle', [0, 1, 2, 3, 2], 6, true);

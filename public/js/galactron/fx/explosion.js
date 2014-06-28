@@ -10,10 +10,13 @@ class Explosion extends GalactronSprite {
 
 	  this.sound1 = game.add.audio('explosion1');
 	  this.sound2 = game.add.audio('explosion2');
+	  // this.game.physics.enable(this, Phaser.Physics.ARCADE);
+
 	}
 
 	explode(){
 	  this.play('explode');
+	  // this.body.velocity.x = -50;
 
 	  // Vary randomly between two different explosion sounds
 	  var sound = Phaser.Math.randomSign() == 1 ? this.sound1 : this.sound2;

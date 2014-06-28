@@ -38,17 +38,22 @@ class Level1 extends PlayState {
 		super();
 		this.createBackground();
 
-		// var alien = new Alien(this.game, 20, 10);
-		// this.game.add.existing(alien, 10, 10);	
-		// alien.body.velocity.x = 3;
+		var width = this.game.width;
 
-		var wave1 = this.addWave(this.game.width, 150, Alien1, 20, 0.3);
-		var wave2 = this.addWave(this.game.width, 100, Alien1, 20, 0.3);
-		var wave3 = this.addWave(this.game.width, 100, Snake, 1);
-		var wave4 = this.addWave(this.game.width, 130, Snake, 1);
-		var wave5 = this.addWave(this.game.width, 180, Snake, 1);
-
-		//wave.body.velocity.x = -20;
+		// Define enemy waves and game events chain
+		this.events.addAction(new WaitAction(2))
+			.chainAction(new SpawnWaveAction(width, 150, Alien1,  20, 0.3))
+			.chainAction(new WaitAction(5))
+			.chainAction(new SpawnWaveAction(width, 100, AlienRed,  20, 0.3))
+			.chainAction(new WaitAction(15))
+			.chainAction(new SpawnWaveAction(width, 100, Snake, 1))
+			.chainAction(new SpawnWaveAction(width, 180, Snake, 1))
+			.chainAction(new WaitAction(10))
+			.chainAction(new SpawnWaveAction(width, 100, WhiteSnake, 1))
+			.chainAction(new SpawnWaveAction(width, 150, WhiteSnake, 1))
+			.chainAction(new SpawnWaveAction(width, 200, WhiteSnake, 1))
+			.start();
+		
 
 		// cheat :)
 		//player.changeWeapon(new LaserGunQuad());
@@ -104,19 +109,16 @@ class Level1 extends PlayState {
 		var starfield3 = this.game.add.tileSprite(0, 0, width, height, 'starfield3');
 				starfield3.autoScroll(-110, 0);
 
-
-		// var world = new BigBlueWorld(500, 0, 0.05);
-		// var smallSaturn = new Sprite(this.game, 900, 50, 'small_saturn');
 		var greenSaturn = new SlidingBackground(this.game, 600, 50, 'green_saturn', -45);
 		var smallMars = new SlidingBackground(this.game, 1300, 150, 'small_mars', -45);
 		var smallJupiter = new SlidingBackground(this.game, 2500, 30, 'small_jupiter', -45);
-		var bigBlueWorld = new SlidingBackground(this.game, 2000, 0, 'big_blue_world', -45);
+		var bigBlueWorld = new SlidingBackground(this.game, 500, 0, 'big_blue_world', -45);
 			
 		this.background.add(starfield1);
 		this.background.add(starfield2);
 		this.background.add(starfield3);
 
-		this.background.add(greenSaturn);
+		// this.background.add(greenSaturn);
 		this.background.add(smallMars);
 		this.background.add(smallJupiter);
 		this.background.add(bigBlueWorld);

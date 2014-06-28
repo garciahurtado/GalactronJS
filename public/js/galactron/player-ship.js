@@ -38,6 +38,12 @@ class PlayerShip extends GalactronSprite {
     this.explosions = game.add.group();
     this.explosions.classType = Explosion;
     this.explosions.createMultiple(5);
+
+    var flame = new GalactronSprite(game, -12, 0, 'player_flame');
+    flame.animations.add('burn', [0,1], 20, true);
+    flame.play('burn');
+    this.addChild(flame);
+    flame.anchor.setTo(0, 0);
   }
 
   /**

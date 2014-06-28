@@ -1,7 +1,8 @@
 "use strict";
 var __moduleName = "public/js/dist/galactron/enemies/snake-head";
-var SnakeHead = function SnakeHead(game, x, y) {
-  $traceurRuntime.superCall(this, $SnakeHead.prototype, "constructor", [game, x, y, 'white_snake_head']);
+var SnakeHead = function SnakeHead(game, x, y, sprite) {
+  sprite = sprite || 'red_snake_head';
+  $traceurRuntime.superCall(this, $SnakeHead.prototype, "constructor", [game, x, y, sprite]);
   this.game.physics.enable(this, Phaser.Physics.ARCADE);
 };
 var $SnakeHead = SnakeHead;

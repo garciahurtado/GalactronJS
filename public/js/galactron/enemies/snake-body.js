@@ -2,8 +2,9 @@
  * Body part of the Snake type enemy. There should be several of these.
  */
 class SnakeBody extends Enemy {
-	constructor(game, x, y) {
-		super(game, x, y, 'white_snake_body');
+	constructor(game, x, y, sprite) {
+		sprite = sprite || 'red_snake_body';
+		super(game, x, y, sprite);
 		this.leader; // target sprite to follow
 		this.trackingDist = 10; // max distance to trail the leader sprite by
 		this.lastLeaderPos;

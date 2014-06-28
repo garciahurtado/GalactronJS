@@ -4,8 +4,8 @@
  * @author Garcia Hurtado
  */
 class Alien2 extends Alien {
-	constructor(game, x, y){
-		super(game, x, y);
+	constructor(game, x, y, sprite){
+		super(game, x, y, sprite);
 	}
 
 	init(){

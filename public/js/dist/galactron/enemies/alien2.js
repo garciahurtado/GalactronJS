@@ -1,7 +1,7 @@
 "use strict";
 var __moduleName = "public/js/dist/galactron/enemies/alien2";
-var Alien2 = function Alien2(game, x, y) {
-  $traceurRuntime.superCall(this, $Alien2.prototype, "constructor", [game, x, y]);
+var Alien2 = function Alien2(game, x, y, sprite) {
+  $traceurRuntime.superCall(this, $Alien2.prototype, "constructor", [game, x, y, sprite]);
 };
 var $Alien2 = Alien2;
 ($traceurRuntime.createClass)(Alien2, {init: function() {

@@ -22,11 +22,8 @@ var $Level1 = Level1;
   create: function() {
     $traceurRuntime.superCall(this, $Level1.prototype, "create", []);
     this.createBackground();
-    var wave1 = this.addWave(this.game.width, 150, Alien1, 20, 0.3);
-    var wave2 = this.addWave(this.game.width, 100, Alien1, 20, 0.3);
-    var wave3 = this.addWave(this.game.width, 100, Snake, 1);
-    var wave4 = this.addWave(this.game.width, 130, Snake, 1);
-    var wave5 = this.addWave(this.game.width, 180, Snake, 1);
+    var width = this.game.width;
+    this.events.addAction(new WaitAction(2)).chainAction(new SpawnWaveAction(width, 150, Alien1, 20, 0.3)).chainAction(new WaitAction(5)).chainAction(new SpawnWaveAction(width, 100, AlienRed, 20, 0.3)).chainAction(new WaitAction(15)).chainAction(new SpawnWaveAction(width, 100, Snake, 1)).chainAction(new SpawnWaveAction(width, 180, Snake, 1)).chainAction(new WaitAction(10)).chainAction(new SpawnWaveAction(width, 100, WhiteSnake, 1)).chainAction(new SpawnWaveAction(width, 150, WhiteSnake, 1)).chainAction(new SpawnWaveAction(width, 200, WhiteSnake, 1)).start();
     var width = this.game.stage.bounds.width;
   },
   createBackground: function() {
@@ -41,11 +38,10 @@ var $Level1 = Level1;
     var greenSaturn = new SlidingBackground(this.game, 600, 50, 'green_saturn', -45);
     var smallMars = new SlidingBackground(this.game, 1300, 150, 'small_mars', -45);
     var smallJupiter = new SlidingBackground(this.game, 2500, 30, 'small_jupiter', -45);
-    var bigBlueWorld = new SlidingBackground(this.game, 2000, 0, 'big_blue_world', -45);
+    var bigBlueWorld = new SlidingBackground(this.game, 500, 0, 'big_blue_world', -45);
     this.background.add(starfield1);
     this.background.add(starfield2);
     this.background.add(starfield3);
-    this.background.add(greenSaturn);
     this.background.add(smallMars);
     this.background.add(smallJupiter);
     this.background.add(bigBlueWorld);

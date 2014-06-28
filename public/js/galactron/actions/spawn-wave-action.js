@@ -4,9 +4,8 @@
  * @author Garcia Hurtado
  */
 class SpawnWaveAction extends Action {
-	constructor(game, enemyClass, x = 0, y = 0, waveSize = 1, delay = 0) {
+	constructor(x = 0, y = 0, enemyClass, waveSize = 1, delay = 0) {
 		super(null);
-		this.game = game;
 		this.enemyClass = enemyClass;
 		this.x = x;
 		this.y = y;
@@ -16,14 +15,14 @@ class SpawnWaveAction extends Action {
 
 	start() {
 		super.start();
-		// var wave = game.spriteFactory.recycle(EnemyWave); // TODO: add recycling!
-		this.game.state.current.addWave(x, y, enemyClass, waveSize, delay);
+		var state = this.game.state.getCurrentState();
+		this.wave = state.addWave(this.x, this.y, this.enemyClass, this.waveSize, this.delay);
 	}
 
 	update() {
 		super.update();
-		if (wave.spawnCounter >= waveSize) {
-			finish();
+		if (this.wave.spawnCounter >= this.waveSize) {
+			this.finish();
 		}
 	}
 }

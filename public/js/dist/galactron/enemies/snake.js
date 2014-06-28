@@ -33,13 +33,14 @@ var $Snake = Snake;
   },
   createParts: function() {
     this.parts = this.game.add.group();
-    var head = new SnakeHead(this.game, this.x - 1, this.y);
+    var head = this.createHead(this.x - 1, this.y);
     head.leader = this;
     this.parts.add(head);
     var num = 10;
     var nextLeader = head;
     for (var i = 0; i < num; i++) {
-      var part = new SnakeBody(this.game, head.x + (i + 1) * this.partDistance, 20);
+      var x = head.x + (i + 1) * this.partDistance;
+      var part = this.createBody(x, 20);
       this.game.physics.enable(part, Phaser.Physics.ARCADE);
       part.leaderDist = this.partDistance;
       part.leader = nextLeader;
@@ -50,6 +51,12 @@ var $Snake = Snake;
       this.parts.sendToBack(part);
       part.reset(this.x, this.y);
     }, this);
+  },
+  createHead: function(x, y) {
+    return new SnakeHead(this.game, x, y);
+  },
+  createBody: function(x, y) {
+    return new SnakeBody(this.game, x, y);
   },
   reset: function(x, y) {
     $traceurRuntime.superCall(this, $Snake.prototype, "reset", [x, y]);

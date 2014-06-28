@@ -1,7 +1,8 @@
 "use strict";
 var __moduleName = "public/js/dist/galactron/enemies/snake-body";
-var SnakeBody = function SnakeBody(game, x, y) {
-  $traceurRuntime.superCall(this, $SnakeBody.prototype, "constructor", [game, x, y, 'white_snake_body']);
+var SnakeBody = function SnakeBody(game, x, y, sprite) {
+  sprite = sprite || 'red_snake_body';
+  $traceurRuntime.superCall(this, $SnakeBody.prototype, "constructor", [game, x, y, sprite]);
   this.leader;
   this.trackingDist = 10;
   this.lastLeaderPos;

@@ -62,7 +62,7 @@ class Snake extends Enemy {
 	createParts() {
 		this.parts = this.game.add.group();
 
-		var head = new SnakeHead(this.game, this.x-1, this.y); // offset the head a tiny bit respect to the other body parts
+		var head = this.createHead(this.x-1, this.y);  // offset the head a tiny bit respect to the other body parts
 		head.leader = this;
 		this.parts.add(head); 
 
@@ -70,7 +70,8 @@ class Snake extends Enemy {
 		var nextLeader = head;
 
 		for(var i = 0; i < num; i++){
-			var part = new SnakeBody(this.game, head.x + (i+1) * this.partDistance, 20);
+			var x = head.x + (i+1) * this.partDistance;
+			var part = this.createBody(x, 20);
 			this.game.physics.enable(part, Phaser.Physics.ARCADE);
 			part.leaderDist = this.partDistance;
 			part.leader = nextLeader;
@@ -83,6 +84,20 @@ class Snake extends Enemy {
 			this.parts.sendToBack(part);
 			part.reset(this.x, this.y);
 		}, this);
+	}
+
+	/**
+	 * Separate creation of head piece to allow override in child class
+	 */
+	createHead(x, y){
+		return new SnakeHead(this.game, x, y);
+	}
+
+	/**
+	 * Separate creation of body pieces to allow override in child class
+	 */
+	createBody(x, y){
+		return new SnakeBody(this.game, x, y);
 	}
 
 	/**

@@ -176,11 +176,10 @@ class PlayState {
 		// 	return;
 		// }
 		
-		// super.update();
-	//	events.update();
+		this.events.update();
 	//	FlxG.camera.follow(camera);
 		
-		// if the game is over there is no need to check for collissions
+		// if the game is over, shortcut collissions checks
 		if (this.isGameOver) {
 			return;
 		}
@@ -213,7 +212,7 @@ class PlayState {
 		delay = typeof delay !== 'undefined' ? delay : 0;
 		count = typeof count !== 'undefined' ? count : 1;
 
-		// TODO: Extract to SpriteFactory (also in enemy-wave.js)
+		// TODO: Extract to SpriteFactory (also in enemy-wave.js) / add recycling
 		var wave = this.waves.getFirstExists(false);
 		if(!wave){
 			wave = new EnemyWave(this.game, x, y, enemyType, count, delay);
@@ -429,5 +428,9 @@ class PlayState {
 		}
 
 		return txt;
+	}
+
+	doLater(action, seconds){
+		this.game.time.events.add(Phaser.Timer.SECOND * seconds, action, this);
 	}
 }
