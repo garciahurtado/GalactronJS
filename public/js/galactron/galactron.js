@@ -2,7 +2,7 @@
 	var game = new Phaser.Game(
 		380,
 		260,
-		Phaser.CANVAS,
+		Phaser.WEBGL, // needed for filters
 		'canvasWrapper',
 		{ preload: preload, create: create, update: update }
 	);
@@ -22,6 +22,8 @@
 		game.load.spritesheet('explosion', 'images/galactron/explosion.png', 35, 35, 6);
 		game.load.spritesheet('alien', 'images/galactron/enemies/alien.png', 20, 20);
 		game.load.spritesheet('alien_red', 'images/galactron/enemies/alien_red.png', 20, 20);
+		game.load.spritesheet('floating_mine', 'images/galactron/enemies/floating_mine.png', 21, 21);
+		game.load.spritesheet('floating_mine_spike', 'images/galactron/enemies/floating_mine_spike.png', 5, 5);
 		game.load.spritesheet('red_snake_head', 'images/galactron/enemies/red_snake_head.png', 19, 24);
 		game.load.spritesheet('red_snake_body', 'images/galactron/enemies/red_snake_body.png', 16, 16);
 		game.load.spritesheet('white_snake_head', 'images/galactron/enemies/white_snake_head.png', 19, 24);
@@ -31,6 +33,7 @@
 		game.load.audio('explosion1', 'sounds/explosion1.mp3');
 		game.load.audio('explosion2', 'sounds/explosion2.mp3');
 		game.load.audio('laser', 'sounds/laser.mp3');
+		game.load.audio('dent', 'sounds/dent.mp3');
 	}
 	 
 	function create() {

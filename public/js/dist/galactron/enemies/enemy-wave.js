@@ -1,17 +1,14 @@
 "use strict";
 var __moduleName = "public/js/dist/galactron/enemies/enemy-wave";
-var EnemyWave = function EnemyWave(game) {
-  var x = arguments[1] !== (void 0) ? arguments[1] : 0;
-  var y = arguments[2] !== (void 0) ? arguments[2] : 0;
-  var enemyType = arguments[3] !== (void 0) ? arguments[3] : null;
-  var waveSize = arguments[4] !== (void 0) ? arguments[4] : 1;
-  var spawnDelay = arguments[5] !== (void 0) ? arguments[5] : 0;
+var EnemyWave = function EnemyWave(game, enemyType, spawnCoords) {
+  var waveSize = arguments[3] !== (void 0) ? arguments[3] : 1;
+  var spawnDelay = arguments[4] !== (void 0) ? arguments[4] : 0;
   $traceurRuntime.superCall(this, $EnemyWave.prototype, "constructor", [game]);
   this.enableBody = true;
   game.physics.enable(this, Phaser.Physics.ARCADE);
   this.game = game;
-  this.x = x;
-  this.y = y;
+  this.spawnCoords = spawnCoords;
+  this.init();
   this.enemyType = enemyType;
   this.waveSize = waveSize;
   this.spawnDelay = spawnDelay;
@@ -24,16 +21,19 @@ var EnemyWave = function EnemyWave(game) {
 };
 var $EnemyWave = EnemyWave;
 ($traceurRuntime.createClass)(EnemyWave, {
-  reset: function(x, y) {
-    $traceurRuntime.superCall(this, $EnemyWave.prototype, "reset", [x, y]);
+  init: function() {
     this.spawnTimer = 0;
     this.spawnCounter = 0;
+    this.spawnCoordsIndex = 0;
   },
   update: function() {
     $traceurRuntime.superCall(this, $EnemyWave.prototype, "update", []);
     this.spawnTimer += this.game.time.elapsed / 1000;
     if ((this.spawnTimer > this.spawnDelay) && (this.spawnCounter < this.waveSize)) {
       this.spawnEnemy();
+      if (this.spawnDelay == 0) {
+        this.update();
+      }
     }
   },
   spawnEnemy: function() {
@@ -43,7 +43,11 @@ var $EnemyWave = EnemyWave;
       this.enemies.add(enemy);
     }
     enemy.revive();
-    enemy.reset(this.x, this.y);
+    var current = this.spawnCoords[this.spawnCoordsIndex];
+    enemy.reset(current.x, current.y);
+    if (++this.spawnCoordsIndex >= this.spawnCoords.length) {
+      this.spawnCoordsIndex = 0;
+    }
     enemy.bullets = this.bullets;
     enemy.player = this.player;
     enemy.wave = this;

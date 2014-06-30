@@ -1,15 +1,23 @@
 ﻿/**
- * Represents a wave of enemies that will spawn enemies into the screen until it has created a preset
- * number of them.
+ * Represents a wave of enemies that will spawn enemies into the screen until it has created a 
+ * preset number of them.
  *
- * It uses a sprite factory to recycle sprites. One can be provided externally or the wave will create its own.
+ * It uses a sprite factory to recycle sprites. One can be provided externally or the wave will 
+ * create its own.
  *
- * @author Garcia
+ * @param game - Instance of the Phaser game
+ * @param spawnCoords {x: 0, y: 0} - Object - Array of starting X,Y coordinates for new enemies spawned.
+ *  If the array has a single element, this element will be used for all enemy spawns.
+ * @param enemyType = null - Class of the enemy that this wave will Spawn. Can also be an array of
+ *  classes (TODO)
+ * @param waveSize = 1 - Total number of enemies to spawn
+ * @param spawnDelay = 0 - Number of seconds to wait between enemy spawns. Zero will spawn all 
+ *  enemies instantly
+ *
+ * @author Garcia Hurtado <ghurtado@gmail.com>
  */
 
 class EnemyWave extends Phaser.Sprite {
-	// enemyType;
-	// waveSize; // number of enemies in this wave
 	// spawnDelay; // number of seconds to wait between enemy spawns
 	// spawnTimer; // keep track of the last time we spawned an enemy in this wave
 	// spawnCounter; // how many enemies have spawned in this wave so far
@@ -20,7 +28,7 @@ class EnemyWave extends Phaser.Sprite {
 	// fx; // TODO: remove
 	// enemies;
 
-	constructor(game, x = 0, y = 0, enemyType = null, waveSize = 1, spawnDelay = 0) {
+	constructor(game, enemyType, spawnCoords, waveSize = 1, spawnDelay = 0) {
 		super(game);
 
 		// Physics
@@ -28,8 +36,9 @@ class EnemyWave extends Phaser.Sprite {
 	  game.physics.enable(this, Phaser.Physics.ARCADE);
 
 		this.game = game;
-		this.x = x;
-		this.y = y;
+		this.spawnCoords = spawnCoords;
+		this.init();
+
 		this.enemyType = enemyType;
 		this.waveSize = waveSize;
 		this.spawnDelay = spawnDelay;
@@ -44,11 +53,13 @@ class EnemyWave extends Phaser.Sprite {
 		this.fx = game.add.group();
 	}
 
-	reset(x, y) {
-		super.reset(x, y);
+	/**
+	 * Resets the spawn timer, counter and the index of x, y coordinate lists
+	 */
+	init() {
 		this.spawnTimer = 0;
 		this.spawnCounter = 0;
-		//this.enemies.removeAll(true);
+		this.spawnCoordsIndex = 0;
 	}
 
 	/**
@@ -57,8 +68,14 @@ class EnemyWave extends Phaser.Sprite {
 	update() {
 		super.update();
 		this.spawnTimer += this.game.time.elapsed / 1000; // time.elapsed is in ms, convert to seconds
+
 		if ((this.spawnTimer > this.spawnDelay) && (this.spawnCounter < this.waveSize)) {
 			this.spawnEnemy();
+
+			// Since this wave has no delay, continue spawning until all enemies have been created
+			if(this.spawnDelay == 0){
+				this.update();
+			}
 		}
 	}
 
@@ -75,7 +92,14 @@ class EnemyWave extends Phaser.Sprite {
 			this.enemies.add(enemy);
 		}
 		enemy.revive();
-		enemy.reset(this.x, this.y);
+
+		var current = this.spawnCoords[this.spawnCoordsIndex];
+		enemy.reset(current.x, current.y);
+
+		// Increment the coordinate index, or reset to zero if we reach the end of the coords list
+		if(++this.spawnCoordsIndex >= this.spawnCoords.length){
+			this.spawnCoordsIndex = 0;
+		}
 
 		// to avoid bullets diying with the enemy, we make the enemy use the bullet array in the wave
 		// TODO: refactor

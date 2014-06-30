@@ -32,7 +32,6 @@ class PlayerShip extends GalactronSprite {
     this.bullets.setAll('checkWorldBounds', true);
     this.bullets.setAll('outOfBoundsKill', true);
 
-    this.sounds = {};
     this.sounds.laser = game.add.audio('laser');
 
     this.explosions = game.add.group();

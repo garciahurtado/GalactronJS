@@ -40,7 +40,6 @@ class AnimationAction extends Action {
 			if (currentFrame == (currentAnimation.frames.length - 1)) {
 				this.finish();
 				finished = true; // mark finished right away to avoid double firing the delayed finish() call
-				//Utils.doLater(currentAnimation.delay * 1000, this.finish); // why this??
 			}
 		}
 	}

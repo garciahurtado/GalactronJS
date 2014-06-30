@@ -1,12 +1,13 @@
 class GalactronSprite extends Phaser.Sprite {
 	constructor(game, x = 0, y = 0, graphic) {
 		this.math = game.math; // convenience
+		this.flickering = false;
 
 		super(game, x, y, graphic);
 		this.actions = new ActionChain(game, this);
 		game.add.existing(this.actions);		
 
-		this.flickering = false;
+    this.sounds = {}; // object to keep track of various FX sounds
 	}
 
 	/**
@@ -33,7 +34,6 @@ class GalactronSprite extends Phaser.Sprite {
 		}
 	}
 
-
 	/**
 	 * Refactor: combine with init?
 	 */
@@ -49,21 +49,21 @@ class GalactronSprite extends Phaser.Sprite {
 	}
 
 	/**
-	 * Overrides parent to provide hook for hurtAnimation() except when dead
-	 * @param	damage
+	 * Overrides parent to provide hook for damageAnimation() except when dead
+	 * @param	amount. Number of health points to substract from entity
 	 */
-	hurt(damage) {
-		super.hurt(damage);
+	damage(amount) {
+		super.damage(amount);
 
-		if (alive) {
-			hurtAnimation();
+		if (this.alive) {
+			this.damageAnimation();
 		}
 	}
 
 	/**
 	 * Override in child class to provide an animation that plays when this sprite is hurt, but not dead
 	 */
-	hurtAnimation() {
+	damageAnimation() {
 		return;
 	}
 
@@ -117,4 +117,12 @@ class GalactronSprite extends Phaser.Sprite {
 		this.x -= Math.round(this.width / 2);
 		this.y -= Math.round(this.height / 2);
 	}
+
+	/**
+	 * Convenience method that wraps Phaser.Timer
+	 */
+	doLater(millis, action, context){
+		var context = context || this;
+		this.game.time.events.add(millis, action, context);
+  }
 }

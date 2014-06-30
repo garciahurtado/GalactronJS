@@ -22,7 +22,10 @@ var PlayState = function PlayState(game) {
   this.game = game;
 };
 ($traceurRuntime.createClass)(PlayState, {
-  preload: function() {},
+  preload: function() {
+    this.game.load.script('abstracFilter', '/js/lib/pixi/abstract-filter.js');
+    this.game.load.script('filter', '/js/lib/pixi/color-matrix-filter.js');
+  },
   create: function() {
     this.events = new ActionChain(this.game);
     this.score = 0;
@@ -84,15 +87,15 @@ var PlayState = function PlayState(game) {
       this.game.physics.arcade.overlap(this.enemies.children[0], this.player, this.playerHit, null, this);
     }
   },
-  addWave: function(x, y, enemyType, count, delay) {
+  addWave: function(enemyType, spawnCoords, count, delay) {
     delay = typeof delay !== 'undefined' ? delay : 0;
     count = typeof count !== 'undefined' ? count : 1;
     var wave = this.waves.getFirstExists(false);
     if (!wave) {
-      wave = new EnemyWave(this.game, x, y, enemyType, count, delay);
+      wave = new EnemyWave(this.game, enemyType, spawnCoords, count, delay);
       this.waves.add(wave);
     }
-    wave.reset(x, y);
+    wave.init();
     wave.player = this.player;
     this.enemies.add(wave.enemies);
     this.enemyBullets.add(wave.bullets);
@@ -197,8 +200,9 @@ var PlayState = function PlayState(game) {
     }
     return txt;
   },
-  doLater: function(action, seconds) {
-    this.game.time.events.add(Phaser.Timer.SECOND * seconds, action, this);
+  doLater: function(millis, action, context) {
+    var context = context || this;
+    this.game.time.events.add(millis, action, context);
   }
 }, {});
 

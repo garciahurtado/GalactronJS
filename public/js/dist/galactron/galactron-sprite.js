@@ -5,10 +5,11 @@ var GalactronSprite = function GalactronSprite(game) {
   var y = arguments[2] !== (void 0) ? arguments[2] : 0;
   var graphic = arguments[3];
   this.math = game.math;
+  this.flickering = false;
   $traceurRuntime.superCall(this, $GalactronSprite.prototype, "constructor", [game, x, y, graphic]);
   this.actions = new ActionChain(game, this);
   game.add.existing(this.actions);
-  this.flickering = false;
+  this.sounds = {};
 };
 var $GalactronSprite = GalactronSprite;
 ($traceurRuntime.createClass)(GalactronSprite, {
@@ -37,13 +38,13 @@ var $GalactronSprite = GalactronSprite;
       this.actions.start();
     }
   },
-  hurt: function(damage) {
-    $traceurRuntime.superCall(this, $GalactronSprite.prototype, "hurt", [damage]);
-    if (alive) {
-      hurtAnimation();
+  damage: function(amount) {
+    $traceurRuntime.superCall(this, $GalactronSprite.prototype, "damage", [amount]);
+    if (this.alive) {
+      this.damageAnimation();
     }
   },
-  hurtAnimation: function() {
+  damageAnimation: function() {
     return;
   },
   kill: function() {
@@ -66,6 +67,10 @@ var $GalactronSprite = GalactronSprite;
     this.y = target.y + Math.round(target.height * .5);
     this.x -= Math.round(this.width / 2);
     this.y -= Math.round(this.height / 2);
+  },
+  doLater: function(millis, action, context) {
+    var context = context || this;
+    this.game.time.events.add(millis, action, context);
   }
 }, {}, Phaser.Sprite);
 

@@ -25,6 +25,7 @@ class Enemy extends GalactronSprite {
 		this.explosions.createMultiple(5);
 
 		this.game.physics.enable(this, Phaser.Physics.ARCADE);
+		this.sounds.dent = game.add.audio('dent');
 	}
 
 	/**
@@ -33,6 +34,18 @@ class Enemy extends GalactronSprite {
 	 */
 	init() {
 		super.init();
+
+		// Prepare a filter, but do not activate, for when we need it
+		var colorMatrix =  [
+	    1,0,0,0,
+	    0,1,0,0,
+	    0,0,1,0,
+	    0,0,0,1
+	  ];
+		this.colorFilter = new PIXI.ColorMatrixFilter();
+	  this.colorFilter.matrix = colorMatrix;
+
+	  this.timer = this.game.time.events; // convenience
 
 		this.lastShot = 0;
 		this.score = 0;
@@ -61,23 +74,38 @@ class Enemy extends GalactronSprite {
 	}
 
 	/**
-	 * Custom hurt animation. Plays a sound and flashes the sprite with a quick white fill
+	 * Custom hurt animation. Plays a sound and flashes the sprite with a quick white fill 
+	 * a couple of times in a row.
 	 */
-	hurtAnimation() {
-		deathAnimation();
+	damageAnimation() {
 
 		//FlxG.play(dentSound);
-		// this.addColorFill(0xFFFFFF);
-		// self = this;
-		// Utils.doLater(30, function(){
-		// 	self.removeColorFill(); 
-		// });
-		// Utils.doLater(60, function(){
-		// 	self.addColorFill(0xFFFFFF);
-		// });
-		// Utils.doLater(90, function(){
-		// 	self.removeColorFill(); 
-		// });
+		this.sounds.dent.play(); 
+		this.doLater(0, this.fillWhite, this);
+		this.doLater(30, this.resetFilters, this);
+		this.doLater(60, this.fillWhite, this);
+		this.doLater(90, this.resetFilters, this);
+	}
+
+	/**
+	 * Apply an all white filter to the sprite, respecting alpha
+	 */
+	fillWhite() {
+		this.colorFilter.matrix =  [
+	    0,0,0,1,
+	    0,0,0,1,
+	    0,0,0,1,
+	    0,0,0,1
+	  ];
+
+	  this.filters = [this.colorFilter];
+	}
+
+	/**
+	 * Resets the PIXI filters to none
+	 */
+	resetFilters() {
+		this.filters = null;
 	}
 
 	update() {

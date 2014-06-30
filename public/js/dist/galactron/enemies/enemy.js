@@ -10,11 +10,16 @@ var Enemy = function Enemy(game) {
   this.explosions.classType = Explosion;
   this.explosions.createMultiple(5);
   this.game.physics.enable(this, Phaser.Physics.ARCADE);
+  this.sounds.dent = game.add.audio('dent');
 };
 var $Enemy = Enemy;
 ($traceurRuntime.createClass)(Enemy, {
   init: function() {
     $traceurRuntime.superCall(this, $Enemy.prototype, "init", []);
+    var colorMatrix = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
+    this.colorFilter = new PIXI.ColorMatrixFilter();
+    this.colorFilter.matrix = colorMatrix;
+    this.timer = this.game.time.events;
     this.lastShot = 0;
     this.score = 0;
     this.offscreenLifespan = 2;
@@ -31,8 +36,19 @@ var $Enemy = Enemy;
     explosion.centerAt(this);
     explosion.explode();
   },
-  hurtAnimation: function() {
-    deathAnimation();
+  damageAnimation: function() {
+    this.sounds.dent.play();
+    this.doLater(0, this.fillWhite, this);
+    this.doLater(30, this.resetFilters, this);
+    this.doLater(60, this.fillWhite, this);
+    this.doLater(90, this.resetFilters, this);
+  },
+  fillWhite: function() {
+    this.colorFilter.matrix = [0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1];
+    this.filters = [this.colorFilter];
+  },
+  resetFilters: function() {
+    this.filters = null;
   },
   update: function() {
     $traceurRuntime.superCall(this, $Enemy.prototype, "update", []);

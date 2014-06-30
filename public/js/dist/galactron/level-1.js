@@ -23,7 +23,64 @@ var $Level1 = Level1;
     $traceurRuntime.superCall(this, $Level1.prototype, "create", []);
     this.createBackground();
     var width = this.game.width;
-    this.events.addAction(new WaitAction(2)).chainAction(new SpawnWaveAction(width, 150, Alien1, 20, 0.3)).chainAction(new WaitAction(5)).chainAction(new SpawnWaveAction(width, 100, AlienRed, 20, 0.3)).chainAction(new WaitAction(15)).chainAction(new SpawnWaveAction(width, 100, Snake, 1)).chainAction(new SpawnWaveAction(width, 180, Snake, 1)).chainAction(new WaitAction(10)).chainAction(new SpawnWaveAction(width, 100, WhiteSnake, 1)).chainAction(new SpawnWaveAction(width, 150, WhiteSnake, 1)).chainAction(new SpawnWaveAction(width, 200, WhiteSnake, 1)).start();
+    this.events.addAction(new WaitAction(1)).chainAction(new SpawnWaveAction(FloatingMine, [{
+      x: width,
+      y: 30
+    }, {
+      x: width,
+      y: 50
+    }, {
+      x: width,
+      y: 70
+    }, {
+      x: width,
+      y: 90
+    }, {
+      x: width,
+      y: 110
+    }, {
+      x: width,
+      y: 130
+    }, {
+      x: width,
+      y: 150
+    }, {
+      x: width,
+      y: 130
+    }, {
+      x: width,
+      y: 110
+    }, {
+      x: width,
+      y: 90
+    }, {
+      x: width,
+      y: 70
+    }, {
+      x: width,
+      y: 50
+    }], 24, 0.5)).chainAction(new SpawnWaveAction(Alien1, [{
+      x: width,
+      y: 150
+    }], 20, 0.3)).chainAction(new WaitAction(5)).chainAction(new SpawnWaveAction(AlienRed, [{
+      x: width,
+      y: 150
+    }], 20, 0.3)).chainAction(new WaitAction(15)).chainAction(new SpawnWaveAction(Snake, [{
+      x: width,
+      y: 150
+    }], 1)).chainAction(new SpawnWaveAction(Snake, [{
+      x: width,
+      y: 150
+    }], 1)).chainAction(new WaitAction(10)).chainAction(new SpawnWaveAction(WhiteSnake, [{
+      x: width,
+      y: 100
+    }], 1)).chainAction(new SpawnWaveAction(WhiteSnake, [{
+      x: width,
+      y: 150
+    }], 1)).chainAction(new SpawnWaveAction(WhiteSnake, [{
+      x: width,
+      y: 200
+    }], 1)).start();
     var width = this.game.stage.bounds.width;
   },
   createBackground: function() {

@@ -21,7 +21,6 @@ var PlayerShip = function PlayerShip(game, x, y) {
   this.bullets.createMultiple(50);
   this.bullets.setAll('checkWorldBounds', true);
   this.bullets.setAll('outOfBoundsKill', true);
-  this.sounds = {};
   this.sounds.laser = game.add.audio('laser');
   this.explosions = game.add.group();
   this.explosions.classType = Explosion;

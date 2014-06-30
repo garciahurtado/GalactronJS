@@ -51,6 +51,8 @@ class PlayState {
 		// Free font from http//mfs.sub.jp/font.html
 		// [Embed(source = "../../../assets/firewire_black.ttf", fontFamily = "firewire_black", embedAsCFF="false")] private var firewireBlackFont;
 		// [Embed(source = "../../../assets/firewire.ttf", fontFamily="firewire", embedAsCFF="false")] private var firewireFont;
+		this.game.load.script('abstracFilter', '/js/lib/pixi/abstract-filter.js');
+		this.game.load.script('filter', '/js/lib/pixi/color-matrix-filter.js');
 	}
 
 	create(){
@@ -80,7 +82,7 @@ class PlayState {
 		this.fx = this.game.add.group();
 		this.gui = this.game.add.group();
 		this.livesSprites = this.game.add.group();
-		
+
 		// camera = new FlxObject(0, 0);
 		// camera.x = 160; // place the camera in the middle of the screen
 		// camera.y = 120; 
@@ -207,7 +209,7 @@ class PlayState {
 	 * 
 	 * @param	wave
 	 */
-	addWave(x, y, enemyType, count, delay)	{
+	addWave(enemyType, spawnCoords, count, delay)	{
 		// defaults
 		delay = typeof delay !== 'undefined' ? delay : 0;
 		count = typeof count !== 'undefined' ? count : 1;
@@ -215,11 +217,12 @@ class PlayState {
 		// TODO: Extract to SpriteFactory (also in enemy-wave.js) / add recycling
 		var wave = this.waves.getFirstExists(false);
 		if(!wave){
-			wave = new EnemyWave(this.game, x, y, enemyType, count, delay);
+			wave = new EnemyWave(this.game, enemyType, spawnCoords, count, delay);
 			this.waves.add(wave);
 		}
 
-		wave.reset(x, y);
+		wave.init();
+
 		// wave.enemyType = enemyType;
 		// wave.waveSize = count;
 		// wave.spawnDelay = delay;
@@ -374,19 +377,16 @@ class PlayState {
 
 		var left = Math.floor(this.game.width / 2);
 		var top = Math.floor(this.game.height / 2);
+
+		// TODO: Text cuts off at the last pixel block
 		var txt = this.createText("GAME OVER", -400, top, 24, 'Firewire', '#FFFFFF', 'center');
 		var txt2 = this.createText("GAME OVER", -400, top, 24, 'FirewireBlack', '#FF0000', 'center');
 		
 	 	this.game.add.tween(txt).to( { x: left }, 200, Phaser.Easing.Linear.None, true, 0, false);
 	 	this.game.add.tween(txt2).to( { x: left }, 200, Phaser.Easing.Linear.None, true, 0, false);
-
-		// Tweener.addTween(txt, { x, time.2, transition"linear" } );
-		// Tweener.addTween(txt2, { x, time.2, transition"linear" } );
 		
 		var moreTxt = this.createText("PRESS ENTER TO RESTART", 500, 200);
 	 	this.game.add.tween(moreTxt).to( { x: left }, 200, Phaser.Easing.Linear.None, true, 0, false);
-
-	//		Tweener.addTween(moreTxt, { x, time.2, transition"linear" } );
 		
 		// var gradientColors = FlxGradient.createGradientArray(1, 20, [ 0xff0000ff, 0xffff00ff, 0xFFFFFF00, 0xFF00FF00 ], 1);
 		// var gradientSprite = FlxGradient.createGradientFlxSprite(100, 100, [0xffff0000, 0xffffff00], 2 ); 
@@ -411,15 +411,8 @@ class PlayState {
 	 * Add dynamic text to the screen in a specified position, and return it
 	 */
 	createText(text, x, y, size = 8, font = 'FirewireBlack', color = "#FFFFFF", align = 'center') {
-		// width = typeof width !== 'undefined' ? width : this.game.world.width;
-
-		
-		//var txt = new FlxText(x, y, FlxG.width, text);
 		var style = { font: size + "px " + font, fill: color, align: align};
-
 	  var txt = this.game.add.text(x, y, text, style);
-
-	 // txt.align = 'right';
 
 		if(align == 'center'){
 			txt.anchor.setTo(0.5, 0.5);
@@ -430,7 +423,11 @@ class PlayState {
 		return txt;
 	}
 
-	doLater(action, seconds){
-		this.game.time.events.add(Phaser.Timer.SECOND * seconds, action, this);
-	}
+	/**
+	 * Convenience method that wraps Phaser.Timer
+	 */
+	doLater(millis, action, context){
+		var context = context || this;
+		this.game.time.events.add(millis, action, context);
+  }
 }
