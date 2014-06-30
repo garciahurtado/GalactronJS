@@ -81,7 +81,6 @@ var $Level1 = Level1;
       x: width,
       y: 200
     }], 1)).start();
-    var width = this.game.stage.bounds.width;
   },
   createBackground: function() {
     var width = this.game.stage.bounds.width;

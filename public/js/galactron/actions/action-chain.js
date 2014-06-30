@@ -104,9 +104,9 @@ class ActionChain extends Action {
 	 * Stops all actions in the chain
 	 */
 	stopAll() {
-		for (var action in this.actions) {
-			action.stop();
-		}
+		for (var i = 0; i < this.actions.length; i++) {
+			this.actions[i].stop();
+		};
 		this.running = false;
 	}
 
@@ -115,7 +115,7 @@ class ActionChain extends Action {
 	 * @param	actionName
 	 */
 	switchTo(actionName) {
-		stopAll();
+		this.stopAll();
 		this.actionRegistry[actionName].start();
 		this.running = true;
 	}

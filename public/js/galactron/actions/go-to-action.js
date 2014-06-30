@@ -19,14 +19,14 @@ class GoToAction extends Action {
 	}
 
 	start() {
-		if (loop) {
-			if (--loopCounter > 0) {
-				this.target.actions.switchTo(actionName);
+		if (this.loop) {
+			if (--this.loopCounter > 0) {
+				this.target.actions.switchTo(this.actionName);
 			} else {
-				finish();
+				this.finish();
 			}
 		} else {
-			this.target.actions.switchTo(actionName);
+			this.target.actions.switchTo(this.actionName);
 		}
 
 	}

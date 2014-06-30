@@ -17,11 +17,13 @@
 		// Load graphics
 		game.load.image('player_life', 'images/galactron/player_life.png');
 		game.load.spritesheet('player', 'images/galactron/player_ship.png', 34, 25, 3);
-		game.load.spritesheet('player_flame', 'images/galactron/player_ship_flame.png', 12, 25, 2);
-		game.load.spritesheet('laser_blue', 'images/galactron/laser_blue.png', 16, 3, 1);
-		game.load.spritesheet('explosion', 'images/galactron/explosion.png', 35, 35, 6);
+		game.load.spritesheet('player_flame', 'images/galactron/fx/player_ship_flame.png', 12, 25, 2);
+		game.load.spritesheet('laser_blue', 'images/galactron/fx/laser_blue.png', 16, 3, 1);
+		game.load.spritesheet('laser_blue_beam', 'images/galactron/fx/laser_blue_beam.png', 530, 20);
+		game.load.spritesheet('explosion', 'images/galactron/fx/explosion.png', 35, 35, 6);
 		game.load.spritesheet('alien', 'images/galactron/enemies/alien.png', 20, 20);
 		game.load.spritesheet('alien_red', 'images/galactron/enemies/alien_red.png', 20, 20);
+		game.load.spritesheet('cannon_drone', 'images/galactron/enemies/cannon_drone.png', 12, 20);
 		game.load.spritesheet('floating_mine', 'images/galactron/enemies/floating_mine.png', 21, 21);
 		game.load.spritesheet('floating_mine_spike', 'images/galactron/enemies/floating_mine_spike.png', 5, 5);
 		game.load.spritesheet('red_snake_head', 'images/galactron/enemies/red_snake_head.png', 19, 24);
@@ -34,6 +36,7 @@
 		game.load.audio('explosion2', 'sounds/explosion2.mp3');
 		game.load.audio('laser', 'sounds/laser.mp3');
 		game.load.audio('dent', 'sounds/dent.mp3');
+		game.load.audio('large_beam', 'sounds/large_beam.mp3');
 	}
 	 
 	function create() {
@@ -53,7 +56,9 @@
 
 	 	// Add game states
 		game.state.add('Level1', Level1);
-	 	game.state.start('Level1');
+		game.state.add('Level2', Level2);
+
+	 	game.state.start('Level2');
 	}
 
 	/**

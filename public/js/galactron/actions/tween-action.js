@@ -11,25 +11,17 @@ class TweenAction extends Action
 	constructor(target, properties, time, transition = null) 
 	{
 		super(target);
-		if (transition == null) {
-			transition = Equations.easeNone;
-		}
-		properties['time'] = time;
-		properties['transition'] = transition;
-		properties['onComplete'] = this.finish;
-		properties['rounded'] = true;
+		this.time = time;
+		this.transition = transition;
 		this.properties = properties;
-	}
-	
-	init()
-	{
-		super.init();
-		Tweener.removeTweens(target);
 	}
 	
 	start()
 	{
 		super.start();
-		Tweener.addTween(target, properties);
+		this.anim = this.target.game.add.tween(this.target);
+    this.anim.to(this.properties, this.time, this.transition);
+    this.anim.onComplete.add(this.finish, this);
+    this.anim.start();
 	}
 }

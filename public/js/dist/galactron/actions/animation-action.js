@@ -7,28 +7,17 @@ var AnimationAction = function AnimationAction(animationName) {
   this.wait = wait;
 };
 var $AnimationAction = AnimationAction;
-($traceurRuntime.createClass)(AnimationAction, {
-  start: function() {
+($traceurRuntime.createClass)(AnimationAction, {start: function() {
     $traceurRuntime.superCall(this, $AnimationAction.prototype, "start", []);
-    target.play(animationName);
-    if (wait) {
-      target.addAnimationCallback(checkFinished);
-    } else {
-      finish();
-    }
-  },
-  checkFinished: function(currentAnimationName, currentFrame, currentFrameIndex) {
-    if (!running || finished) {
-      return;
-    }
-    if (currentAnimationName == animationName) {
-      currentAnimation = target.getCurrentAnimation();
-      if (currentFrame == (currentAnimation.frames.length - 1)) {
+    this.anim = this.target.animations.play(this.animationName);
+    if (this.wait) {
+      this.anim.onComplete.add(function() {
         this.finish();
-        finished = true;
-      }
+        console.log('Animation finished');
+      }, this);
+    } else {
+      this.finish();
     }
-  }
-}, {}, Action);
+  }}, {}, Action);
 
 //# sourceMappingURL=animation-action.js.map

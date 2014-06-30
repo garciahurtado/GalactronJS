@@ -13,34 +13,20 @@ class AnimationAction extends Action {
 	/**
 	 * When the animation starts, we check whether we should wait until it completes all
 	 * frames before starting the next action. If the action shouldn't wait, we finish() the
-	 * action right away. If it should wait, we add a callback to check for the animation to end
+	 * action right away, so the next one can start. If it should wait, we add a callback to
+	 * check to the animationComplete event.
 	 */
 	start() {
 		super.start();
-		target.play(animationName);
+		this.anim = this.target.animations.play(this.animationName);
 
-		if (wait) {
-			target.addAnimationCallback(checkFinished);
-		} else {
-			finish();
-		}
-	}
-
-	/**
-	 * Check whether the animation has finished, and if so, finish the action to that
-	 * the next action can start
-	 */
-	checkFinished(currentAnimationName, currentFrame, currentFrameIndex) {
-		if (!running || finished) {
-			return;
-		}
-		if (currentAnimationName == animationName) {
-			currentAnimation = target.getCurrentAnimation();
-
-			if (currentFrame == (currentAnimation.frames.length - 1)) {
+		if (this.wait) {
+			this.anim.onComplete.add(function(){
 				this.finish();
-				finished = true; // mark finished right away to avoid double firing the delayed finish() call
-			}
+				console.log('Animation finished');
+			}, this);
+		} else {
+			this.finish();
 		}
 	}
 }

@@ -80,32 +80,6 @@ class Level1 extends PlayState {
 		// scorpion.y = 100;
 
 		// add(scorpion);
-
-		var width = this.game.stage.bounds.width;
-
-		//this.events.addAction(new WaitAction(0.5))
-			// .chainAction(new SpawnWaveAction(this, Alien1, width, 150, 20, 0.2))
-			// .chainAction(new WaitAction(2))
-		// .chainAction( new SpawnWaveAction(this, AlienRedWave, width, 150, 20, 0.2))
-		// .chainAction( new WaitAction(5) )
-		// .chainAction( new SpawnWaveAction(this, Scorpion1, width, 150, 3, 5))
-		// .chainAction( new WaitAction(10) )
-		// .chainAction( new SpawnWaveAction(this, ArrowShipGreen, width, 150, 12, 0.3))
-		// .chainAction( new WaitAction(5) )
-		// .chainAction( new SpawnWaveAction(this, ArrowShipRed1, width, 150, 12, 0.5))
-		// .chainAction( new WaitAction(10) )
-		// .chainAction( new SpawnWaveAction(this, CannonDrone1, width, 40, 1, 0))
-		// .chainAction( new WaitAction(1) )
-		// .chainAction( new SpawnWaveAction(this, CannonDrone1, width, 80, 1, 0))
-		// .chainAction( new WaitAction(1) )
-		// .chainAction( new SpawnWaveAction(this, CannonDrone1, width, 120, 1, 0))
-		// .chainAction( new WaitAction(1) )
-		// .chainAction( new SpawnWaveAction(this, CannonDrone1, width, 160, 1, 0))
-		// .chainAction( new SpawnWaveAction(this, Freighter1, width - 50, -30, 1, 0))
-		// .chainAction( new WaitAction(3) )
-		// .chainAction( new SpawnWaveAction(this, Scorpion1, width, 100, 4, 2))
-		// .chainAction( new WaitAction(2))
-		//.start();
 	}
 
 	/**

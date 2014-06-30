@@ -56,13 +56,14 @@ var $ActionChain = ActionChain;
     }
   },
   stopAll: function() {
-    for (var action in this.actions) {
-      action.stop();
+    for (var i = 0; i < this.actions.length; i++) {
+      this.actions[i].stop();
     }
+    ;
     this.running = false;
   },
   switchTo: function(actionName) {
-    stopAll();
+    this.stopAll();
     this.actionRegistry[actionName].start();
     this.running = true;
   },
