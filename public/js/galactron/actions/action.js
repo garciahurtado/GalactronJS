@@ -55,14 +55,14 @@ class Action extends Phaser.Sprite {
 	}
 
 	/**
-	 * Stops executing the action and calls the finish handler, if one is set.
+	 * Called when the action is done executing. It calls the finish handler, if one is set.
+	 * It also resets the action to its default state via init();
 	 */
 	finish() {
-		this.stop();
-
 		if (this.finishHandler != null) {
 			this.finishHandler();
 		}
+		this.init();
 	}
 
 	/**

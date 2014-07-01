@@ -18,7 +18,15 @@ class AnimationAction extends Action {
 	 */
 	start() {
 		super.start();
-		this.anim = this.target.animations.play(this.animationName);
+
+		this.anim = this.target.animations.getAnimation(this.animationName);
+
+		if(!this.anim){
+			console.log('Unable to find animation named ' + this.animationName + ' in target');
+			return;
+		}
+
+		this.target.animations.play(this.animationName);
 
 		if (this.wait) {
 			this.anim.onComplete.add(function(){

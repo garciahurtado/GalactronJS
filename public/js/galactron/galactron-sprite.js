@@ -42,6 +42,9 @@ class GalactronSprite extends Phaser.Sprite {
 		this.init();
 	}
 
+	/**
+	 * Init should restart the action chain
+	 */
 	init() {
 		if (this.actions) {
 			this.actions.start();

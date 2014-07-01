@@ -15,6 +15,7 @@ var $SpawnWaveAction = SpawnWaveAction;
     $traceurRuntime.superCall(this, $SpawnWaveAction.prototype, "start", []);
     var state = this.game.state.getCurrentState();
     this.wave = state.addWave(this.enemyClass, this.spawnCoords, this.waveSize, this.delay);
+    this.wave.bullets = state.enemyBullets;
   },
   update: function() {
     $traceurRuntime.superCall(this, $SpawnWaveAction.prototype, "update", []);

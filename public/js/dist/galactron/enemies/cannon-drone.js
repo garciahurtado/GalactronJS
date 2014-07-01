@@ -13,7 +13,10 @@ var CannonDrone = function CannonDrone(game) {
   this.laser = new BlueLaserBeam(game, x, y);
   this.laser.x = -534;
   this.laser.y = -1000;
+  this.bullets.add(this.laser);
   this.addChild(this.laser);
+  this.actions.addAction(new TweenAction(this, {x: 310}, 1000, Phaser.Easing.Sinusoidal.Out)).chainAction(new WaitAction(0.5)).chainAction(new StopMotionAction()).chainAction(new AnimationAction("open"), "openLaser").chainAction(new WaitAction(0.5)).chainAction(new MethodAction(this.laserOn)).chainAction(new WaitAction(2)).chainAction(new MethodAction(this.laserOff)).chainAction(new AnimationAction("close"), "close").chainAction(new WaitAction(1)).chainAction(new GoToAction("openLaser", 1)).chainAction(new TweenAction(this, {x: -50}, 2000, Phaser.Easing.Sinusoidal.In));
+  ;
 };
 var $CannonDrone = CannonDrone;
 ($traceurRuntime.createClass)(CannonDrone, {
@@ -23,9 +26,6 @@ var $CannonDrone = CannonDrone;
     this.health = 50;
     this.score = 300;
     this.speed = 30;
-    this.actions.addAction(new TweenAction(this.velocity, {x: 310}, 1000, Phaser.Easing.Sinusoidal.Out)).chainAction(new WaitAction(0.5)).chainAction(new StopMotionAction()).chainAction(new AnimationAction("open"), "open").chainAction(new WaitAction(0.5)).chainAction(new MethodAction(this.laserOn)).chainAction(new WaitAction(2)).chainAction(new MethodAction(this.laserOff)).chainAction(new AnimationAction("close"), "close").chainAction(new WaitAction(1)).chainAction(new GoToAction("open", 2)).chainAction(new TweenAction(this.velocity, {x: -30}, 1000, Phaser.Easing.Sinusoidal.In));
-    ;
-    this.actions.start();
   },
   laserOn: function() {
     this.sounds.laser.play();

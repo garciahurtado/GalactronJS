@@ -10,10 +10,10 @@ var TweenAction = function TweenAction(target, properties, time) {
 var $TweenAction = TweenAction;
 ($traceurRuntime.createClass)(TweenAction, {start: function() {
     $traceurRuntime.superCall(this, $TweenAction.prototype, "start", []);
-    this.anim = this.target.game.add.tween(this.target);
-    this.anim.to(this.properties, this.time, this.transition);
-    this.anim.onComplete.add(this.finish, this);
-    this.anim.start();
+    this.tween = this.target.game.add.tween(this.target);
+    this.tween.to(this.properties, this.time, this.transition);
+    this.tween.onComplete.add(this.finish, this);
+    this.tween.start();
   }}, {}, Action);
 
 //# sourceMappingURL=tween-action.js.map

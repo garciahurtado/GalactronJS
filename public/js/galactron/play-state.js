@@ -71,6 +71,8 @@ class PlayState {
 
 		this.enemies = this.game.add.group();
 		this.enemyBullets = this.game.add.group();
+		this.enemyBullets.physicsBodyType = Phaser.Physics.ARCADE;
+		this.game.physics.arcade.enable(this.enemyBullets);
 
 		this.playerBullets = this.game.add.group();
 		this.playerBullets.physicsBodyType = Phaser.Physics.ARCADE;
@@ -198,6 +200,8 @@ class PlayState {
 		// check whether the player was hit by enemies or enemy bullets
 		if(!this.player.flickering){ // player is not immune
 			this.game.physics.arcade.overlap(this.enemies.children[0], this.player, this.playerHit, null, this);
+			this.game.physics.arcade.overlap(this.enemyBullets.children[0], this.player, this.playerHit, null, this);
+			console.log('Length of bullets: ' + this.enemyBullets.children[0].length);
 			// FlxG.overlap(player, enemies, playerHit);
 			// FlxG.overlap(player, enemyBullets, playerHit);
 		}

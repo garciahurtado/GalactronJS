@@ -14,12 +14,8 @@ class WaitAction extends Action {
 	}
 	
 	init()	{
-		super.init();
+		super();
 		this.timer = 0;
-	}
-	
-	start()	{
-		super.start();
 	}
 	
 	/**

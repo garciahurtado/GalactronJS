@@ -36,6 +36,8 @@ var PlayState = function PlayState(game) {
     this.waves = this.game.add.group();
     this.enemies = this.game.add.group();
     this.enemyBullets = this.game.add.group();
+    this.enemyBullets.physicsBodyType = Phaser.Physics.ARCADE;
+    this.game.physics.arcade.enable(this.enemyBullets);
     this.playerBullets = this.game.add.group();
     this.playerBullets.physicsBodyType = Phaser.Physics.ARCADE;
     this.game.physics.arcade.enable(this.playerBullets);
@@ -85,6 +87,8 @@ var PlayState = function PlayState(game) {
     this.game.physics.arcade.overlap(this.playerBullets, this.enemies.children, this.enemyHit, null, this);
     if (!this.player.flickering) {
       this.game.physics.arcade.overlap(this.enemies.children[0], this.player, this.playerHit, null, this);
+      this.game.physics.arcade.overlap(this.enemyBullets.children[0], this.player, this.playerHit, null, this);
+      console.log('Length of bullets: ' + this.enemyBullets.children[0].length);
     }
   },
   addWave: function(enemyType, spawnCoords, count, delay) {

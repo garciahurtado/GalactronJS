@@ -11,9 +11,6 @@ var $WaitAction = WaitAction;
     $traceurRuntime.superCall(this, $WaitAction.prototype, "init", []);
     this.timer = 0;
   },
-  start: function() {
-    $traceurRuntime.superCall(this, $WaitAction.prototype, "start", []);
-  },
   update: function() {
     this.timer += this.game.time.elapsed / 1000;
     if (this.timer > this.timeout) {

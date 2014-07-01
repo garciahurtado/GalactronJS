@@ -28,10 +28,10 @@ var $Action = Action;
     this.running = false;
   },
   finish: function() {
-    this.stop();
     if (this.finishHandler != null) {
       this.finishHandler();
     }
+    this.init();
   },
   onFinish: function(handler) {
     this.finishHandler = handler;

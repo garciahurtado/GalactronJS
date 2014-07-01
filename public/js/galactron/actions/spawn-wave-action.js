@@ -21,6 +21,7 @@ class SpawnWaveAction extends Action {
 		super.start();
 		var state = this.game.state.getCurrentState();
 		this.wave = state.addWave(this.enemyClass, this.spawnCoords, this.waveSize, this.delay);
+		this.wave.bullets = state.enemyBullets;
 	}
 
 	/**

@@ -8,26 +8,26 @@
  */
 class GoToAction extends Action {
 	// actionNam
-	// loop; // False for infinite loops, int for running the specified number of loops
+	// repeat; // False for infinite repeats, int for running the specified number of loops
 	// loopCounter;
 
-	constructor(actionName, loop = 0) {
+	constructor(actionName, repeat = 0) {
 		super();
-		this.loop = loop;
-		this.loopCounter = loop;
+		this.repeat = repeat;
+		this.repeatCounter = 0;
 		this.actionName = actionName;
 	}
 
 	start() {
-		if (this.loop) {
-			if (--this.loopCounter > 0) {
+		if (this.repeat) {
+			if (this.repeatCounter++ < this.repeat) {
 				this.target.actions.switchTo(this.actionName);
 			} else {
-				this.finish();
+				// we've repeated the loop the requested number of times, so give way to the next action
+				this.finish(); 
 			}
 		} else {
 			this.target.actions.switchTo(this.actionName);
 		}
-
 	}
 }
