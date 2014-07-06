@@ -8,5 +8,7 @@ Phaser.Group = Phaser.Group || {};
  * Merges the children of another Phaser.Group into this one
  */
 Phaser.Group.prototype.merge = function(other) {
-	this.children = this.children.concat(other.children);
+	if(other && other.children instanceof Array){
+		this.children = this.children.concat(other.children);
+	}
 }

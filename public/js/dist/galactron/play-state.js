@@ -54,15 +54,6 @@ var PlayState = function PlayState(game) {
     this.enableInput();
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
   },
-  enableInput: function() {
-    this.controls = this.game.input.keyboard.createCursorKeys();
-    this.controls.fire = this.game.input.keyboard.addKey(Phaser.Keyboard.CONTROL);
-    this.controls.enter = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
-    this.controls.pause = this.game.input.keyboard.addKey(Phaser.Keyboard.P);
-    this.controls.pause.onDown.add(function() {
-      this.game.paused = !this.game.paused;
-    }, this);
-  },
   createHud: function() {
     var offset = 0;
     for (var i = 0; i < this.lives; i++) {
@@ -86,7 +77,7 @@ var PlayState = function PlayState(game) {
     if (this.isGameOver) {
       return;
     }
-    this.game.physics.arcade.overlap(this.playerBullets, this.enemies.children, this.enemyHit, null, this);
+    this.game.physics.arcade.overlap(this.playerBullets, this.enemies, this.enemyHit, null, this);
     if (!this.player.flickering && this.player.exists) {
       this.game.physics.arcade.overlap(this.enemies, this.player, this.playerHit, null, this);
       this.game.physics.arcade.overlap(this.enemyBullets, this.player, this.playerHit, null, this);
@@ -107,15 +98,15 @@ var PlayState = function PlayState(game) {
     wave.player = this.player;
     return wave;
   },
-  enemyHit: function(enemy, bullet) {
+  enemyHit: function(bullet, enemy) {
     bullet.kill();
     enemy.damage(bullet.power);
     if (!enemy.alive) {
       this.addScore(enemy.score);
     }
   },
-  playerHit: function(enemy, player) {
-    if (!player.exists) {
+  playerHit: function(player, enemy) {
+    if (player.alive == false) {
       return;
     }
     this.player.kill();
@@ -174,8 +165,8 @@ var PlayState = function PlayState(game) {
   },
   spawnPlayer: function() {
     this.player = new PlayerShip(this.game, 0, 100);
-    this.player.body.velocity.x = 100;
     this.player.flicker(3);
+    this.player.body.velocity.x = 100;
     this.playerBullets = this.player.bullets;
     this.player.body.collideWorldBounds = true;
     this.playerLayer.add(this.player);
@@ -191,28 +182,10 @@ var PlayState = function PlayState(game) {
     var moreTxt = this.createText("PRESS ENTER TO RESTART", 500, 200);
     this.game.add.tween(moreTxt).to({x: left}, 200, Phaser.Easing.Linear.None, true, 0, false);
   },
-  createText: function(text, x, y) {
-    var size = arguments[3] !== (void 0) ? arguments[3] : 8;
-    var font = arguments[4] !== (void 0) ? arguments[4] : 'FirewireBlack';
-    var color = arguments[5] !== (void 0) ? arguments[5] : "#FFFFFF";
-    var align = arguments[6] !== (void 0) ? arguments[6] : 'center';
-    var style = {
-      font: size + "px " + font,
-      fill: color,
-      align: align
-    };
-    var txt = this.game.add.text(x, y, text, style);
-    if (align == 'center') {
-      txt.anchor.setTo(0.5, 0.5);
-    } else if (align == 'right') {
-      txt.anchor.setTo(1, 1);
-    }
-    return txt;
-  },
   doLater: function(millis, action, context) {
     var context = context || this;
     this.game.time.events.add(millis, action, context);
   }
-}, {});
+}, {}, GameState);
 
 //# sourceMappingURL=play-state.js.map

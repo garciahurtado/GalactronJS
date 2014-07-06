@@ -16,8 +16,8 @@ var $FloatingMineSpike = FloatingMineSpike;
     this.health = 1000;
     this.moves = false;
     this.body.speed = 0;
-    this.actions.addAction(new WaitAction(1)).chainAction(new MethodAction(function() {
-      this.body.velocity.y = -50;
+    this.actions.chainAction(new MethodAction(function() {
+      this.body.velocity.x = -200;
     }));
     ;
   }}, {}, Enemy);

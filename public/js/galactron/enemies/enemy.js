@@ -82,8 +82,6 @@ class Enemy extends GalactronSprite {
 	 * a couple of times in a row.
 	 */
 	damageAnimation() {
-
-		//FlxG.play(dentSound);
 		this.sounds.dent.play(); 
 		this.doLater(0, this.fillWhite, this);
 		this.doLater(30, this.resetFilters, this);

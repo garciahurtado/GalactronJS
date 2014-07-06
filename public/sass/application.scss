@@ -39,6 +39,17 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'EditUndoLine';
+    src: url('/fonts/edunline-webfont.eot');
+    src: url('/fonts/edunline-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/fonts/edunline-webfont.woff') format('woff'),
+         url('/fonts/edunline-webfont.ttf') format('truetype'),
+         url('/fonts/edunline-webfont.svg#edit_undo_line_brkregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
 	font-family: "Verdana", sans-serif;
 	font-size: 16px;

@@ -41,9 +41,10 @@ var __moduleName = "public/js/dist/galactron/galactron";
     game.stage.smoothed = false;
     game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
     game.scale.setScreenSize(true);
+    game.state.add('MenuState', MenuState);
     game.state.add('Level1', Level1);
     game.state.add('Level2', Level2);
-    game.state.start('Level1');
+    game.state.start('MenuState');
   }
   function addSprite(sprite) {
     game.add.existing(sprite);

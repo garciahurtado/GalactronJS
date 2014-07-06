@@ -55,10 +55,11 @@
 	 	game.scale.setScreenSize(true);
 
 	 	// Add game states
+		game.state.add('MenuState', MenuState);
 		game.state.add('Level1', Level1);
 		game.state.add('Level2', Level2);
 
-	 	game.state.start('Level1');
+	 	game.state.start('MenuState');
 	}
 
 	/**

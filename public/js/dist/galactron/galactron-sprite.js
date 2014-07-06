@@ -6,6 +6,8 @@ var GalactronSprite = function GalactronSprite(game) {
   var graphic = arguments[3];
   this.math = game.math;
   this.flickering = false;
+  this.flickerFreq = 30;
+  this.flickerTimer = 0;
   $traceurRuntime.superCall(this, $GalactronSprite.prototype, "constructor", [game, x, y, graphic]);
   this.actions = new ActionChain(game, this);
   game.add.existing(this.actions);
@@ -15,7 +17,12 @@ var $GalactronSprite = GalactronSprite;
 ($traceurRuntime.createClass)(GalactronSprite, {
   flicker: function() {
     var seconds = arguments[0] !== (void 0) ? arguments[0] : 0;
+    var frequency = arguments[1];
+    if (frequency) {
+      this.flickerFreq = frequency;
+    }
     this.flickering = true;
+    this.flickerTimer = 0;
     if (seconds) {
       this.game.time.events.add(Phaser.Timer.SECOND * seconds, function() {
         this.flickering = false;
@@ -26,11 +33,15 @@ var $GalactronSprite = GalactronSprite;
   update: function() {
     $traceurRuntime.superCall(this, $GalactronSprite.prototype, "update", []);
     if (this.flickering) {
-      this.alpha = this.alpha ? 0 : 1;
+      this.flickerTimer += this.game.time.elapsed;
+      if (this.flickerTimer > this.flickerFreq) {
+        this.alpha = this.alpha ? 0 : 1;
+        this.flickerTimer = 0;
+      }
     }
   },
-  reset: function(x, y, health) {
-    $traceurRuntime.superCall(this, $GalactronSprite.prototype, "reset", [x, y, health]);
+  reset: function(x, y) {
+    $traceurRuntime.superCall(this, $GalactronSprite.prototype, "reset", [x, y, this.health]);
     this.init();
   },
   init: function() {
@@ -39,6 +50,7 @@ var $GalactronSprite = GalactronSprite;
     }
   },
   damage: function(amount) {
+    console.log('Damaging by ' + amount);
     $traceurRuntime.superCall(this, $GalactronSprite.prototype, "damage", [amount]);
     if (this.alive) {
       this.damageAnimation();
@@ -55,6 +67,9 @@ var $GalactronSprite = GalactronSprite;
   },
   deathAnimation: function() {
     return;
+  },
+  revive: function() {
+    $traceurRuntime.superCall(this, $GalactronSprite.prototype, "revive", [this.health]);
   },
   angleTo: function(target) {
     return this.math.angleBetweenPoints(this, target);

@@ -2,6 +2,8 @@ class GalactronSprite extends Phaser.Sprite {
 	constructor(game, x = 0, y = 0, graphic) {
 		this.math = game.math; // convenience
 		this.flickering = false;
+		this.flickerFreq = 30; // number of millis between flicker flashes
+		this.flickerTimer = 0;
 
 		super(game, x, y, graphic);
 		this.actions = new ActionChain(game, this);
@@ -13,8 +15,13 @@ class GalactronSprite extends Phaser.Sprite {
 	/**
 	 * Flicker the sprite quickly for a certain amount of time, by turning the visibility on and off
 	 */
-	flicker(seconds = 0){
+	flicker(seconds = 0, frequency){
+		if(frequency){
+			this.flickerFreq = frequency;
+		}
+		
 		this.flickering = true;
+		this.flickerTimer = 0;
 
 		if(seconds){
 			this.game.time.events.add(Phaser.Timer.SECOND * seconds, function() {
@@ -25,20 +32,24 @@ class GalactronSprite extends Phaser.Sprite {
 	}
 
 	/**
-	 * Override to add flickering functionality
+	 * Overrides parent to add flickering functionality
 	 */
 	update(){
 		super.update();
 		if(this.flickering){
-			this.alpha = this.alpha ? 0 : 1;
+			this.flickerTimer += this.game.time.elapsed;
+			if(this.flickerTimer > this.flickerFreq){
+				this.alpha = this.alpha ? 0 : 1; // flip alpha between 0 and 1 every other frame
+				this.flickerTimer = 0;
+			}
 		}
 	}
 
 	/**
 	 * Refactor: combine with init?
 	 */
-	reset(x, y, health) {
-		super(x, y, health);
+	reset(x, y) {
+		super(x, y, this.health);
 		this.init();
 	}
 
@@ -56,6 +67,7 @@ class GalactronSprite extends Phaser.Sprite {
 	 * @param	amount. Number of health points to substract from entity
 	 */
 	damage(amount) {
+		console.log('Damaging by ' + amount);
 		super.damage(amount);
 
 		if (this.alive) {
@@ -88,6 +100,10 @@ class GalactronSprite extends Phaser.Sprite {
 	 */
 	deathAnimation() {
 		return;
+	}
+
+	revive(){
+		super(this.health);
 	}
 
 	/* ------------- PHYSICS --------------------*/

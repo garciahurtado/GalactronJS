@@ -9,7 +9,7 @@
  * 
  * @author Garcia Hurtado
  */
-class PlayState {
+class PlayState extends GameState {
 
 	constructor(game){
 		this.camera;
@@ -116,22 +116,6 @@ class PlayState {
 
  		this.game.physics.startSystem(Phaser.Physics.ARCADE);
 	}
-
-	/**
-	 * Wire up the keyboard controls 
-	 */
-	enableInput() {
-		// create controls
-	 	this.controls = this.game.input.keyboard.createCursorKeys();
-	 	this.controls.fire = this.game.input.keyboard.addKey(Phaser.Keyboard.CONTROL);
-	 	this.controls.enter = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
-
-	 	// Add Pause key
-	 	this.controls.pause = this.game.input.keyboard.addKey(Phaser.Keyboard.P);
-	 	this.controls.pause.onDown.add(function(){
-		  this.game.paused = !this.game.paused;
-		}, this);
-	}
 		
 	/**
 	 * Creates the lives / score display on the top layer of the screen
@@ -194,11 +178,8 @@ class PlayState {
 		// // did we pick up a powerup?
 		// FlxG.overlap(player, powerups, powerUp);
 
-		// check whether any player bullets hit an enemy
-		// this.playerBullets.overlap(this.enemies, this.enemyHit, this);
-
 		// TODO: figure out how to do collision detection with nested groups (this.enemies instead of this.enemies.children)
-		this.game.physics.arcade.overlap(this.playerBullets, this.enemies.children, this.enemyHit, null, this);
+		this.game.physics.arcade.overlap(this.playerBullets, this.enemies, this.enemyHit, null, this);
 		
 		// check whether the player was hit by enemies or enemy bullets
 		if(!this.player.flickering && this.player.exists){ // player is not immune
@@ -247,7 +228,7 @@ class PlayState {
 	 * @param	bullet
 	 * @param	enemy
 	 */
-	enemyHit(enemy, bullet) {
+	enemyHit(bullet, enemy) {
 		bullet.kill();
 		enemy.damage(bullet.power);
 		
@@ -262,11 +243,11 @@ class PlayState {
 	 * @param	player
 	 * @param	enemy
 	 */
-	playerHit(enemy, player) {
+	playerHit(player, enemy) {
 		// this callback may be called once the player is already dead, 
 		// to prevent a double kill, we check early whether the player
 		// is alive
-		if(!player.exists){
+		if(player.alive == false){
 			return;
 		}
 
@@ -361,8 +342,8 @@ class PlayState {
 	 */
 	spawnPlayer() {
 		this.player = new PlayerShip(this.game, 0, 100);
-		this.player.body.velocity.x = 100;
 		this.player.flicker(3);
+		this.player.body.velocity.x = 100;
 
 		// player.enemies = enemies; 
 		//player.spriteFactory = spriteFactory;
@@ -415,22 +396,6 @@ class PlayState {
 
 		//FlxDisplay.alphaMask(gradientSprite.pixels, txt.pixels, maskedGradient);
 		//FlxGradient.overlayGradientOnBitmapData(this.player.pixels, 100, 100, gradientColors);
-	}
-
-	/**
-	 * Add dynamic text to the screen in a specified position, and return it
-	 */
-	createText(text, x, y, size = 8, font = 'FirewireBlack', color = "#FFFFFF", align = 'center') {
-		var style = { font: size + "px " + font, fill: color, align: align};
-	  var txt = this.game.add.text(x, y, text, style);
-
-		if(align == 'center'){
-			txt.anchor.setTo(0.5, 0.5);
-		} else if(align == 'right'){
-			txt.anchor.setTo(1, 1);
-		}
-
-		return txt;
 	}
 
 	/**

@@ -89,6 +89,8 @@ class EnemyWave extends Phaser.Sprite {
 
 		if (!enemy) {
 			enemy = new this.enemyType(this.game, 0, 0);
+			this.enemies.merge(enemy.children);
+			//enemy.children = this.enemies; // so that subsprites will also collide with player
 			this.enemies.add(enemy);
 		}
 		var current = this.spawnCoords[this.spawnCoordsIndex];

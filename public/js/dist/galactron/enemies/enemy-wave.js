@@ -41,6 +41,7 @@ var $EnemyWave = EnemyWave;
     var enemy = this.enemies.getFirstDead(false);
     if (!enemy) {
       enemy = new this.enemyType(this.game, 0, 0);
+      this.enemies.merge(enemy.children);
       this.enemies.add(enemy);
     }
     var current = this.spawnCoords[this.spawnCoordsIndex];
