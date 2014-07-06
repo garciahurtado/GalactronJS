@@ -23,7 +23,8 @@ class FloatingMineSpike extends Enemy {
 
 		this.actions.addAction(new WaitAction(1))
 			.chainAction(new MethodAction(function() {
-				this.body.speed = 50; 
+				this.body.velocity.y = -50;
+				// this.body.speed = 50; 
 			}))
 			;
 			

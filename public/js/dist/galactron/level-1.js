@@ -59,7 +59,7 @@ var $Level1 = Level1;
     }, {
       x: width,
       y: 50
-    }], 24, 0.5)).chainAction(new SpawnWaveAction(Alien1, [{
+    }], 1, 0.5)).chainAction(new SpawnWaveAction(Alien1, [{
       x: width,
       y: 150
     }], 20, 0.3)).chainAction(new WaitAction(5)).chainAction(new SpawnWaveAction(AlienRed, [{

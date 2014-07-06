@@ -107,14 +107,14 @@ var PlayState = function PlayState(game) {
     wave.player = this.player;
     return wave;
   },
-  enemyHit: function(bullet, enemy) {
+  enemyHit: function(enemy, bullet) {
     bullet.kill();
     enemy.damage(bullet.power);
     if (!enemy.alive) {
       this.addScore(enemy.score);
     }
   },
-  playerHit: function(player, enemy) {
+  playerHit: function(enemy, player) {
     if (!player.exists) {
       return;
     }

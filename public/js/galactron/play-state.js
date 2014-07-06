@@ -247,7 +247,7 @@ class PlayState {
 	 * @param	bullet
 	 * @param	enemy
 	 */
-	enemyHit(bullet, enemy) {
+	enemyHit(enemy, bullet) {
 		bullet.kill();
 		enemy.damage(bullet.power);
 		
@@ -262,7 +262,7 @@ class PlayState {
 	 * @param	player
 	 * @param	enemy
 	 */
-	playerHit(player, enemy) {
+	playerHit(enemy, player) {
 		// this callback may be called once the player is already dead, 
 		// to prevent a double kill, we check early whether the player
 		// is alive

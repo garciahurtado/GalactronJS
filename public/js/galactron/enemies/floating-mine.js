@@ -27,14 +27,13 @@ class FloatingMine extends Enemy {
 		super.init();
 		this.body.velocity.x = -50;
 		this.score = 50;
-		this.health = 1000;
+		this.health = 50;
 	}
 
 	/**
 	 * Overrides parent
 	 */
 	damage(amount){
-		console.log('Enemy damaged');
 		super.damage(amount);
 
 		this.spikeLeft.actions.start();

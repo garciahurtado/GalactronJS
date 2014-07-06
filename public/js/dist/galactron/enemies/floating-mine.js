@@ -19,10 +19,9 @@ var $FloatingMine = FloatingMine;
     $traceurRuntime.superCall(this, $FloatingMine.prototype, "init", []);
     this.body.velocity.x = -50;
     this.score = 50;
-    this.health = 1000;
+    this.health = 50;
   },
   damage: function(amount) {
-    console.log('Enemy damaged');
     $traceurRuntime.superCall(this, $FloatingMine.prototype, "damage", [amount]);
     this.spikeLeft.actions.start();
     this.spikeTop.actions.start();
