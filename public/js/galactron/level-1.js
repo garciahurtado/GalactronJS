@@ -61,7 +61,7 @@ class Level1 extends PlayState {
 			.chainAction(new SpawnWaveAction(Alien1, [{x:width, y:150}], 20, 0.3))
 			.chainAction(new WaitAction(5))
 			.chainAction(new SpawnWaveAction(AlienRed, [{x:width, y:150}], 20, 0.3))
-			.chainAction(new WaitAction(15))
+			.chainAction(new WaitAction(5))
 			.chainAction(new SpawnWaveAction(Snake, [{x:width, y:150}], 1))
 			.chainAction(new SpawnWaveAction(Snake, [{x:width, y:150}], 1))
 			.chainAction(new WaitAction(10))

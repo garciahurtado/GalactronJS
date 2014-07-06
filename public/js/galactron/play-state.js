@@ -70,6 +70,9 @@ class PlayState {
 		this.waves = this.game.add.group();
 
 		this.enemies = this.game.add.group();
+		this.enemies.physicsBodyType = Phaser.Physics.ARCADE;
+		this.enemies.enableBody = true;
+		
 		this.enemyBullets = this.game.add.group();
 		this.enemyBullets.physicsBodyType = Phaser.Physics.ARCADE;
 		this.game.physics.arcade.enable(this.enemyBullets);
@@ -198,27 +201,30 @@ class PlayState {
 		this.game.physics.arcade.overlap(this.playerBullets, this.enemies.children, this.enemyHit, null, this);
 		
 		// check whether the player was hit by enemies or enemy bullets
-		if(!this.player.flickering){ // player is not immune
-			this.game.physics.arcade.overlap(this.enemies.children[0], this.player, this.playerHit, null, this);
-			this.game.physics.arcade.overlap(this.enemyBullets.children[0], this.player, this.playerHit, null, this);
-			console.log('Length of bullets: ' + this.enemyBullets.children[0].length);
+		if(!this.player.flickering && this.player.exists){ // player is not immune
+			// Did any enemies hit the player?
+			this.game.physics.arcade.overlap(this.enemies, this.player, this.playerHit, null, this);
+
+			// Did any enemy bullets hit the player?
+			this.game.physics.arcade.overlap(this.enemyBullets, this.player, this.playerHit, null, this);
 			// FlxG.overlap(player, enemies, playerHit);
 			// FlxG.overlap(player, enemyBullets, playerHit);
 		}
 	}
 
 	/**
-	 * Adds a new wave to the game, adds the wave's bullets to the collision array, and the wave's enemies
-	 * and powerups to the playstate
+	 * Adds a new wave to the game, and passes the enemies and bullets groups to the wave to use.
 	 * 
-	 * @param	wave
+	 * @param	enemyType Class of the enemy this wave will spawn
+	 * @param spawnCoords List of coordinates to spawn enemies in
+	 * @param count Maximum number of enemies to spawn
+	 * @param delay Amount of time to wait between enemy spawns
 	 */
-	addWave(enemyType, spawnCoords, count, delay)	{
+	spawnWave(enemyType, spawnCoords, count, delay)	{
 		// defaults
 		delay = typeof delay !== 'undefined' ? delay : 0;
 		count = typeof count !== 'undefined' ? count : 1;
 
-		// TODO: Extract to SpriteFactory (also in enemy-wave.js) / add recycling
 		var wave = this.waves.getFirstExists(false);
 		if(!wave){
 			wave = new EnemyWave(this.game, enemyType, spawnCoords, count, delay);
@@ -226,19 +232,11 @@ class PlayState {
 		}
 
 		wave.init();
-
-		// wave.enemyType = enemyType;
-		// wave.waveSize = count;
-		// wave.spawnDelay = delay;
-		
+		this.enemies.merge(wave.enemies);
+		wave.enemies = this.enemies; // share the enemies group among all waves, for easy collision 
+		wave.bullets = this.enemyBullets; // similarly, share bullets among all waves
 		wave.player = this.player;
-//		wave.spriteFactory = spriteFactory;
-		// add(wave.fx);
 		
-		this.enemies.add(wave.enemies);
-		this.enemyBullets.add(wave.bullets);
-
-	
 	// powerups.add(wave.powerups);
 
 		return wave;
@@ -259,12 +257,19 @@ class PlayState {
 	}
 
 	/**
-	 * Called when any enemies, enemy bullets or objects hit the player
+	 * Called whenever enemies, enemy bullets or objects hit the player
 	 * 
 	 * @param	player
 	 * @param	enemy
 	 */
 	playerHit(player, enemy) {
+		// this callback may be called once the player is already dead, 
+		// to prevent a double kill, we check early whether the player
+		// is alive
+		if(!player.exists){
+			return;
+		}
+
 		this.player.kill();
 		
 		// update the lives counter in the HUD
@@ -274,6 +279,7 @@ class PlayState {
 		
 		var sec = Phaser.Timer.SECOND;
 		var self = this;
+
 		if (this.lives > 0) {
     	this.game.time.events.add(sec * 2, function() {
 				this.spawnPlayer(); // wait 2 seconds before respawn

@@ -4,6 +4,7 @@ var EnemyWave = function EnemyWave(game, enemyType, spawnCoords) {
   var waveSize = arguments[3] !== (void 0) ? arguments[3] : 1;
   var spawnDelay = arguments[4] !== (void 0) ? arguments[4] : 0;
   $traceurRuntime.superCall(this, $EnemyWave.prototype, "constructor", [game]);
+  this.playState = game.state.getCurrentState();
   this.enableBody = true;
   game.physics.enable(this, Phaser.Physics.ARCADE);
   this.game = game;
@@ -42,12 +43,12 @@ var $EnemyWave = EnemyWave;
       enemy = new this.enemyType(this.game, 0, 0);
       this.enemies.add(enemy);
     }
-    enemy.revive();
     var current = this.spawnCoords[this.spawnCoordsIndex];
     enemy.reset(current.x, current.y);
     if (++this.spawnCoordsIndex >= this.spawnCoords.length) {
       this.spawnCoordsIndex = 0;
     }
+    this.bullets.merge(enemy.bullets);
     enemy.bullets = this.bullets;
     enemy.player = this.player;
     enemy.wave = this;
@@ -57,7 +58,7 @@ var $EnemyWave = EnemyWave;
   onEnemyKill: function(enemy) {},
   kill: function() {
     $traceurRuntime.superCall(this, $EnemyWave.prototype, "kill", []);
-    if (playState) {}
+    if (this.playState) {}
   },
   dropPowerUp: function(x, y) {
     powerup = recycle(PowerUp);

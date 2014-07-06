@@ -4,7 +4,6 @@
 class PlayerShip extends GalactronSprite {
   constructor(game, x, y){
     super(game, x, y, 'player');
-
     this.x = x;
     this.y = y;
 
@@ -103,7 +102,7 @@ class PlayerShip extends GalactronSprite {
 
   /**
    * Rounds the x,y position of the Physics body. This is done to avoid subpixel rendering artifacts,
-   * caused by the fact that we are rendering sprites at 2x zoom for retro effect.
+   * caused by rendering sprites at 2x zoom (retro effect).
    */
   update(){
     super.update();

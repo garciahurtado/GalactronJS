@@ -14,8 +14,7 @@ var CannonDrone = function CannonDrone(game) {
   this.laser.x = -534;
   this.laser.y = -1000;
   this.bullets.add(this.laser);
-  this.addChild(this.laser);
-  this.actions.addAction(new TweenAction(this, {x: 310}, 1000, Phaser.Easing.Sinusoidal.Out)).chainAction(new WaitAction(0.5)).chainAction(new StopMotionAction()).chainAction(new AnimationAction("open"), "openLaser").chainAction(new WaitAction(0.5)).chainAction(new MethodAction(this.laserOn)).chainAction(new WaitAction(2)).chainAction(new MethodAction(this.laserOff)).chainAction(new AnimationAction("close"), "close").chainAction(new WaitAction(1)).chainAction(new GoToAction("openLaser", 1)).chainAction(new TweenAction(this, {x: -50}, 2000, Phaser.Easing.Sinusoidal.In));
+  this.actions.addAction(new TweenAction(this, {x: 310}, 1000, Phaser.Easing.Sinusoidal.Out)).chainAction(new WaitAction(0.5)).chainAction(new StopMotionAction()).chainAction(new AnimationAction("open"), "openLaser").chainAction(new WaitAction(0.5)).chainAction(new MethodAction(this.laserOn)).chainAction(new WaitAction(2)).chainAction(new MethodAction(this.laserOff)).chainAction(new AnimationAction("close"), "close").chainAction(new WaitAction(1)).chainAction(new GoToAction("openLaser", 2)).chainAction(new TweenAction(this, {x: -50}, 2000, Phaser.Easing.Sinusoidal.In));
   ;
 };
 var $CannonDrone = CannonDrone;
@@ -35,6 +34,14 @@ var $CannonDrone = CannonDrone;
   laserOff: function() {
     this.sounds.laser.stop();
     this.laser.y = -1000;
+  },
+  update: function() {
+    $traceurRuntime.superCall(this, $CannonDrone.prototype, "update", []);
+  },
+  kill: function() {
+    $traceurRuntime.superCall(this, $CannonDrone.prototype, "kill", []);
+    this.laserOff();
+    this.laser.kill();
   }
 }, {}, Enemy);
 

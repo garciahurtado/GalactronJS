@@ -6,6 +6,7 @@
 class Bullet extends Phaser.Sprite {
 	constructor(game, x, y, sprite) {
 		super(game, x, y, sprite);
+    game.physics.enable(this, Phaser.Physics.ARCADE);
 		this.power = 1;
 	}
 }

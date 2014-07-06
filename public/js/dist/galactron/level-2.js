@@ -25,14 +25,23 @@ var $Level2 = Level2;
     var width = this.game.width;
     this.events.addAction(new WaitAction(0.5)).chainAction(new SpawnWaveAction(CannonDrone, [{
       x: width,
-      y: 60
+      y: 100
     }, {
       x: width,
       y: 120
     }, {
       x: width,
+      y: 140
+    }, {
+      x: width,
+      y: 160
+    }, {
+      x: width,
       y: 180
-    }], 3, 0)).start();
+    }, {
+      x: width,
+      y: 200
+    }], 6, 0)).start();
   },
   createBackground: function() {
     var width = this.game.stage.bounds.width;

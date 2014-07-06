@@ -31,7 +31,6 @@ class AnimationAction extends Action {
 		if (this.wait) {
 			this.anim.onComplete.add(function(){
 				this.finish();
-				console.log('Animation finished');
 			}, this);
 		} else {
 			this.finish();

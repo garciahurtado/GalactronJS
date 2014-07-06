@@ -5,7 +5,10 @@ var Enemy = function Enemy(game) {
   var y = arguments[2] !== (void 0) ? arguments[2] : 0;
   var graphic = arguments[3];
   $traceurRuntime.superCall(this, $Enemy.prototype, "constructor", [game, x, y, graphic]);
+  this.subSprites = game.add.group();
+  this.addChild(this.subSprites);
   this.bullets = game.add.group();
+  this.subSprites.add(this.bullets);
   this.explosions = game.add.group();
   this.explosions.classType = Explosion;
   this.explosions.createMultiple(5);
@@ -60,10 +63,6 @@ var $Enemy = Enemy;
   addWeapon: function(weapon) {
     weapon.bullets = this.bullets;
     weapon.spriteFactory = spriteFactory;
-  },
-  reset: function(x, y, health) {
-    $traceurRuntime.superCall(this, $Enemy.prototype, "reset", [x, y, health]);
-    this.init();
   }
 }, {}, GalactronSprite);
 

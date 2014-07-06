@@ -58,15 +58,14 @@
 		game.state.add('Level1', Level1);
 		game.state.add('Level2', Level2);
 
-	 	game.state.start('Level2');
+	 	game.state.start('Level1');
 	}
 
 	/**
-	 * Adds a previously created sprite, its subsprites and bullets, to the game
+	 * Adds a previously created sprite to the game
 	 */
 	function addSprite(sprite) {
 		game.add.existing(sprite);
-		//game.add.existing(sprite.subSprites);
 	}
 
 	function createRandomAliens() {

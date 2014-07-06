@@ -30,6 +30,7 @@ class EnemyWave extends Phaser.Sprite {
 
 	constructor(game, enemyType, spawnCoords, waveSize = 1, spawnDelay = 0) {
 		super(game);
+		this.playState = game.state.getCurrentState();
 
 		// Physics
 	  this.enableBody = true;
@@ -46,7 +47,7 @@ class EnemyWave extends Phaser.Sprite {
 		this.enemies = game.add.group();
 		this.enemies.physicsBodyType = Phaser.Physics.ARCADE;
 		this.enemies.enableBody = true;
-		//this.enemies.createMultiple(10, enemyType);
+		//this.enemies.createMultiple(waveSize, enemyType); // pregenerate enemies before spawning them
 
 		this.bullets = game.add.group();
 		this.powerups = game.add.group();
@@ -85,14 +86,11 @@ class EnemyWave extends Phaser.Sprite {
 	 */
 	spawnEnemy() {
 		var enemy = this.enemies.getFirstDead(false);
-		
+
 		if (!enemy) {
-			//console.warn("Had to create new enemy!");
 			enemy = new this.enemyType(this.game, 0, 0);
 			this.enemies.add(enemy);
 		}
-		enemy.revive();
-
 		var current = this.spawnCoords[this.spawnCoordsIndex];
 		enemy.reset(current.x, current.y);
 
@@ -101,10 +99,9 @@ class EnemyWave extends Phaser.Sprite {
 			this.spawnCoordsIndex = 0;
 		}
 
-		// to avoid bullets diying with the enemy, we make the enemy use the bullet array in the wave
-		// TODO: refactor
+		// Add the bullets from the enemy we just created into the wave bullets
+		this.bullets.merge(enemy.bullets);
 		enemy.bullets = this.bullets;
-
 		enemy.player = this.player;
 		enemy.wave = this;
 
@@ -133,7 +130,7 @@ class EnemyWave extends Phaser.Sprite {
 	 */
 	kill() {
 		super.kill();
-		if (playState) {
+		if (this.playState) {
 			//		playState.fx.remove(this.fx);
 		}
 	}

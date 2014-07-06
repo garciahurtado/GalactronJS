@@ -16,8 +16,8 @@ class CannonDrone extends Enemy {
     this.laser = new BlueLaserBeam(game, x, y);
     this.laser.x = -534;
     this.laser.y = -1000; // effectively invisible
+
     this.bullets.add(this.laser);
-    this.addChild(this.laser);
 
 		this.actions
 			.addAction(new TweenAction(this, {x : 310}, 1000, Phaser.Easing.Sinusoidal.Out )) 	// slow down
@@ -30,7 +30,7 @@ class CannonDrone extends Enemy {
 			.chainAction(new MethodAction(this.laserOff))
 			.chainAction(new AnimationAction("close"), "close")
 			.chainAction(new WaitAction(1))
-			.chainAction(new GoToAction("openLaser", 1)) // repeat a second time
+			.chainAction(new GoToAction("openLaser", 2)) // repeat a second time
 			.chainAction(new TweenAction(this, {x : -50}, 2000, Phaser.Easing.Sinusoidal.In)) 	// speed up
 			;
 	}
@@ -59,5 +59,15 @@ class CannonDrone extends Enemy {
 	laserOff() {
 		this.sounds.laser.stop();
 		this.laser.y = -1000;
+	}
+
+	update(){
+		super.update();
+	}
+
+	kill(){
+		super.kill();
+		this.laserOff();
+		this.laser.kill();
 	}
 }

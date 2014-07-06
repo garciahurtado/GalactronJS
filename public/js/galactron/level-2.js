@@ -41,7 +41,13 @@ class Level2 extends PlayState {
 		var width = this.game.width;
 
 		this.events.addAction(new WaitAction(0.5))
-			.chainAction( new SpawnWaveAction(CannonDrone, [{x:width, y:60}, {x:width, y:120}, {x:width, y:180}], 3, 0))
+			.chainAction( new SpawnWaveAction(CannonDrone, [
+				{x:width, y:100}, 
+				{x:width, y:120}, 
+				{x:width, y:140}, 
+				{x:width, y:160}, 
+				{x:width, y:180}, 
+				{x:width, y:200}], 6, 0))
 
 		// .chainAction( new SpawnWaveAction(this, Scorpion1, width, 150, 3, 5))
 		// .chainAction( new WaitAction(10) )

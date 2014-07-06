@@ -7,21 +7,19 @@ class SpawnWaveAction extends Action {
 	constructor(enemyClass, spawnCoords, waveSize = 1, delay = 0) {
 		super(null);
 		this.enemyClass = enemyClass;
-
 		this.spawnCoords = spawnCoords;
-
 		this.waveSize = waveSize;
 		this.delay = delay;
 	}
 
 	/**
-	 * When this wave stars spawning enemies, we need to add it to the current game state
+	 * When this action starts, it will create a new enemy wave. We then need to add
+	 * it to the current game state
 	 */
 	start() {
 		super.start();
 		var state = this.game.state.getCurrentState();
-		this.wave = state.addWave(this.enemyClass, this.spawnCoords, this.waveSize, this.delay);
-		this.wave.bullets = state.enemyBullets;
+		this.wave = state.spawnWave(this.enemyClass, this.spawnCoords, this.waveSize, this.delay);
 	}
 
 	/**

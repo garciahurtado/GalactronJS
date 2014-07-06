@@ -35,6 +35,8 @@ var PlayState = function PlayState(game) {
     this.background = this.game.add.group();
     this.waves = this.game.add.group();
     this.enemies = this.game.add.group();
+    this.enemies.physicsBodyType = Phaser.Physics.ARCADE;
+    this.enemies.enableBody = true;
     this.enemyBullets = this.game.add.group();
     this.enemyBullets.physicsBodyType = Phaser.Physics.ARCADE;
     this.game.physics.arcade.enable(this.enemyBullets);
@@ -85,13 +87,12 @@ var PlayState = function PlayState(game) {
       return;
     }
     this.game.physics.arcade.overlap(this.playerBullets, this.enemies.children, this.enemyHit, null, this);
-    if (!this.player.flickering) {
-      this.game.physics.arcade.overlap(this.enemies.children[0], this.player, this.playerHit, null, this);
-      this.game.physics.arcade.overlap(this.enemyBullets.children[0], this.player, this.playerHit, null, this);
-      console.log('Length of bullets: ' + this.enemyBullets.children[0].length);
+    if (!this.player.flickering && this.player.exists) {
+      this.game.physics.arcade.overlap(this.enemies, this.player, this.playerHit, null, this);
+      this.game.physics.arcade.overlap(this.enemyBullets, this.player, this.playerHit, null, this);
     }
   },
-  addWave: function(enemyType, spawnCoords, count, delay) {
+  spawnWave: function(enemyType, spawnCoords, count, delay) {
     delay = typeof delay !== 'undefined' ? delay : 0;
     count = typeof count !== 'undefined' ? count : 1;
     var wave = this.waves.getFirstExists(false);
@@ -100,9 +101,10 @@ var PlayState = function PlayState(game) {
       this.waves.add(wave);
     }
     wave.init();
+    this.enemies.merge(wave.enemies);
+    wave.enemies = this.enemies;
+    wave.bullets = this.enemyBullets;
     wave.player = this.player;
-    this.enemies.add(wave.enemies);
-    this.enemyBullets.add(wave.bullets);
     return wave;
   },
   enemyHit: function(bullet, enemy) {
@@ -113,6 +115,9 @@ var PlayState = function PlayState(game) {
     }
   },
   playerHit: function(player, enemy) {
+    if (!player.exists) {
+      return;
+    }
     this.player.kill();
     var lostLife = this.livesSprites.children[this.lives - 1];
     lostLife.kill();
