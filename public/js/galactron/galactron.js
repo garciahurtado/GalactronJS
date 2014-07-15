@@ -2,7 +2,7 @@
 	var game = new Phaser.Game(
 		380,
 		260,
-		Phaser.WEBGL, // needed for filters
+		Phaser.WEBGL, // WebGL is needed in order to use filters
 		'canvasWrapper',
 		{ preload: preload, create: create, update: update }
 	);
@@ -49,9 +49,8 @@
 	  game.scale.maxHeight = 520;
 		game.stage.smoothed = false;
 	  
-
 	  //  Then we tell Phaser that we want it to scale up to whatever the browser can handle, but to do it proportionally
-	  game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+	  game.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT;
 	 	game.scale.setScreenSize(true);
 
 	 	// Add game states
@@ -59,7 +58,7 @@
 		game.state.add('Level1', Level1);
 		game.state.add('Level2', Level2);
 
-	 	game.state.start('MenuState');
+	 	game.state.start('Level1');
 	}
 
 	/**

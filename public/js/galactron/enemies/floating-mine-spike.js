@@ -12,6 +12,10 @@ class FloatingMineSpike extends Enemy {
     this.animations.add('down', 	[3], 1, false);
     this.play('up');
 
+    // Track the velocity that this spike will follow at launch (change after instantiation)
+    this.velocityX = 0;
+    this.velocityY = 0;
+
 		this.init();
 	}
 
@@ -23,8 +27,8 @@ class FloatingMineSpike extends Enemy {
 
 		this.actions
 			.chainAction(new MethodAction(function() {
-				this.body.velocity.x = -200;
-				// this.body.speed = 50; 
+				this.body.velocity.x = this.velocityX;
+				this.body.velocity.y = this.velocityY;
 			}))
 			;
 			

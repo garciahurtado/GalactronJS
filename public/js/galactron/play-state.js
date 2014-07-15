@@ -70,8 +70,8 @@ class PlayState extends GameState {
 		this.waves = this.game.add.group();
 
 		this.enemies = this.game.add.group();
-		this.enemies.physicsBodyType = Phaser.Physics.ARCADE;
-		this.enemies.enableBody = true;
+		// this.enemies.physicsBodyType = Phaser.Physics.ARCADE;
+		// this.enemies.enableBody = true;
 		
 		this.enemyBullets = this.game.add.group();
 		this.enemyBullets.physicsBodyType = Phaser.Physics.ARCADE;
@@ -213,7 +213,7 @@ class PlayState extends GameState {
 		}
 
 		wave.init();
-		this.enemies.merge(wave.enemies);
+		this.enemies.addMany(wave.enemies);
 		wave.enemies = this.enemies; // share the enemies group among all waves, for easy collision 
 		wave.bullets = this.enemyBullets; // similarly, share bullets among all waves
 		wave.player = this.player;

@@ -44,11 +44,7 @@ class EnemyWave extends Phaser.Sprite {
 		this.waveSize = waveSize;
 		this.spawnDelay = spawnDelay;
 
-		this.enemies = game.add.group();
-		this.enemies.physicsBodyType = Phaser.Physics.ARCADE;
-		this.enemies.enableBody = true;
-		//this.enemies.createMultiple(waveSize, enemyType); // pregenerate enemies before spawning them
-
+		this.enemies = [];
 		this.bullets = game.add.group();
 		this.powerups = game.add.group();
 		this.fx = game.add.group();
@@ -89,9 +85,8 @@ class EnemyWave extends Phaser.Sprite {
 
 		if (!enemy) {
 			enemy = new this.enemyType(this.game, 0, 0);
-			this.enemies.merge(enemy.children);
-			//enemy.children = this.enemies; // so that subsprites will also collide with player
 			this.enemies.add(enemy);
+			this.enemies.addMany(enemy.children); // so that subsprites will also collide with player
 		}
 		var current = this.spawnCoords[this.spawnCoordsIndex];
 		enemy.reset(current.x, current.y);
@@ -102,7 +97,7 @@ class EnemyWave extends Phaser.Sprite {
 		}
 
 		// Add the bullets from the enemy we just created into the wave bullets
-		this.bullets.merge(enemy.bullets);
+		this.bullets.addMany(enemy.bullets);
 		enemy.bullets = this.bullets;
 		enemy.player = this.player;
 		enemy.wave = this;

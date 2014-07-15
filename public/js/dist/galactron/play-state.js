@@ -35,8 +35,6 @@ var PlayState = function PlayState(game) {
     this.background = this.game.add.group();
     this.waves = this.game.add.group();
     this.enemies = this.game.add.group();
-    this.enemies.physicsBodyType = Phaser.Physics.ARCADE;
-    this.enemies.enableBody = true;
     this.enemyBullets = this.game.add.group();
     this.enemyBullets.physicsBodyType = Phaser.Physics.ARCADE;
     this.game.physics.arcade.enable(this.enemyBullets);
@@ -92,7 +90,7 @@ var PlayState = function PlayState(game) {
       this.waves.add(wave);
     }
     wave.init();
-    this.enemies.merge(wave.enemies);
+    this.enemies.addMany(wave.enemies);
     wave.enemies = this.enemies;
     wave.bullets = this.enemyBullets;
     wave.player = this.player;

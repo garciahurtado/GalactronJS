@@ -14,9 +14,11 @@ class MenuState extends GameState {
 	 */
 	create(){
 		super();
+		this.game.stage.smoothed = false;
+		
 		this.enableInput();
 
-		this.createText("GALACTRON", 190, 60, 52, 'EditUndoLine', '#FFFFFF', 'center');
+		this.createText("GALACTRON", 190, 60, 32, 'FirewireBlack', '#FFFFFF', 'center');
 
 		this.createText("LEVEL 1", 160, 140, 8, 'FirewireBlack', '#FFFFFF', 'left');
 		this.createText("LEVEL 2", 160, 160, 8, 'FirewireBlack', '#FFFFFF', 'left');

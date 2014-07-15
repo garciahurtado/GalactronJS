@@ -8,6 +8,8 @@ var FloatingMineSpike = function FloatingMineSpike(game, x, y, sprite) {
   this.animations.add('right', [2], 1, false);
   this.animations.add('down', [3], 1, false);
   this.play('up');
+  this.velocityX = 0;
+  this.velocityY = 0;
   this.init();
 };
 var $FloatingMineSpike = FloatingMineSpike;
@@ -17,7 +19,8 @@ var $FloatingMineSpike = FloatingMineSpike;
     this.moves = false;
     this.body.speed = 0;
     this.actions.chainAction(new MethodAction(function() {
-      this.body.velocity.x = -200;
+      this.body.velocity.x = this.velocityX;
+      this.body.velocity.y = this.velocityY;
     }));
     ;
   }}, {}, Enemy);
