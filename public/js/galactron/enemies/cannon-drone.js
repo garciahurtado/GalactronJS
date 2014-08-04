@@ -13,11 +13,12 @@ class CannonDrone extends Enemy {
 
     this.sounds.laser = game.add.audio('large_beam');
     this.sounds.laser.loop = true;
-    this.laser = new BlueLaserBeam(game, x, y);
-    this.laser.x = -534;
-    this.laser.y = -1000; // effectively invisible
+    this.laser = this.createBullet(BlueLaserBeam);
+    this.laser.x = -533;
+    this.laser.y = -1000; 
 
-    this.bullets.add(this.laser);
+    // this.laser.x = -533;
+    // this.laser.y = -1000; // effectively invisible
 
 		this.actions
 			.addAction(new TweenAction(this, {x : 310}, 1000, Phaser.Easing.Sinusoidal.Out )) 	// slow down
@@ -37,6 +38,7 @@ class CannonDrone extends Enemy {
 
 	init() {
 		super.init();
+
 		this.lastShot = 3;
 		this.health = 50;
 		this.score = 300;
@@ -49,7 +51,8 @@ class CannonDrone extends Enemy {
 	laserOn() {
 		this.sounds.laser.play();
 		this.laser.play('on');
-		this.laser.y = 0;
+		this.laser.y = this.y;
+		this.laser.x = this.x - 532;
 	}
 
 	/**

@@ -103,6 +103,8 @@ class PlayerShip extends GalactronSprite {
   /**
    * Rounds the x,y position of the Physics body. This is done to avoid subpixel rendering artifacts,
    * caused by rendering sprites at 2x zoom (retro effect).
+   *
+   * @TODO: Move to GalactronSprite
    */
   update(){
     super.update();

@@ -93,16 +93,16 @@ class Level1 extends PlayState {
 
 		// we will use several starfield tileSprites to create a parallax effect
 		var starfield1 = this.game.add.tileSprite(0, 0, width, height, 'starfield1');
-				starfield1.autoScroll(-70, 0);
+				starfield1.autoScroll(-120, 0);
 		var starfield2 = this.game.add.tileSprite(0, 0, width, height, 'starfield2');
-				starfield2.autoScroll(-90, 0);
+				starfield2.autoScroll(-130, 0);
 		var starfield3 = this.game.add.tileSprite(0, 0, width, height, 'starfield3');
-				starfield3.autoScroll(-110, 0);
+				starfield3.autoScroll(-160, 0);
 
-		var greenSaturn = new SlidingBackground(this.game, 600, 50, 'green_saturn', -45);
-		var smallMars = new SlidingBackground(this.game, 1300, 150, 'small_mars', -45);
-		var smallJupiter = new SlidingBackground(this.game, 2500, 30, 'small_jupiter', -45);
-		var bigBlueWorld = new SlidingBackground(this.game, 500, 0, 'big_blue_world', -45);
+		var greenSaturn = new SlidingBackground(this.game, 600, 50, 'green_saturn', -30);
+		var smallMars = new SlidingBackground(this.game, 1300, 150, 'small_mars', -30);
+		var smallJupiter = new SlidingBackground(this.game, 2500, 30, 'small_jupiter', -30);
+		var bigBlueWorld = new SlidingBackground(this.game, 500, 0, 'big_blue_world', -30);
 			
 		this.background.add(starfield1);
 		this.background.add(starfield2);

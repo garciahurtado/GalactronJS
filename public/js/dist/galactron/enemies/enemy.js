@@ -8,7 +8,6 @@ var Enemy = function Enemy(game) {
   this.subSprites = game.add.group();
   this.addChild(this.subSprites);
   this.bullets = game.add.group();
-  this.subSprites.add(this.bullets);
   this.explosions = game.add.group();
   this.explosions.classType = Explosion;
   this.explosions.createMultiple(5);
@@ -63,6 +62,15 @@ var $Enemy = Enemy;
   addWeapon: function(weapon) {
     weapon.bullets = this.bullets;
     weapon.spriteFactory = spriteFactory;
+  },
+  createBullet: function(bulletClass) {
+    var x = arguments[1] !== (void 0) ? arguments[1] : this.x;
+    var y = arguments[2] !== (void 0) ? arguments[2] : this.y;
+    var bullet = new bulletClass(this.game, x, y);
+    bullet.enableBody = true;
+    this.game.physics.enable(bullet, Phaser.Physics.ARCADE);
+    this.bullets.add(bullet);
+    return bullet;
   }
 }, {}, GalactronSprite);
 

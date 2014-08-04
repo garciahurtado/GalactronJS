@@ -1,23 +1,24 @@
 "use strict";
 var __moduleName = "public/js/dist/galactron/enemies/floating-mine";
-var FloatingMine = function FloatingMine(game, x, y, sprite) {
-  sprite = sprite || 'floating_mine';
-  $traceurRuntime.superCall(this, $FloatingMine.prototype, "constructor", [game, x, y, sprite]);
+var FloatingMine = function FloatingMine(game, x, y) {
+  $traceurRuntime.superCall(this, $FloatingMine.prototype, "constructor", [game, x, y, null]);
   this.init();
+  this.core = new Enemy(this.game, 0, 0, 'floating_mine');
+  this.addChild(this.core);
   var spikeSpeed = 100;
-  this.spikeLeft = new FloatingMineSpike(game, 0, 8);
+  this.spikeLeft = new FloatingMineSpike(this.game, 0, 8);
   this.spikeLeft.play('left');
   this.spikeLeft.velocityX = -spikeSpeed;
   this.addChild(this.spikeLeft);
-  this.spikeTop = new FloatingMineSpike(game, 8, 0);
+  this.spikeTop = new FloatingMineSpike(this.game, 8, 0);
   this.spikeTop.play('top');
   this.spikeTop.velocityY = -spikeSpeed;
   this.addChild(this.spikeTop);
-  this.spikeRight = new FloatingMineSpike(game, 16, 8);
+  this.spikeRight = new FloatingMineSpike(this.game, 16, 8);
   this.spikeRight.play('right');
   this.spikeRight.velocityX = spikeSpeed;
   this.addChild(this.spikeRight);
-  this.spikeBottom = new FloatingMineSpike(game, 8, 16);
+  this.spikeBottom = new FloatingMineSpike(this.game, 8, 16);
   this.spikeBottom.play('down');
   this.spikeBottom.velocityY = spikeSpeed;
   this.addChild(this.spikeBottom);
@@ -35,7 +36,7 @@ var $FloatingMine = FloatingMine;
   },
   kill: function() {
     this.launchSpikes();
-    $traceurRuntime.superCall(this, $FloatingMine.prototype, "kill", []);
+    this.core.kill();
   },
   launchSpikes: function() {
     this.spikeLeft.actions.start();

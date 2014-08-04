@@ -14,7 +14,7 @@ var EnemyWave = function EnemyWave(game, enemyType, spawnCoords) {
   this.waveSize = waveSize;
   this.spawnDelay = spawnDelay;
   this.enemies = [];
-  this.bullets = game.add.group();
+  this.bullets = [];
   this.powerups = game.add.group();
   this.fx = game.add.group();
 };
@@ -40,15 +40,17 @@ var $EnemyWave = EnemyWave;
     if (!enemy) {
       enemy = new this.enemyType(this.game, 0, 0);
       this.enemies.add(enemy);
-      this.enemies.addMany(enemy.children);
     }
     var current = this.spawnCoords[this.spawnCoordsIndex];
     enemy.reset(current.x, current.y);
     if (++this.spawnCoordsIndex >= this.spawnCoords.length) {
       this.spawnCoordsIndex = 0;
     }
-    this.bullets.addMany(enemy.bullets);
-    enemy.bullets = this.bullets;
+    var gameBullets = this.game.state.getCurrentState().enemyBullets;
+    if (gameBullets) {
+      gameBullets.addMany(enemy.bullets);
+    }
+    enemy.bullets = gameBullets;
     enemy.player = this.player;
     enemy.wave = this;
     this.spawnTimer = 0;

@@ -79,6 +79,7 @@ var PlayState = function PlayState(game) {
     if (!this.player.flickering && this.player.exists) {
       this.game.physics.arcade.overlap(this.enemies, this.player, this.playerHit, null, this);
       this.game.physics.arcade.overlap(this.enemyBullets, this.player, this.playerHit, null, this);
+      console.log('Num enemy bullets: ' + this.enemyBullets.children.length);
     }
   },
   spawnWave: function(enemyType, spawnCoords, count, delay) {
@@ -90,7 +91,6 @@ var PlayState = function PlayState(game) {
       this.waves.add(wave);
     }
     wave.init();
-    this.enemies.addMany(wave.enemies);
     wave.enemies = this.enemies;
     wave.bullets = this.enemyBullets;
     wave.player = this.player;
@@ -146,6 +146,7 @@ var PlayState = function PlayState(game) {
       }
     } else {
       if (keys.enter.isDown) {
+        this.isGameOver = false;
         this.game.state.start('Level1');
         return;
       }

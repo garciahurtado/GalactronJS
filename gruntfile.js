@@ -45,9 +45,9 @@ module.exports = function(grunt) {
 
     uglify: {
       js: {
-        files: { 'public/js/galactron.min.js': 
+        files: { 'public/js/dist/galactron.min.js': 
             [   
-                'public/js/galactron/**/*.js'
+                'public/js/dist/galactron/**/*.js'
            ]
         }
       }
@@ -122,14 +122,11 @@ module.exports = function(grunt) {
     grunt.config('traceur.custom.files.src', filepath);
   });
 
-  //Making grunt default to force in order not to break the project.
-  grunt.option('force', true);
-
   //Default task(s).
   if (process.env.NODE_ENV === 'production') {
     grunt.registerTask('default', ['cssmin', 'uglify', 'concurrent']);
   } else {
-    grunt.registerTask('default', ['concurrent:server']);
+    grunt.registerTask('default', ['concurrent:server', 'uglify']);
   }
 
   //Test task.

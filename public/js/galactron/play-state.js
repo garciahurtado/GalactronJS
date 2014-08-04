@@ -213,9 +213,9 @@ class PlayState extends GameState {
 		}
 
 		wave.init();
-		this.enemies.addMany(wave.enemies);
 		wave.enemies = this.enemies; // share the enemies group among all waves, for easy collision 
 		wave.bullets = this.enemyBullets; // similarly, share bullets among all waves
+//		this.enemyBullets.add(wave.bullets);
 		wave.player = this.player;
 		
 	// powerups.add(wave.powerups);
@@ -308,8 +308,9 @@ class PlayState extends GameState {
 			// 	player.cycleWeapon();
 			// }
 
-		} else { // Game Over state
+		} else { // We are in Game Over state
 			if(keys.enter.isDown) {
+				this.isGameOver = false;
 				this.game.state.start('Level1');
 				return;
 			}

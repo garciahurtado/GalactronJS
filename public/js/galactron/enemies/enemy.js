@@ -22,7 +22,7 @@ class Enemy extends GalactronSprite {
     this.addChild(this.subSprites); 
 
 		this.bullets = game.add.group();
-  	this.subSprites.add(this.bullets);
+  	//this.subSprites.add(this.bullets);
 
 		this.explosions = game.add.group();
 		this.explosions.classType = Explosion;
@@ -126,5 +126,17 @@ class Enemy extends GalactronSprite {
 	addWeapon(weapon) {
 		weapon.bullets = this.bullets;
 		weapon.spriteFactory = spriteFactory;
+	}
+
+	/**
+	 * Create a bullet of the specified class, at the given coordinates, and enable its Physics body
+	 * as well as add it to the bullets array of this enemy
+	 */
+	createBullet(bulletClass, x = this.x, y = this.y){
+		var bullet = new bulletClass(this.game, x, y);
+    bullet.enableBody = true;
+    this.game.physics.enable(bullet, Phaser.Physics.ARCADE);
+		this.bullets.add(bullet);
+		return bullet;
 	}
 }
