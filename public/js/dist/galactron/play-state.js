@@ -77,9 +77,8 @@ var PlayState = function PlayState(game) {
     }
     this.game.physics.arcade.overlap(this.playerBullets, this.enemies, this.enemyHit, null, this);
     if (!this.player.flickering && this.player.exists) {
-      this.game.physics.arcade.overlap(this.enemies, this.player, this.playerHit, null, this);
-      this.game.physics.arcade.overlap(this.enemyBullets, this.player, this.playerHit, null, this);
-      console.log('Num enemy bullets: ' + this.enemyBullets.children.length);
+      this.game.physics.arcade.overlap(this.player, this.enemies, this.playerHit, null, this);
+      this.game.physics.arcade.overlap(this.player, this.enemyBullets, this.playerHit, null, this);
     }
   },
   spawnWave: function(enemyType, spawnCoords, count, delay) {

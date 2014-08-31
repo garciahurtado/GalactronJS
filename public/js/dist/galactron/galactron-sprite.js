@@ -50,7 +50,6 @@ var $GalactronSprite = GalactronSprite;
     }
   },
   damage: function(amount) {
-    console.log('Damaging by ' + amount);
     $traceurRuntime.superCall(this, $GalactronSprite.prototype, "damage", [amount]);
     if (this.alive) {
       this.damageAnimation();

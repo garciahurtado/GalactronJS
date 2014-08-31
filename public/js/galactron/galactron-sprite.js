@@ -67,7 +67,6 @@ class GalactronSprite extends Phaser.Sprite {
 	 * @param	amount. Number of health points to substract from entity
 	 */
 	damage(amount) {
-		console.log('Damaging by ' + amount);
 		super.damage(amount);
 
 		if (this.alive) {

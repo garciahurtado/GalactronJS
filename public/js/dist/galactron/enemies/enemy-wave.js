@@ -46,15 +46,24 @@ var $EnemyWave = EnemyWave;
     if (++this.spawnCoordsIndex >= this.spawnCoords.length) {
       this.spawnCoordsIndex = 0;
     }
+    this.addBullets(enemy);
+    this.addChildren(enemy);
+    enemy.player = this.player;
+    enemy.wave = this;
+    this.spawnTimer = 0;
+    this.spawnCounter++;
+  },
+  addBullets: function(enemy) {
     var gameBullets = this.game.state.getCurrentState().enemyBullets;
     if (gameBullets) {
       gameBullets.addMany(enemy.bullets);
     }
     enemy.bullets = gameBullets;
-    enemy.player = this.player;
-    enemy.wave = this;
-    this.spawnTimer = 0;
-    this.spawnCounter++;
+  },
+  addChildren: function(enemy) {
+    if (enemy.children) {
+      this.enemies.addMany(enemy.children);
+    }
   },
   onEnemyKill: function(enemy) {},
   kill: function() {

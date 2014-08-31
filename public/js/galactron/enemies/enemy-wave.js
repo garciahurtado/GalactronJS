@@ -96,19 +96,36 @@ class EnemyWave extends Phaser.Sprite {
 			this.spawnCoordsIndex = 0;
 		}
 
-		// Add the bullets from the enemy we just created into the game state bullets: this is necessary
-		// because the physics engine does not do nested group collision checks 
-		var gameBullets = this.game.state.getCurrentState().enemyBullets;
-		if(gameBullets){
-			gameBullets.addMany(enemy.bullets);
-		}
-		enemy.bullets = gameBullets; // inject the enemy bullets array, sharing "gameBullets" across enemies
+		// facilitate collision with the bullets and children of the newly added enemy
+		this.addBullets(enemy);
+		this.addChildren(enemy);
 
 		enemy.player = this.player;
 		enemy.wave = this;
 
 		this.spawnTimer = 0;
 		this.spawnCounter++;
+	}
+
+	/**
+	 * Since the physics engine does not support nested group collision checks, we need to come 
+	 * up with a way to have a global bullets array which is shared among all enemies.
+	 * 
+	 * This method adds the bullets from the enemy we just created into the global bullets array, and
+	 * replaces the refernce in the enemy with this global array, in case it needs to create more.
+	 */
+	addBullets(enemy){
+		var gameBullets = this.game.state.getCurrentState().enemyBullets;
+		if(gameBullets){
+			gameBullets.addMany(enemy.bullets);
+		}
+		enemy.bullets = gameBullets; // this effectively shares "gameBullets" across all enemies
+	}
+
+	addChildren(enemy){
+		if(enemy.children){
+			this.enemies.addMany(enemy.children);
+		}
 	}
 
 	/**

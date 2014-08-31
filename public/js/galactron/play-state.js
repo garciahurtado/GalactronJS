@@ -178,16 +178,16 @@ class PlayState extends GameState {
 		// // did we pick up a powerup?
 		// FlxG.overlap(player, powerups, powerUp);
 
-		// TODO: figure out how to do collision detection with nested groups (this.enemies instead of this.enemies.children)
+		// Were there any enemies hit by player bullets?
 		this.game.physics.arcade.overlap(this.playerBullets, this.enemies, this.enemyHit, null, this);
 		
 		// check whether the player was hit by enemies or enemy bullets
 		if(!this.player.flickering && this.player.exists){ // player is not immune
 			// Did any enemies hit the player?
-			this.game.physics.arcade.overlap(this.enemies, this.player, this.playerHit, null, this);
+			this.game.physics.arcade.overlap(this.player, this.enemies, this.playerHit, null, this);
 
 			// Did any enemy bullets hit the player?
-			this.game.physics.arcade.overlap(this.enemyBullets, this.player, this.playerHit, null, this);
+			this.game.physics.arcade.overlap(this.player, this.enemyBullets, this.playerHit, null, this);
 			// FlxG.overlap(player, enemies, playerHit);
 			// FlxG.overlap(player, enemyBullets, playerHit);
 		}

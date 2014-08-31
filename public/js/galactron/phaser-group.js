@@ -18,6 +18,15 @@ Phaser.Group.prototype.addMany = function (other) {
 
 	// Add we use Group.add, the length of the newChildren group decreases, so a reverse loop is needed
 	for (var i = newChildren.length - 1; i >= 0; i--) {
-		this.add(newChildren[i]);
+		this.copyChildAt(newChildren[i], this.children.length);
 	};
+}
+
+/**
+ * Similar to PIXI's addChildAt, but doesn't change the object's parent, so that an object can 
+ * belong to more than one group without causing positioning issues (ie: when adding a sprite's 
+ * children)
+ */
+Phaser.Group.prototype.copyChildAt = function(child, index) {
+	this.children.splice(index, 0, child);
 }
