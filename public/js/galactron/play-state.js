@@ -69,7 +69,8 @@ class PlayState extends GameState {
 		this.background = this.game.add.group();
 		this.waves = this.game.add.group();
 
-		this.enemies = this.game.add.group();
+		this.enemies = [];
+		this.enemyLayer = this.game.add.group();
 		// this.enemies.physicsBodyType = Phaser.Physics.ARCADE;
 		// this.enemies.enableBody = true;
 		
@@ -209,18 +210,40 @@ class PlayState extends GameState {
 		var wave = this.waves.getFirstExists(false);
 		if(!wave){
 			wave = new EnemyWave(this.game, enemyType, spawnCoords, count, delay);
+			var playState = this; // create closure
+			wave.onSpawnEnemy = function(enemy){playState.onSpawnEnemy(enemy)};
 			this.waves.add(wave);
 		}
 
 		wave.init();
 		wave.enemies = this.enemies; // share the enemies group among all waves, for easy collision 
-		wave.bullets = this.enemyBullets; // similarly, share bullets among all waves
-//		this.enemyBullets.add(wave.bullets);
 		wave.player = this.player;
 		
 	// powerups.add(wave.powerups);
 
 		return wave;
+	}
+
+	/**
+	 * Event handler for the wave to trigger when a new enemy is spawned
+	 */
+	onSpawnEnemy(enemy){
+		this.enemies.push(enemy);
+		this.enemyLayer.add(enemy);
+
+		// Add sub sprites (children) to play state
+		if(enemy.children){
+			for (var i = enemy.children.length - 1; i >= 0; i--) {
+				this.enemies.push(enemy.children[i]);
+			};
+		}
+
+		// Add enemy bullets to play state
+		var gameBullets = this.enemyBullets;
+		if(this.enemyBullets){
+			this.enemyBullets.addMany(enemy.bullets);
+		}
+		enemy.bullets = gameBullets; // this effectively shares "gameBullets" across all enemies
 	}
 
 	/**

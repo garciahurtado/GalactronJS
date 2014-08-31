@@ -43,9 +43,8 @@ class EnemyWave extends Phaser.Sprite {
 		this.enemyType = enemyType;
 		this.waveSize = waveSize;
 		this.spawnDelay = spawnDelay;
+		this.onSpawnEnemy = false; // callback to use when enemies are spawned
 
-		this.enemies = [];
-		this.bullets = [];
 		this.powerups = game.add.group();
 		this.fx = game.add.group();
 	}
@@ -81,12 +80,14 @@ class EnemyWave extends Phaser.Sprite {
 	 * to the display list, and provides it with a reference to the player.
 	 */
 	spawnEnemy() {
-		var enemy = this.enemies.getFirstDead(false);
+		//var enemy = this.enemies.getFirstDead(false);
+		var enemy = false;
 
 		if (!enemy) {
 			enemy = new this.enemyType(this.game, 0, 0);
-			this.enemies.add(enemy);
-			//this.enemies.addMany(enemy.children); // so that subsprites will also collide with player
+			if(this.onSpawnEnemy){
+				this.onSpawnEnemy(enemy);
+			}
 		}
 		var current = this.spawnCoords[this.spawnCoordsIndex];
 		enemy.reset(current.x, current.y);
@@ -96,36 +97,11 @@ class EnemyWave extends Phaser.Sprite {
 			this.spawnCoordsIndex = 0;
 		}
 
-		// facilitate collision with the bullets and children of the newly added enemy
-		this.addBullets(enemy);
-		this.addChildren(enemy);
-
 		enemy.player = this.player;
 		enemy.wave = this;
 
 		this.spawnTimer = 0;
 		this.spawnCounter++;
-	}
-
-	/**
-	 * Since the physics engine does not support nested group collision checks, we need to come 
-	 * up with a way to have a global bullets array which is shared among all enemies.
-	 * 
-	 * This method adds the bullets from the enemy we just created into the global bullets array, and
-	 * replaces the refernce in the enemy with this global array, in case it needs to create more.
-	 */
-	addBullets(enemy){
-		var gameBullets = this.game.state.getCurrentState().enemyBullets;
-		if(gameBullets){
-			gameBullets.addMany(enemy.bullets);
-		}
-		enemy.bullets = gameBullets; // this effectively shares "gameBullets" across all enemies
-	}
-
-	addChildren(enemy){
-		if(enemy.children){
-			this.enemies.addMany(enemy.children);
-		}
 	}
 
 	/**

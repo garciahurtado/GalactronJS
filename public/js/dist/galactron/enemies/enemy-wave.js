@@ -13,8 +13,7 @@ var EnemyWave = function EnemyWave(game, enemyType, spawnCoords) {
   this.enemyType = enemyType;
   this.waveSize = waveSize;
   this.spawnDelay = spawnDelay;
-  this.enemies = [];
-  this.bullets = [];
+  this.onSpawnEnemy = false;
   this.powerups = game.add.group();
   this.fx = game.add.group();
 };
@@ -36,34 +35,22 @@ var $EnemyWave = EnemyWave;
     }
   },
   spawnEnemy: function() {
-    var enemy = this.enemies.getFirstDead(false);
+    var enemy = false;
     if (!enemy) {
       enemy = new this.enemyType(this.game, 0, 0);
-      this.enemies.add(enemy);
+      if (this.onSpawnEnemy) {
+        this.onSpawnEnemy(enemy);
+      }
     }
     var current = this.spawnCoords[this.spawnCoordsIndex];
     enemy.reset(current.x, current.y);
     if (++this.spawnCoordsIndex >= this.spawnCoords.length) {
       this.spawnCoordsIndex = 0;
     }
-    this.addBullets(enemy);
-    this.addChildren(enemy);
     enemy.player = this.player;
     enemy.wave = this;
     this.spawnTimer = 0;
     this.spawnCounter++;
-  },
-  addBullets: function(enemy) {
-    var gameBullets = this.game.state.getCurrentState().enemyBullets;
-    if (gameBullets) {
-      gameBullets.addMany(enemy.bullets);
-    }
-    enemy.bullets = gameBullets;
-  },
-  addChildren: function(enemy) {
-    if (enemy.children) {
-      this.enemies.addMany(enemy.children);
-    }
   },
   onEnemyKill: function(enemy) {},
   kill: function() {

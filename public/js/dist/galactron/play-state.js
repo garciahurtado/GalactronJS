@@ -34,7 +34,8 @@ var PlayState = function PlayState(game) {
     this.isGameOver = false;
     this.background = this.game.add.group();
     this.waves = this.game.add.group();
-    this.enemies = this.game.add.group();
+    this.enemies = [];
+    this.enemyLayer = this.game.add.group();
     this.enemyBullets = this.game.add.group();
     this.enemyBullets.physicsBodyType = Phaser.Physics.ARCADE;
     this.game.physics.arcade.enable(this.enemyBullets);
@@ -87,13 +88,31 @@ var PlayState = function PlayState(game) {
     var wave = this.waves.getFirstExists(false);
     if (!wave) {
       wave = new EnemyWave(this.game, enemyType, spawnCoords, count, delay);
+      var playState = this;
+      wave.onSpawnEnemy = function(enemy) {
+        playState.onSpawnEnemy(enemy);
+      };
       this.waves.add(wave);
     }
     wave.init();
     wave.enemies = this.enemies;
-    wave.bullets = this.enemyBullets;
     wave.player = this.player;
     return wave;
+  },
+  onSpawnEnemy: function(enemy) {
+    this.enemies.push(enemy);
+    this.enemyLayer.add(enemy);
+    if (enemy.children) {
+      for (var i = enemy.children.length - 1; i >= 0; i--) {
+        this.enemies.push(enemy.children[i]);
+      }
+      ;
+    }
+    var gameBullets = this.enemyBullets;
+    if (this.enemyBullets) {
+      this.enemyBullets.addMany(enemy.bullets);
+    }
+    enemy.bullets = gameBullets;
   },
   enemyHit: function(bullet, enemy) {
     bullet.kill();

@@ -44,7 +44,7 @@ var __moduleName = "public/js/dist/galactron/galactron";
     game.state.add('MenuState', MenuState);
     game.state.add('Level1', Level1);
     game.state.add('Level2', Level2);
-    game.state.start('Level2');
+    game.state.start('Level1');
   }
   function addSprite(sprite) {
     game.add.existing(sprite);

@@ -10,12 +10,9 @@ Phaser.Group.prototype.addMany = function(other) {
     newChildren = other.children;
   }
   for (var i = newChildren.length - 1; i >= 0; i--) {
-    this.copyChildAt(newChildren[i], this.children.length);
+    this.add(newChildren[i]);
   }
   ;
-};
-Phaser.Group.prototype.copyChildAt = function(child, index) {
-  this.children.splice(index, 0, child);
 };
 
 //# sourceMappingURL=phaser-group.js.map
