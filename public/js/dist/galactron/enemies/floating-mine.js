@@ -7,47 +7,22 @@ var FloatingMine = function FloatingMine(game, x, y) {
   this.core = new FloatingMineCore(this.game, 0, 0);
   this.addChild(this.core);
   var spikeSpeed = 150;
-  var spikeDuration = 600;
   this.spikeLeft = new FloatingMineSpike(this.game, 0, 8);
   this.spikeLeft.play('left');
   this.spikeLeft.velocityX = -spikeSpeed;
   this.addChild(this.spikeLeft);
-  this.spikeLeft.tween = game.add.tween(this.spikeLeft.body.velocity);
-  this.spikeLeft.tween.to({
-    x: 0,
-    y: 0
-  }, spikeDuration);
-  this.spikeLeft.tween.onComplete.add(this.spikeLeft.kill, this.spikeLeft);
   this.spikeTop = new FloatingMineSpike(this.game, 8, 0);
   this.spikeTop.play('top');
   this.spikeTop.velocityY = -spikeSpeed;
   this.addChild(this.spikeTop);
-  this.spikeTop.tween = game.add.tween(this.spikeTop.body.velocity);
-  this.spikeTop.tween.to({
-    x: 0,
-    y: 0
-  }, spikeDuration);
-  this.spikeTop.tween.onComplete.add(this.spikeTop.kill, this.spikeTop);
   this.spikeRight = new FloatingMineSpike(this.game, 16, 8);
   this.spikeRight.play('right');
   this.spikeRight.velocityX = spikeSpeed;
   this.addChild(this.spikeRight);
-  this.spikeRight.tween = game.add.tween(this.spikeRight.body.velocity);
-  this.spikeRight.tween.to({
-    x: 0,
-    y: 0
-  }, spikeDuration);
-  this.spikeRight.tween.onComplete.add(this.spikeRight.kill, this.spikeRight);
   this.spikeBottom = new FloatingMineSpike(this.game, 8, 16);
   this.spikeBottom.play('down');
   this.spikeBottom.velocityY = spikeSpeed;
   this.addChild(this.spikeBottom);
-  this.spikeBottom.tween = game.add.tween(this.spikeBottom.body.velocity);
-  this.spikeBottom.tween.to({
-    x: 0,
-    y: 0
-  }, spikeDuration);
-  this.spikeBottom.tween.onComplete.add(this.spikeBottom.kill, this.spikeBottom);
 };
 var $FloatingMine = FloatingMine;
 ($traceurRuntime.createClass)(FloatingMine, {

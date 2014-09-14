@@ -16,6 +16,13 @@ class FloatingMineSpike extends Enemy {
     this.velocityX = 0;
     this.velocityY = 0;
 
+		this.duration = 600;
+
+    // Add the animation tween to slow down the spike after launch
+    this.tween = game.add.tween(this.body.velocity);
+    this.tween.to({x: 0, y: 0}, this.duration);
+    this.tween.onComplete.add(this.kill, this);
+
     // When the spike dies, it must notify its parent sprite, to allow it to kill itself
 		this.events.onKilled.add(function() {
 			this.parent.onChildKilled();

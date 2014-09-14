@@ -10,6 +10,13 @@ var FloatingMineSpike = function FloatingMineSpike(game, x, y, sprite) {
   this.play('up');
   this.velocityX = 0;
   this.velocityY = 0;
+  this.duration = 600;
+  this.tween = game.add.tween(this.body.velocity);
+  this.tween.to({
+    x: 0,
+    y: 0
+  }, this.duration);
+  this.tween.onComplete.add(this.kill, this);
   this.events.onKilled.add(function() {
     this.parent.onChildKilled();
   }.bind(this));
