@@ -8,6 +8,8 @@ var GalactronSprite = function GalactronSprite(game) {
   this.flickering = false;
   this.flickerFreq = 30;
   this.flickerTimer = 0;
+  this.debugBounds = false;
+  this.debugColor = '#00FF00';
   $traceurRuntime.superCall(this, $GalactronSprite.prototype, "constructor", [game, x, y, graphic]);
   this.actions = new ActionChain(game, this);
   game.add.existing(this.actions);
@@ -39,6 +41,9 @@ var $GalactronSprite = GalactronSprite;
         this.flickerTimer = 0;
       }
     }
+    if (this.debugBounds) {
+      this.game.debug.spriteBounds(this, this.debugColor, false);
+    }
   },
   reset: function(x, y) {
     $traceurRuntime.superCall(this, $GalactronSprite.prototype, "reset", [x, y, this.health]);
@@ -64,6 +69,7 @@ var $GalactronSprite = GalactronSprite;
       this.deathAnimation();
     }
   },
+  onChildKilled: function() {},
   deathAnimation: function() {
     return;
   },
@@ -77,8 +83,8 @@ var $GalactronSprite = GalactronSprite;
     return this.math.distance(this.x, this.y, target.x, target.y);
   },
   centerAt: function(target) {
-    this.x = target.x + Math.round(target.width * .5);
-    this.y = target.y + Math.round(target.height * .5);
+    this.x = target.world.x + Math.round(target.width * .5);
+    this.y = target.world.y + Math.round(target.height * .5);
     this.x -= Math.round(this.width / 2);
     this.y -= Math.round(this.height / 2);
   },

@@ -49,8 +49,8 @@ class Level2 extends PlayState {
 				{x:width, y:180}, 
 				{x:width, y:200}], 6, 0))
 
-		// .chainAction( new SpawnWaveAction(this, Scorpion1, width, 150, 3, 5))
-		// .chainAction( new WaitAction(10) )
+		.chainAction( new SpawnWaveAction(this, Scorpion1, width, 150, 3, 5))
+		.chainAction( new WaitAction(10) )
 		// .chainAction( new SpawnWaveAction(this, ArrowShipGreen, width, 150, 12, 0.3))
 		// .chainAction( new WaitAction(5) )
 		// .chainAction( new SpawnWaveAction(this, ArrowShipRed1, width, 150, 12, 0.5))

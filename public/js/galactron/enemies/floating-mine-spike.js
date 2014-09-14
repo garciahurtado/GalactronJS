@@ -16,14 +16,20 @@ class FloatingMineSpike extends Enemy {
     this.velocityX = 0;
     this.velocityY = 0;
 
+    // When the spike dies, it must notify its parent sprite, to allow it to kill itself
+		this.events.onKilled.add(function() {
+			this.parent.onChildKilled();
+		}.bind(this));
+
 		this.init();
+
+		this.debugBounds = true; // render the sprite's bounds
+		this.debugColor = '#00FF00'; // default color of the debug outline of the sprite (green)
 	}
 
 	init() {
 		super();
-		this.health = 1000;
-		this.moves = false;
-		this.body.speed = 0;
+		this.health = 10000;
 
 		this.actions
 			.chainAction(new MethodAction(function() {
@@ -31,6 +37,12 @@ class FloatingMineSpike extends Enemy {
 				this.body.velocity.y = this.velocityY;
 			}))
 			;
-			
+	}
+
+	/**
+	 * Spikes don't explode
+	 */
+	deathAnimation(){
+		return;
 	}
 }

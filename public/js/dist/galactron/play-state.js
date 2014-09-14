@@ -52,6 +52,7 @@ var PlayState = function PlayState(game) {
     this.createHud();
     this.enableInput();
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
+    this.game.debug.font = "8px Courier";
   },
   createHud: function() {
     var offset = 0;
@@ -71,14 +72,21 @@ var PlayState = function PlayState(game) {
     this.gui.add(sprite);
   },
   update: function() {
+    this.debugText("Num sprites: " + this.game.stage.currentRenderOrderID);
     this.playerInput(this.game.time.elapsed);
     this.events.update();
     if (this.isGameOver) {
       return;
     }
-    this.game.physics.arcade.overlap(this.playerBullets, this.enemies, this.enemyHit, null, this);
+    for (var i = 0; i < this.enemies.length; i++) {
+      this.game.physics.arcade.overlap(this.playerBullets, this.enemies[i], this.enemyHit, null, this);
+    }
+    ;
     if (!this.player.flickering && this.player.exists) {
-      this.game.physics.arcade.overlap(this.player, this.enemies, this.playerHit, null, this);
+      for (var i = 0; i < this.enemies.length; i++) {
+        this.game.physics.arcade.overlap(this.player, this.enemies[i], this.playerHit, null, this);
+      }
+      ;
       this.game.physics.arcade.overlap(this.player, this.enemyBullets, this.playerHit, null, this);
     }
   },
@@ -103,10 +111,7 @@ var PlayState = function PlayState(game) {
     this.enemies.push(enemy);
     this.enemyLayer.add(enemy);
     if (enemy.children) {
-      for (var i = enemy.children.length - 1; i >= 0; i--) {
-        this.enemies.push(enemy.children[i]);
-      }
-      ;
+      this.enemies.push(enemy.children);
     }
     var gameBullets = this.enemyBullets;
     if (this.enemyBullets) {
@@ -114,7 +119,7 @@ var PlayState = function PlayState(game) {
     }
     enemy.bullets = gameBullets;
   },
-  enemyHit: function(bullet, enemy) {
+  enemyHit: function(enemy, bullet) {
     bullet.kill();
     enemy.damage(bullet.power);
     if (!enemy.alive) {
@@ -122,7 +127,7 @@ var PlayState = function PlayState(game) {
     }
   },
   playerHit: function(player, enemy) {
-    if (player.alive == false) {
+    if (!player.alive) {
       return;
     }
     this.player.kill();
@@ -202,6 +207,11 @@ var PlayState = function PlayState(game) {
   doLater: function(millis, action, context) {
     var context = context || this;
     this.game.time.events.add(millis, action, context);
+  },
+  debugText: function(text) {
+    var x = arguments[1] !== (void 0) ? arguments[1] : 5;
+    var y = arguments[2] !== (void 0) ? arguments[2] : 25;
+    this.game.debug.text(text, x, y, '#0F0', '8px FirewireBlack');
   }
 }, {}, GameState);
 

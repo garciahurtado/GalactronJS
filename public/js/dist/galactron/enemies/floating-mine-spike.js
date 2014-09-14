@@ -10,19 +10,27 @@ var FloatingMineSpike = function FloatingMineSpike(game, x, y, sprite) {
   this.play('up');
   this.velocityX = 0;
   this.velocityY = 0;
+  this.events.onKilled.add(function() {
+    this.parent.onChildKilled();
+  }.bind(this));
   this.init();
+  this.debugBounds = true;
+  this.debugColor = '#00FF00';
 };
 var $FloatingMineSpike = FloatingMineSpike;
-($traceurRuntime.createClass)(FloatingMineSpike, {init: function() {
+($traceurRuntime.createClass)(FloatingMineSpike, {
+  init: function() {
     $traceurRuntime.superCall(this, $FloatingMineSpike.prototype, "init", []);
-    this.health = 1000;
-    this.moves = false;
-    this.body.speed = 0;
+    this.health = 10000;
     this.actions.chainAction(new MethodAction(function() {
       this.body.velocity.x = this.velocityX;
       this.body.velocity.y = this.velocityY;
     }));
     ;
-  }}, {}, Enemy);
+  },
+  deathAnimation: function() {
+    return;
+  }
+}, {}, Enemy);
 
 //# sourceMappingURL=floating-mine-spike.js.map

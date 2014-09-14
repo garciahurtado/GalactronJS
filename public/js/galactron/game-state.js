@@ -1,5 +1,5 @@
 /**
- * Base Game State class intended to be extended by all the other states, whether playable or not (menus)
+ * Base Game State class intended to be extended by all the other states, whether playable or not (such as menus)
  */
 class GameState {
 

@@ -17,7 +17,7 @@
  * @author Garcia Hurtado <ghurtado@gmail.com>
  */
 
-class EnemyWave extends Phaser.Sprite {
+class EnemyWave extends GalactronSprite {
 	// spawnDelay; // number of seconds to wait between enemy spawns
 	// spawnTimer; // keep track of the last time we spawned an enemy in this wave
 	// spawnCounter; // how many enemies have spawned in this wave so far
@@ -33,7 +33,6 @@ class EnemyWave extends Phaser.Sprite {
 		this.playState = game.state.getCurrentState();
 
 		// Physics
-	  this.enableBody = true;
 	  game.physics.enable(this, Phaser.Physics.ARCADE);
 
 		this.game = game;
@@ -44,6 +43,9 @@ class EnemyWave extends Phaser.Sprite {
 		this.waveSize = waveSize;
 		this.spawnDelay = spawnDelay;
 		this.onSpawnEnemy = false; // callback to use when enemies are spawned
+
+		this.debugBounds = false;
+		this.debugColor = '#FF6600';
 
 		this.powerups = game.add.group();
 		this.fx = game.add.group();

@@ -4,6 +4,8 @@ class GalactronSprite extends Phaser.Sprite {
 		this.flickering = false;
 		this.flickerFreq = 30; // number of millis between flicker flashes
 		this.flickerTimer = 0;
+		this.debugBounds = false; // render the sprite's bounds
+		this.debugColor = '#00FF00'; // default color of the debug outline of the sprite (green)
 
 		super(game, x, y, graphic);
 		this.actions = new ActionChain(game, this);
@@ -42,6 +44,10 @@ class GalactronSprite extends Phaser.Sprite {
 				this.alpha = this.alpha ? 0 : 1; // flip alpha between 0 and 1 every other frame
 				this.flickerTimer = 0;
 			}
+		}
+
+		if(this.debugBounds){
+			this.game.debug.spriteBounds(this, this.debugColor, false);
 		}
 	}
 
@@ -93,6 +99,14 @@ class GalactronSprite extends Phaser.Sprite {
 	}
 
 	/**
+	 * Override in subclass to take action when children sprites are killed (ie: to kill an invisible
+	 * sprite container parent)
+	 */
+	onChildKilled(){
+		// nothing to do
+	}
+
+	/**
 	 * Override in child class to provide an animation that plays when this sprite is killed. Keep in mind
 	 * that this function will be called after the sprite no longer exists, so it should not rely on the
 	 * sprite's update() method.
@@ -126,10 +140,11 @@ class GalactronSprite extends Phaser.Sprite {
 	/**
 	 * Moves this sprite such that its center is placed exactly at the center of the
 	 * provided sprite
+	 * @param target Phaser.Sprite
 	 */
 	centerAt(target) {
-		this.x = target.x + Math.round(target.width * .5);
-		this.y = target.y + Math.round(target.height * .5);
+		this.x = target.world.x + Math.round(target.width * .5);
+		this.y = target.world.y + Math.round(target.height * .5);
 
 		// substract half the width and height of this sprite from x,y to finish centering it
 		this.x -= Math.round(this.width / 2);

@@ -5,7 +5,6 @@ var EnemyWave = function EnemyWave(game, enemyType, spawnCoords) {
   var spawnDelay = arguments[4] !== (void 0) ? arguments[4] : 0;
   $traceurRuntime.superCall(this, $EnemyWave.prototype, "constructor", [game]);
   this.playState = game.state.getCurrentState();
-  this.enableBody = true;
   game.physics.enable(this, Phaser.Physics.ARCADE);
   this.game = game;
   this.spawnCoords = spawnCoords;
@@ -14,6 +13,8 @@ var EnemyWave = function EnemyWave(game, enemyType, spawnCoords) {
   this.waveSize = waveSize;
   this.spawnDelay = spawnDelay;
   this.onSpawnEnemy = false;
+  this.debugBounds = false;
+  this.debugColor = '#FF6600';
   this.powerups = game.add.group();
   this.fx = game.add.group();
 };
@@ -63,6 +64,6 @@ var $EnemyWave = EnemyWave;
     powerup.y = y;
     powerups.add(powerup);
   }
-}, {}, Phaser.Sprite);
+}, {}, GalactronSprite);
 
 //# sourceMappingURL=enemy-wave.js.map

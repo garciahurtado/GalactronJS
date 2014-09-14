@@ -17,12 +17,7 @@ class Enemy extends GalactronSprite {
 	constructor(game, x = 0, y = 0, graphic) {
 		super(game, x, y, graphic);
 
-		// Add subsprites group as direct child, so positioning will be relative to main sprite
-    this.subSprites = game.add.group();
-    this.addChild(this.subSprites); 
-
 		this.bullets = game.add.group();
-  	//this.subSprites.add(this.bullets);
 
 		this.explosions = game.add.group();
 		this.explosions.classType = Explosion;

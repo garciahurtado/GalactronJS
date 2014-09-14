@@ -1,5 +1,4 @@
-﻿
-/**
+﻿/**
  * Base Playstate class. Provides base functionality used by all "playable" levels in the game. It
  * is meant to be extended by individual levels to provide custom functionality and level content such as:
  *
@@ -71,6 +70,7 @@ class PlayState extends GameState {
 
 		this.enemies = [];
 		this.enemyLayer = this.game.add.group();
+
 		// this.enemies.physicsBodyType = Phaser.Physics.ARCADE;
 		// this.enemies.enableBody = true;
 		
@@ -89,21 +89,6 @@ class PlayState extends GameState {
 		this.gui = this.game.add.group();
 		this.livesSprites = this.game.add.group();
 
-		// camera = new FlxObject(0, 0);
-		// camera.x = 160; // place the camera in the middle of the screen
-		// camera.y = 120; 
-		
-		// // start level at high speed and gradually slow down
-		// //camera.velocity.x = 1000;
-		// camera.velocity.x = 300;
-		
-	//		FlxG.bgColor = 0xff000000;
-		
-		// add(createBackground());
-		// add(waves);
-		// add(playerBullets);
-		// add(enemyBullets);
-		
 		this.spawnPlayer();
 		this.createHud(); // creating the HUD at the end allows it to sit on the top layer
 		
@@ -116,6 +101,8 @@ class PlayState extends GameState {
 		// FlxG.play(music, 1, false);
 
  		this.game.physics.startSystem(Phaser.Physics.ARCADE);
+
+		this.game.debug.font = "8px Courier";
 	}
 		
 	/**
@@ -162,14 +149,10 @@ class PlayState extends GameState {
 	 * The main update loop. Does collision checks between player and enemies and viceversa.
 	 */
 	update()	{
+		this.debugText( "Num sprites: " + this.game.stage.currentRenderOrderID);
 		this.playerInput(this.game.time.elapsed);
 		
-		// if (FlxG.paused) {
-		// 	return;
-		// }
-		
 		this.events.update();
-	//	FlxG.camera.follow(camera);
 		
 		// if the game is over, shortcut collissions checks
 		if (this.isGameOver) {
@@ -180,17 +163,21 @@ class PlayState extends GameState {
 		// FlxG.overlap(player, powerups, powerUp);
 
 		// Were there any enemies hit by player bullets?
-		this.game.physics.arcade.overlap(this.playerBullets, this.enemies, this.enemyHit, null, this);
-		
+		// TODO: refactor to iterator or special kind of group
+		for (var i = 0; i < this.enemies.length; i++) {
+			this.game.physics.arcade.overlap(this.playerBullets, this.enemies[i], this.enemyHit, null, this);
+		};
+
 		// check whether the player was hit by enemies or enemy bullets
 		if(!this.player.flickering && this.player.exists){ // player is not immune
-			// Did any enemies hit the player?
-			this.game.physics.arcade.overlap(this.player, this.enemies, this.playerHit, null, this);
+			// Check for enemies that hit the player. The children sprites must be iterated as separate
+			// groups, since Arcade.overlap does not do nested collision checks
+			for (var i = 0; i < this.enemies.length; i++) {
+				this.game.physics.arcade.overlap(this.player, this.enemies[i], this.playerHit, null, this);
+			};
 
 			// Did any enemy bullets hit the player?
 			this.game.physics.arcade.overlap(this.player, this.enemyBullets, this.playerHit, null, this);
-			// FlxG.overlap(player, enemies, playerHit);
-			// FlxG.overlap(player, enemyBullets, playerHit);
 		}
 	}
 
@@ -231,14 +218,13 @@ class PlayState extends GameState {
 		this.enemies.push(enemy);
 		this.enemyLayer.add(enemy);
 
-		// Add sub sprites (children) to play state
+		// Add sub sprites (children) to enemies collision group
 		if(enemy.children){
-			for (var i = enemy.children.length - 1; i >= 0; i--) {
-				this.enemies.push(enemy.children[i]);
-			};
+			this.enemies.push(enemy.children);
 		}
 
 		// Add enemy bullets to play state
+		// TODO: refactor, there's gotta be an easier way to recycle bullets...
 		var gameBullets = this.enemyBullets;
 		if(this.enemyBullets){
 			this.enemyBullets.addMany(enemy.bullets);
@@ -251,7 +237,7 @@ class PlayState extends GameState {
 	 * @param	bullet
 	 * @param	enemy
 	 */
-	enemyHit(bullet, enemy) {
+	enemyHit(enemy, bullet) {
 		bullet.kill();
 		enemy.damage(bullet.power);
 		
@@ -267,10 +253,10 @@ class PlayState extends GameState {
 	 * @param	enemy
 	 */
 	playerHit(player, enemy) {
-		// this callback may be called once the player is already dead, 
-		// to prevent a double kill, we check early whether the player
-		// is alive
-		if(player.alive == false){
+		// This function may be called once the player is already dead.
+		// To prevent a "double kill", we check early whether the player
+		// is alive first, and return if not
+		if(!player.alive){
 			return;
 		}
 
@@ -369,9 +355,6 @@ class PlayState extends GameState {
 		this.player.flicker(3);
 		this.player.body.velocity.x = 100;
 
-		// player.enemies = enemies; 
-		//player.spriteFactory = spriteFactory;
-		
 		//var missile1 = new MissileWeapon();
 		//missile1.angle = Math.PI; // aim the missiles towards the back
 		//player.changeMissileWeapon(missile1);
@@ -379,7 +362,7 @@ class PlayState extends GameState {
 		
 		this.playerBullets = this.player.bullets;
 
-			// prevent player from going outside the viewport bounds
+		// prevent player from going outside the viewport bounds
 		this.player.body.collideWorldBounds = true;
 		this.playerLayer.add(this.player);
 	}
@@ -428,5 +411,12 @@ class PlayState extends GameState {
 	doLater(millis, action, context){
 		var context = context || this;
 		this.game.time.events.add(millis, action, context);
+  }
+
+  /**
+   * Convenience method to hardcode the font color, size and family
+   */
+  debugText(text, x = 5, y = 25){
+		this.game.debug.text(text, x, y, '#0F0', '8px FirewireBlack');
   }
 }

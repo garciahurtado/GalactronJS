@@ -25,6 +25,9 @@ var $Level1 = Level1;
     var width = this.game.width;
     this.events.addAction(new WaitAction(1)).chainAction(new SpawnWaveAction(FloatingMine, [{
       x: width,
+      y: 150
+    }], 1, 0)).chainAction(new WaitAction(10)).chainAction(new SpawnWaveAction(FloatingMine, [{
+      x: width,
       y: 30
     }, {
       x: width,
