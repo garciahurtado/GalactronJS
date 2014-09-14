@@ -41,7 +41,7 @@ var $Level2 = Level2;
     }, {
       x: width,
       y: 200
-    }], 6, 0)).chainAction(new SpawnWaveAction(this, Scorpion1, width, 150, 3, 5)).chainAction(new WaitAction(10)).start();
+    }], 6, 0)).start();
   },
   createBackground: function() {
     var width = this.game.stage.bounds.width;

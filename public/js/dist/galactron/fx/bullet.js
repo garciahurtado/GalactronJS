@@ -5,6 +5,6 @@ var Bullet = function Bullet(game, x, y, sprite) {
   this.power = 1;
 };
 var $Bullet = Bullet;
-($traceurRuntime.createClass)(Bullet, {}, {}, Phaser.Sprite);
+($traceurRuntime.createClass)(Bullet, {}, {}, GalactronSprite);
 
 //# sourceMappingURL=bullet.js.map

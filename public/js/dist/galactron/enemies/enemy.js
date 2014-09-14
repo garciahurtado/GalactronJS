@@ -52,10 +52,6 @@ var $Enemy = Enemy;
   },
   update: function() {
     $traceurRuntime.superCall(this, $Enemy.prototype, "update", []);
-    this.lastShot += this.game.time.delta;
-  },
-  shoot: function() {
-    lastShot = 0;
   },
   addWeapon: function(weapon) {
     weapon.bullets = this.bullets;
@@ -68,6 +64,7 @@ var $Enemy = Enemy;
     bullet.enableBody = true;
     this.game.physics.enable(bullet, Phaser.Physics.ARCADE);
     this.bullets.add(bullet);
+    bullet.reset(x, y);
     return bullet;
   }
 }, {}, GalactronSprite);

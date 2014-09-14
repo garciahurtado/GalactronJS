@@ -39,7 +39,6 @@ class CannonDrone extends Enemy {
 	init() {
 		super.init();
 
-		this.lastShot = 3;
 		this.health = 50;
 		this.score = 300;
 		this.speed = 30;

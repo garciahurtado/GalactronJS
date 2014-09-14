@@ -20,7 +20,6 @@ var $CannonDrone = CannonDrone;
 ($traceurRuntime.createClass)(CannonDrone, {
   init: function() {
     $traceurRuntime.superCall(this, $CannonDrone.prototype, "init", []);
-    this.lastShot = 3;
     this.health = 50;
     this.score = 300;
     this.speed = 30;

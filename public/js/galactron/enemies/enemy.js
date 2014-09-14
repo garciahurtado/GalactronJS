@@ -5,7 +5,6 @@
 class Enemy extends GalactronSprite {
 	/*
 	bullets;
-	lastShot;
 	player;
 	wave; // the wave this enemy belongs to, if any
 	score; // how many points you get for killing this guy
@@ -107,11 +106,6 @@ class Enemy extends GalactronSprite {
 
 	update() {
 		super.update();
-		this.lastShot += this.game.time.delta;
-	}
-
-	shoot() {
-		lastShot = 0;
 	}
 
 	/**
@@ -132,6 +126,7 @@ class Enemy extends GalactronSprite {
     bullet.enableBody = true;
     this.game.physics.enable(bullet, Phaser.Physics.ARCADE);
 		this.bullets.add(bullet);
+		bullet.reset(x, y);
 		return bullet;
 	}
 }
