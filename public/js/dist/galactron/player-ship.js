@@ -12,8 +12,8 @@ var PlayerShip = function PlayerShip(game, x, y) {
   this.animations.add('down', [1], 1, false);
   this.animations.add('up', [2], 1, false);
   this.play('normal');
-  this.enableBody = true;
   game.physics.enable(this, Phaser.Physics.ARCADE);
+  this.body.setSize(27, 18, 2, 4);
   this.bullets = game.add.group();
   this.bullets.classType = BlueLaser;
   this.bullets.enableBody = true;

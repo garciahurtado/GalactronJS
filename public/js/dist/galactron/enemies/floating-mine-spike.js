@@ -21,8 +21,6 @@ var FloatingMineSpike = function FloatingMineSpike(game, x, y, sprite) {
     this.parent.onChildKilled();
   }.bind(this));
   this.init();
-  this.debugBounds = true;
-  this.debugColor = '#00FF00';
 };
 var $FloatingMineSpike = FloatingMineSpike;
 ($traceurRuntime.createClass)(FloatingMineSpike, {

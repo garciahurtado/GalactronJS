@@ -8,7 +8,6 @@ var ArrowShipGreen = function ArrowShipGreen(game, x, y) {
 var $ArrowShipGreen = ArrowShipGreen;
 ($traceurRuntime.createClass)(ArrowShipGreen, {init: function() {
     $traceurRuntime.superCall(this, $ArrowShipGreen.prototype, "init", []);
-    this.body.velocity.x = -100;
   }}, {}, ArrowShip);
 
 //# sourceMappingURL=arrow-ship-green.js.map

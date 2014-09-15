@@ -29,9 +29,6 @@ class FloatingMineSpike extends Enemy {
 		}.bind(this));
 
 		this.init();
-
-		this.debugBounds = true; // render the sprite's bounds
-		this.debugColor = '#00FF00'; // default color of the debug outline of the sprite (green)
 	}
 
 	init() {

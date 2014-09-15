@@ -11,6 +11,5 @@ class ArrowShipGreen extends ArrowShip	{
 	
 	init(){
 		super();
-		this.body.velocity.x = -100;
 	}
 }

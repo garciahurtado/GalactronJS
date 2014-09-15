@@ -19,7 +19,7 @@ class Level3 extends Level2 {
 		this.events = new ActionChain(this.game);
 		this.events.addAction(new WaitAction(0.5))
 			.chainAction( new SpawnWaveAction(ArrowShipGreen, [{x:width, y:150}], 10, 0.5))
-			.chainAction( new WaitAction(20))
+			.chainAction( new WaitAction(6))
 			.chainAction( new SpawnWaveAction(CannonDrone, [
 				{x:width, y:100}, 
 				{x:width, y:120}, 

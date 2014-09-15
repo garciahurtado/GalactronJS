@@ -4,8 +4,10 @@ class GalactronSprite extends Phaser.Sprite {
 		this.flickering = false;
 		this.flickerFreq = 30; // number of millis between flicker flashes
 		this.flickerTimer = 0;
-		this.debugBounds = false; // render the sprite's bounds
-		this.debugColor = '#00FF00'; // default color of the debug outline of the sprite (green)
+		this.debugSprite = false; // render the sprite's bounds (expensive, debug only)
+		this.debugBody = false; // render the physics body's bounds
+		this.debugSpriteColor = '#00FF00'; // default color of the debug outline of the sprite (green)
+		this.debugBodyColor = '#FF0000'; // default color of the debug outline of the body (red)
 
 		super(game, x, y, graphic);
 		this.actions = new ActionChain(game, this);
@@ -46,8 +48,11 @@ class GalactronSprite extends Phaser.Sprite {
 			}
 		}
 
-		if(this.debugBounds){
-			this.game.debug.spriteBounds(this, this.debugColor, false);
+		if(this.debugBody){
+			this.game.debug.body(this, this.debugBodyColor, false);
+		}
+		if(this.debugSprite){
+			this.game.debug.spriteBounds(this, this.debugSpriteColor, false);
 		}
 	}
 

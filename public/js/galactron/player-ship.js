@@ -18,8 +18,8 @@ class PlayerShip extends GalactronSprite {
     this.play('normal');
 
     // Physics
-    this.enableBody = true;
     game.physics.enable(this, Phaser.Physics.ARCADE);
+    this.body.setSize(27, 18, 2, 4); // tweak the size of the player hit box a tad
 
     // Create player bullets
     this.bullets = game.add.group();

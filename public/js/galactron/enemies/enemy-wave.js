@@ -44,7 +44,7 @@ class EnemyWave extends GalactronSprite {
 		this.spawnDelay = spawnDelay;
 		this.onSpawnEnemy = false; // callback to use when enemies are spawned
 
-		this.debugBounds = false;
+		this.debugSprite = false;
 		this.debugColor = '#FF6600';
 
 		this.powerups = game.add.group();
