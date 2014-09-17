@@ -6,7 +6,7 @@
 class MenuState extends GameState {
 	constructor(game){
 		this.arrowIndex = 0;
-		this.levelList = ['Level1', 'Level2'];
+		this.levelList = ['Level1', 'Level2',  'Level3'];
 	}
 
 	/**
@@ -30,12 +30,11 @@ class MenuState extends GameState {
 		this.arrow.flicker(0, 30);
 
 		this.pressEnter = this.createText("PRESS ENTER TO START", 190, 240, 8, 'FirewireBlack', '#FFFFFF', 'center');
-		this.pressEnter.flicker = GalactronSprite.prototype.flicker;
+		this.pressEnter.flicker = GalactronSprite.prototype.flicker; // mixin
 		this.pressEnter.update = GalactronSprite.prototype.update;
 		this.pressEnter.flicker(0, 700);
 		
-			// this.add(new FlxText(0, FlxG.height - 24, FlxG.width, "PRESS ENTER TO START")
-			// 	.setFormat(null, 8, 0xFFFFFFFF, "center"));
+		this.configInput();
 	}
 
 	/**
@@ -52,12 +51,17 @@ class MenuState extends GameState {
 			// 		FlxG.switchState(new levelList[arrowIndex]());
 			// 	});
 			// }
-			
-			if (this.controls.down.isDown) {
+
+	}
+
+	configInput(){
+			this.controls.down.onDown.add(function() {
 				this.moveArrow(+1);
-			} else if (this.controls.up.isDown) {
+				console.log('Arrow down');
+			}, this);
+			this.controls.up.onDown.add(function(){
 				this.moveArrow(-1);
-			}
+			}, this);
 	}
 
 	/**

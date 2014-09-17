@@ -70,9 +70,6 @@ class PlayState extends GameState {
 
 		this.enemies = [];
 		this.enemyLayer = this.game.add.group();
-
-		// this.enemies.physicsBodyType = Phaser.Physics.ARCADE;
-		// this.enemies.enableBody = true;
 		
 		this.enemyBullets = this.game.add.group();
 		this.enemyBullets.physicsBodyType = Phaser.Physics.ARCADE;
@@ -101,7 +98,6 @@ class PlayState extends GameState {
 		// FlxG.play(music, 1, false);
 
  		this.game.physics.startSystem(Phaser.Physics.ARCADE);
-
 		this.game.debug.font = "8px Courier";
 	}
 		

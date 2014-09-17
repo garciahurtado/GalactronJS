@@ -2,7 +2,7 @@
 var __moduleName = "public/js/dist/galactron/menu-state";
 var MenuState = function MenuState(game) {
   this.arrowIndex = 0;
-  this.levelList = ['Level1', 'Level2'];
+  this.levelList = ['Level1', 'Level2', 'Level3'];
 };
 var $MenuState = MenuState;
 ($traceurRuntime.createClass)(MenuState, {
@@ -22,17 +22,22 @@ var $MenuState = MenuState;
     this.pressEnter.flicker = GalactronSprite.prototype.flicker;
     this.pressEnter.update = GalactronSprite.prototype.update;
     this.pressEnter.flicker(0, 700);
+    this.configInput();
   },
   update: function() {
     if (this.controls.enter.isDown) {
       var newLevel = this.levelList[this.arrowIndex];
       this.game.state.start(newLevel);
     }
-    if (this.controls.down.isDown) {
+  },
+  configInput: function() {
+    this.controls.down.onDown.add(function() {
       this.moveArrow(+1);
-    } else if (this.controls.up.isDown) {
+      console.log('Arrow down');
+    }, this);
+    this.controls.up.onDown.add(function() {
       this.moveArrow(-1);
-    }
+    }, this);
   },
   moveArrow: function(offset) {
     var newOffset = this.arrowIndex + offset;
