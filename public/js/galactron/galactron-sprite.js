@@ -1,9 +1,7 @@
 class GalactronSprite extends Phaser.Sprite {
 	constructor(game, x = 0, y = 0, graphic) {
 		this.math = game.math; // convenience
-		this.flickering = false;
-		this.flickerFreq = 30; // number of millis between flicker flashes
-		this.flickerTimer = 0;
+		this.immune = false;
 		this.debugSprite = false; // render the sprite's bounds (expensive, debug only)
 		this.debugBody = false; // render the physics body's bounds
 		this.debugSpriteColor = '#00FF00'; // default color of the debug outline of the sprite (green)
@@ -17,36 +15,10 @@ class GalactronSprite extends Phaser.Sprite {
 	}
 
 	/**
-	 * Flicker the sprite quickly for a certain amount of time, by turning the visibility on and off
-	 */
-	flicker(seconds = 0, frequency){
-		if(frequency){
-			this.flickerFreq = frequency;
-		}
-		
-		this.flickering = true;
-		this.flickerTimer = 0;
-
-		if(seconds){
-			this.game.time.events.add(Phaser.Timer.SECOND * seconds, function() {
-				this.flickering = false;
-				this.alpha = 1;
-			}, this);
-		}
-	}
-
-	/**
-	 * Overrides parent to add flickering functionality
+	 * Overrides parent to add debugging functionality
 	 */
 	update(){
 		super.update();
-		if(this.flickering){
-			this.flickerTimer += this.game.time.elapsed;
-			if(this.flickerTimer > this.flickerFreq){
-				this.alpha = this.alpha ? 0 : 1; // flip alpha between 0 and 1 every other frame
-				this.flickerTimer = 0;
-			}
-		}
 
 		if(this.debugBody){
 			this.game.debug.body(this, this.debugBodyColor, false);

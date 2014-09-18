@@ -15,4 +15,9 @@ class FloatingMineCore extends Enemy {
 
 		this.init();
 	}
+
+	init(){
+		super();
+		this.health = 1000;
+	}
 }

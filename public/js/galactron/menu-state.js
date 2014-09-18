@@ -7,6 +7,7 @@ class MenuState extends GameState {
 	constructor(game){
 		this.arrowIndex = 0;
 		this.levelList = ['Level1', 'Level2',  'Level3'];
+		game.plugins.add(new Phaser.Plugin.Flicker());
 	}
 
 	/**
@@ -15,7 +16,6 @@ class MenuState extends GameState {
 	create(){
 		super();
 		this.game.stage.smoothed = false;
-		
 		this.enableInput();
 
 		this.createText("GALACTRON", 190, 60, 32, 'FirewireBlack', '#FFFFFF', 'center');
@@ -25,14 +25,10 @@ class MenuState extends GameState {
 		this.createText("LEVEL 3", 160, 180, 8, 'FirewireBlack', '#FFFFFF', 'left');
 
 		this.arrow = this.createText(">", 150, 140, 8, 'FirewireBlack', '#FFFFFF', 'left');
-		this.arrow.flicker = GalactronSprite.prototype.flicker;
-		this.arrow.update = GalactronSprite.prototype.update;
-		this.arrow.flicker(0, 30);
+		this.arrow.flicker();
 
 		this.pressEnter = this.createText("PRESS ENTER TO START", 190, 240, 8, 'FirewireBlack', '#FFFFFF', 'center');
-		this.pressEnter.flicker = GalactronSprite.prototype.flicker; // mixin
-		this.pressEnter.update = GalactronSprite.prototype.update;
-		this.pressEnter.flicker(0, 700);
+		this.pressEnter.flicker(1.42);
 		
 		this.configInput();
 	}
@@ -57,7 +53,6 @@ class MenuState extends GameState {
 	configInput(){
 			this.controls.down.onDown.add(function() {
 				this.moveArrow(+1);
-				console.log('Arrow down');
 			}, this);
 			this.controls.up.onDown.add(function(){
 				this.moveArrow(-1);

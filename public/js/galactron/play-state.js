@@ -42,6 +42,9 @@ class PlayState extends GameState {
 		this.controls;
 
 		this.game = game;
+
+		// Plugins
+		game.plugins.add(new Phaser.Plugin.Flicker());
 	}
 
 	preload(){
@@ -165,7 +168,7 @@ class PlayState extends GameState {
 		};
 
 		// check whether the player was hit by enemies or enemy bullets
-		if(!this.player.flickering && this.player.exists){ // player is not immune
+		if(!this.player.immune && this.player.exists){
 			// Check for enemies that hit the player. The children sprites must be iterated as separate
 			// groups, since Arcade.overlap does not do nested collision checks
 			for (var i = 0; i < this.enemies.length; i++) {
@@ -348,7 +351,7 @@ class PlayState extends GameState {
 	 */
 	spawnPlayer() {
 		this.player = new PlayerShip(this.game, 0, 100);
-		this.player.flicker(3);
+		this.player.flicker(null, 3000);
 		this.player.body.velocity.x = 100;
 
 		//var missile1 = new MissileWeapon();

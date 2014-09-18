@@ -20,6 +20,7 @@ var PlayState = function PlayState(game) {
   this.scoreDisplay;
   this.controls;
   this.game = game;
+  game.plugins.add(new Phaser.Plugin.Flicker());
 };
 ($traceurRuntime.createClass)(PlayState, {
   preload: function() {
@@ -82,7 +83,7 @@ var PlayState = function PlayState(game) {
       this.game.physics.arcade.overlap(this.playerBullets, this.enemies[i], this.enemyHit, null, this);
     }
     ;
-    if (!this.player.flickering && this.player.exists) {
+    if (!this.player.immune && this.player.exists) {
       for (var i = 0; i < this.enemies.length; i++) {
         this.game.physics.arcade.overlap(this.player, this.enemies[i], this.playerHit, null, this);
       }
@@ -187,7 +188,7 @@ var PlayState = function PlayState(game) {
   },
   spawnPlayer: function() {
     this.player = new PlayerShip(this.game, 0, 100);
-    this.player.flicker(3);
+    this.player.flicker(null, 3000);
     this.player.body.velocity.x = 100;
     this.playerBullets = this.player.bullets;
     this.player.body.collideWorldBounds = true;

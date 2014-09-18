@@ -11,6 +11,9 @@ var FloatingMineCore = function FloatingMineCore(game, x, y, sprite) {
   this.init();
 };
 var $FloatingMineCore = FloatingMineCore;
-($traceurRuntime.createClass)(FloatingMineCore, {}, {}, Enemy);
+($traceurRuntime.createClass)(FloatingMineCore, {init: function() {
+    $traceurRuntime.superCall(this, $FloatingMineCore.prototype, "init", []);
+    this.health = 1000;
+  }}, {}, Enemy);
 
 //# sourceMappingURL=floating-mine-core.js.map

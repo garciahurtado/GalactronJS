@@ -5,9 +5,7 @@ var GalactronSprite = function GalactronSprite(game) {
   var y = arguments[2] !== (void 0) ? arguments[2] : 0;
   var graphic = arguments[3];
   this.math = game.math;
-  this.flickering = false;
-  this.flickerFreq = 30;
-  this.flickerTimer = 0;
+  this.immune = false;
   this.debugSprite = false;
   this.debugBody = false;
   this.debugSpriteColor = '#00FF00';
@@ -19,30 +17,8 @@ var GalactronSprite = function GalactronSprite(game) {
 };
 var $GalactronSprite = GalactronSprite;
 ($traceurRuntime.createClass)(GalactronSprite, {
-  flicker: function() {
-    var seconds = arguments[0] !== (void 0) ? arguments[0] : 0;
-    var frequency = arguments[1];
-    if (frequency) {
-      this.flickerFreq = frequency;
-    }
-    this.flickering = true;
-    this.flickerTimer = 0;
-    if (seconds) {
-      this.game.time.events.add(Phaser.Timer.SECOND * seconds, function() {
-        this.flickering = false;
-        this.alpha = 1;
-      }, this);
-    }
-  },
   update: function() {
     $traceurRuntime.superCall(this, $GalactronSprite.prototype, "update", []);
-    if (this.flickering) {
-      this.flickerTimer += this.game.time.elapsed;
-      if (this.flickerTimer > this.flickerFreq) {
-        this.alpha = this.alpha ? 0 : 1;
-        this.flickerTimer = 0;
-      }
-    }
     if (this.debugBody) {
       this.game.debug.body(this, this.debugBodyColor, false);
     }
