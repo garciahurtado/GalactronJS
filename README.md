@@ -5,7 +5,7 @@ Galactron is an old school throwback to the golden era side shooters such as F-t
 1. Clone the project
 2. Run "npm install"
 3. Run "grunt". This launches the node server.
-4. Open (http://localhost:3000) and waste some aliens!
+4. Open http://localhost:3000 and waste some aliens!
 
 ## Known issues
 - This game is very much unfinished. The engine is about 80% done, but there is no consistent content for the levels
