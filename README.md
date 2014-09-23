@@ -7,6 +7,16 @@ Galactron is an old school throwback to the golden era side shooters such as F-t
 3. Run "grunt". This launches the node server.
 4. Open http://localhost:3000 and waste some aliens!
 
+## ES6
+Most of the custom JavaScript code in this project is written in ES6. Don't be weirded out by the class syntax and ES6 syntax, it is mostly syntatic sugar that ends up transpiling to "regular" JS.
+
+It uses the [Traceur](https://github.com/google/traceur-compiler) transpiler to automatically convert to browser-ready ES5. A Grunt task automatically watches all JS source folders while the server is running and ensures that all the latest changes are transpiled on the fly.
+
+Traceur creates source maps of the files it transpiles, so debugging in-browser can be done using the source code that you wrote, rather than the output from Traceur.
+
+## SASS
+Although there isn't much CSS in this one page HTML5 game, I am using Compass for SASS > CSS compilation.
+
 ## Known issues
 - This game is very much unfinished. The engine is about 80% done, but there is no consistent content for the levels
 - Aliased pixel art is only currently available in Firefox when using WebGL. Due to the way that Phaser upscales the stage via CSS, there is no easy solution for this at the moment.
