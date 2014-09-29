@@ -41,10 +41,12 @@ class Level1 extends PlayState {
 		var width = this.game.width;
 
 		// Define enemy waves and game events chain
-		this.events.addAction(new WaitAction(1))
-			.chainAction(new SpawnWaveAction(FloatingMine, [{x:width, y:150}], 1, 0))
-			.chainAction(new WaitAction(10))
-			.chainAction(new SpawnWaveAction(
+		this.events.add(new WaitAction(1))
+			// .then(new SpawnWaveAction(Alien1, [{x:width, y:150}], 20, 0.2))
+			// .then(new WaitAction(10))
+			.then(new SpawnWaveAction(FloatingMine, [{x:width, y:150}], 1, 0))
+			.then(new WaitAction(3))
+			.then(new SpawnWaveAction(
 				FloatingMine,[
 				{x: width, y: 30},
 				{x: width, y: 50},
@@ -59,17 +61,20 @@ class Level1 extends PlayState {
 				{x: width, y: 70},
 				{x: width, y: 50}
 				],
-				24, 0.5))
-			.chainAction(new SpawnWaveAction(Alien1, [{x:width, y:150}], 20, 0.3))
-			.chainAction(new WaitAction(5))
-			.chainAction(new SpawnWaveAction(AlienRed, [{x:width, y:150}], 20, 0.3))
-			.chainAction(new WaitAction(5))
-			.chainAction(new SpawnWaveAction(Snake, [{x:width, y:150}], 1))
-			.chainAction(new SpawnWaveAction(Snake, [{x:width, y:150}], 1))
-			.chainAction(new WaitAction(10))
-			.chainAction(new SpawnWaveAction(WhiteSnake, [{x:width, y:100}], 1))
-			.chainAction(new SpawnWaveAction(WhiteSnake, [{x:width, y:150}], 1))
-			.chainAction(new SpawnWaveAction(WhiteSnake, [{x:width, y:200}], 1))
+				10, 0.5))
+			.then(new SpawnWaveAction(Alien1, [{x:width, y:50}], 20, 0.3))
+			.then(new SpawnWaveAction(Alien1, [{x:width, y:100}], 20, 0.3))
+			.then(new SpawnWaveAction(Alien1, [{x:width, y:150}], 20, 0.3))
+			.then(new SpawnWaveAction(Alien1, [{x:width, y:200}], 20, 0.3))
+			.then(new WaitAction(5))
+			.then(new SpawnWaveAction(AlienRed, [{x:width, y:150}], 20, 0.3))
+			.then(new WaitAction(5))
+			.then(new SpawnWaveAction(Snake, [{x:width, y:150}], 1))
+			.then(new SpawnWaveAction(Snake, [{x:width, y:150}], 1))
+			.then(new WaitAction(10))
+			.then(new SpawnWaveAction(WhiteSnake, [{x:width, y:100}], 1))
+			.then(new SpawnWaveAction(WhiteSnake, [{x:width, y:150}], 1))
+			.then(new SpawnWaveAction(WhiteSnake, [{x:width, y:200}], 1))
 			.start();
 		
 
@@ -90,8 +95,8 @@ class Level1 extends PlayState {
 	 * @return
 	 */
 	createBackground() {
-		var width = this.game.stage.bounds.width;
-		var height = this.game.stage.bounds.height;
+		var width = this.game.stage.width;
+		var height = this.game.stage.height;
 
 		// we will use several starfield tileSprites to create a parallax effect
 		var starfield1 = this.game.add.tileSprite(0, 0, width, height, 'starfield1');

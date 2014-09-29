@@ -24,7 +24,7 @@ class Action extends Phaser.Sprite {
 	}
 
 	init() {
-		this.running = false;
+		// Extend in your own classes
 	}
 
 	/**
@@ -43,6 +43,7 @@ class Action extends Phaser.Sprite {
 	 * Revive the object so that it will continue to update
 	 */
 	start() {
+		this.finished = false;
 		this.running = true;
 	}
 
@@ -59,6 +60,9 @@ class Action extends Phaser.Sprite {
 	 * It also resets the action to its default state via init();
 	 */
 	finish() {
+		this.finished = true;
+		this.running = false;
+		
 		if (this.finishHandler != null) {
 			this.finishHandler();
 		}

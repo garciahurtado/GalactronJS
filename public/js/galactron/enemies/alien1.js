@@ -12,24 +12,22 @@ class Alien1 extends Alien {
 		super();
 
 		this.body.velocity.x = -50;
+		var Circle = CircleMotionAction;
 
-		this.actions.addAction(new WaitAction(2))
-			.chainAction(new CircleMotionAction(1, 1, CircleMotionAction.CLOCKWISE))
-			.chainAction(new MethodAction(function() {
-				this.body.velocity.y = 0; // straighten
-			}))
-			.chainAction(new WaitAction(2))
-			.chainAction(new CircleMotionAction(1, 1.5, CircleMotionAction.COUNTERCLOCKWISE))
-			.chainAction(new StopMotionAction())
-			.chainAction(new MethodAction(function() {
-				this.body.velocity.y = 70; // switch directions
-				this.body.velocity.x = 0;
-			}))
-			.chainAction(new WaitAction(0.2))
-			.chainAction(new WaveMotionAction(this, 1, 5))
+		this.actions
+			.wait(2)
+			.then(new Circle(1, 1, Circle.COUNTERCLOCKWISE))
+			.wait(1.5)
+			.then(new Circle(1, 1.5, Circle.CLOCKWISE))
+			.then(new StopMotionAction())
+			.then(function() {
+				this.body.velocity = {x:0, y:70}; // switch directions
+			})
+			.wait(0.2)
+			.then(new WaveMotionAction(this, 1, 5))
 			;
 			
-		//actions.addAction(new ShootAction(this), "shoot");
+		//actions.add(new ShootAction(this), "shoot");
 	}
 }
 

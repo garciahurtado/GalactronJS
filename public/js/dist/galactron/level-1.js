@@ -23,10 +23,10 @@ var $Level1 = Level1;
     $traceurRuntime.superCall(this, $Level1.prototype, "create", []);
     this.createBackground();
     var width = this.game.width;
-    this.events.addAction(new WaitAction(1)).chainAction(new SpawnWaveAction(FloatingMine, [{
+    this.events.add(new WaitAction(1)).then(new SpawnWaveAction(FloatingMine, [{
       x: width,
       y: 150
-    }], 1, 0)).chainAction(new WaitAction(10)).chainAction(new SpawnWaveAction(FloatingMine, [{
+    }], 1, 0)).then(new WaitAction(3)).then(new SpawnWaveAction(FloatingMine, [{
       x: width,
       y: 30
     }, {
@@ -62,32 +62,41 @@ var $Level1 = Level1;
     }, {
       x: width,
       y: 50
-    }], 24, 0.5)).chainAction(new SpawnWaveAction(Alien1, [{
+    }], 10, 0.5)).then(new SpawnWaveAction(Alien1, [{
       x: width,
-      y: 150
-    }], 20, 0.3)).chainAction(new WaitAction(5)).chainAction(new SpawnWaveAction(AlienRed, [{
-      x: width,
-      y: 150
-    }], 20, 0.3)).chainAction(new WaitAction(5)).chainAction(new SpawnWaveAction(Snake, [{
-      x: width,
-      y: 150
-    }], 1)).chainAction(new SpawnWaveAction(Snake, [{
-      x: width,
-      y: 150
-    }], 1)).chainAction(new WaitAction(10)).chainAction(new SpawnWaveAction(WhiteSnake, [{
+      y: 50
+    }], 20, 0.3)).then(new SpawnWaveAction(Alien1, [{
       x: width,
       y: 100
-    }], 1)).chainAction(new SpawnWaveAction(WhiteSnake, [{
+    }], 20, 0.3)).then(new SpawnWaveAction(Alien1, [{
       x: width,
       y: 150
-    }], 1)).chainAction(new SpawnWaveAction(WhiteSnake, [{
+    }], 20, 0.3)).then(new SpawnWaveAction(Alien1, [{
+      x: width,
+      y: 200
+    }], 20, 0.3)).then(new WaitAction(5)).then(new SpawnWaveAction(AlienRed, [{
+      x: width,
+      y: 150
+    }], 20, 0.3)).then(new WaitAction(5)).then(new SpawnWaveAction(Snake, [{
+      x: width,
+      y: 150
+    }], 1)).then(new SpawnWaveAction(Snake, [{
+      x: width,
+      y: 150
+    }], 1)).then(new WaitAction(10)).then(new SpawnWaveAction(WhiteSnake, [{
+      x: width,
+      y: 100
+    }], 1)).then(new SpawnWaveAction(WhiteSnake, [{
+      x: width,
+      y: 150
+    }], 1)).then(new SpawnWaveAction(WhiteSnake, [{
       x: width,
       y: 200
     }], 1)).start();
   },
   createBackground: function() {
-    var width = this.game.stage.bounds.width;
-    var height = this.game.stage.bounds.height;
+    var width = this.game.stage.width;
+    var height = this.game.stage.height;
     var starfield1 = this.game.add.tileSprite(0, 0, width, height, 'starfield1');
     starfield1.autoScroll(-120, 0);
     var starfield2 = this.game.add.tileSprite(0, 0, width, height, 'starfield2');

@@ -13,21 +13,22 @@ var Action = function Action() {
 };
 var $Action = Action;
 ($traceurRuntime.createClass)(Action, {
-  init: function() {
-    this.running = false;
-  },
+  init: function() {},
   update: function() {
     if (this.running) {} else {
       return false;
     }
   },
   start: function() {
+    this.finished = false;
     this.running = true;
   },
   stop: function() {
     this.running = false;
   },
   finish: function() {
+    this.finished = true;
+    this.running = false;
     if (this.finishHandler != null) {
       this.finishHandler();
     }

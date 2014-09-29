@@ -79,10 +79,17 @@ var PlayState = function PlayState(game) {
     if (this.isGameOver) {
       return;
     }
-    for (var i = 0; i < this.enemies.length; i++) {
+    this.checkEnemyHit();
+    this.checkPlayerHit();
+  },
+  checkEnemyHit: function() {
+    var count = this.enemies.length;
+    for (var i = 0; i < count; i++) {
       this.game.physics.arcade.overlap(this.playerBullets, this.enemies[i], this.enemyHit, null, this);
     }
     ;
+  },
+  checkPlayerHit: function() {
     if (!this.player.immune && this.player.exists) {
       for (var i = 0; i < this.enemies.length; i++) {
         this.game.physics.arcade.overlap(this.player, this.enemies[i], this.playerHit, null, this);

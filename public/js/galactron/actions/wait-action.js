@@ -5,8 +5,6 @@
  * @author Garcia Hurtado
  */
 class WaitAction extends Action {
-	// timer;
-	// timeout;
 	
 	constructor(timeout = 0){
 		super();

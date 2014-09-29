@@ -21,18 +21,18 @@ class CannonDrone extends Enemy {
     // this.laser.y = -1000; // effectively invisible
 
 		this.actions
-			.addAction(new TweenAction(this, {x : 310}, 1000, Phaser.Easing.Sinusoidal.Out )) 	// slow down
-			.chainAction(new WaitAction(0.5))
-			.chainAction(new StopMotionAction())
-			.chainAction(new AnimationAction("open"), "openLaser")
-			.chainAction(new WaitAction(0.5))
-			.chainAction(new MethodAction(this.laserOn))									// Fire!
-			.chainAction(new WaitAction(2))
-			.chainAction(new MethodAction(this.laserOff))
-			.chainAction(new AnimationAction("close"), "close")
-			.chainAction(new WaitAction(1))
-			.chainAction(new GoToAction("openLaser", 2)) // repeat a second time
-			.chainAction(new TweenAction(this, {x : -50}, 2000, Phaser.Easing.Sinusoidal.In)) 	// speed up
+			.add(new TweenAction(this, {x : 310}, 1000, Phaser.Easing.Sinusoidal.Out )) 	// slow down
+			.then(new WaitAction(0.5))
+			.then(new StopMotionAction())
+			.then(new AnimationAction("open"), "openLaser")
+			.then(new WaitAction(0.5))
+			.then(new MethodAction(this.laserOn))									// Fire!
+			.then(new WaitAction(2))
+			.then(new MethodAction(this.laserOff))
+			.then(new AnimationAction("close"), "close")
+			.then(new WaitAction(1))
+			.then(new GoToAction("openLaser", 2)) // repeat a second time
+			.then(new TweenAction(this, {x : -50}, 2000, Phaser.Easing.Sinusoidal.In)) 	// speed up
 			;
 	}
 

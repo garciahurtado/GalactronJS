@@ -2,7 +2,7 @@
 	var game = new Phaser.Game(
 		380,
 		260,
-		Phaser.CANVAS, // WebGL is needed in order to use filters
+		Phaser.WEBGL, // WebGL is needed in order to use filters
 		'canvasWrapper',
 		{ preload: preload, create: create, update: update }
 	);
@@ -65,7 +65,7 @@
 		game.state.add('Level2', Level2);
 		game.state.add('Level3', Level3);
 
-	 	game.state.start('MenuState');
+	 	game.state.start('Level1');
 	}
 
 	/**

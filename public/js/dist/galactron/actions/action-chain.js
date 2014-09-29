@@ -10,23 +10,13 @@ var ActionChain = function ActionChain(game) {
 };
 var $ActionChain = ActionChain;
 ($traceurRuntime.createClass)(ActionChain, {
-  init: function() {
-    $traceurRuntime.superCall(this, $ActionChain.prototype, "init", []);
-  },
-  chainAction: function(newAction, name) {
-    if (this.actions.length > 0) {
-      var previousAction = this.actions[this.actions.length - 1];
-      if (previousAction) {
-        var nextAction = newAction;
-        previousAction.onFinish(function() {
-          nextAction.start();
-        });
-      }
+  start: function() {
+    this.running = true;
+    if (this.actions[0]) {
+      this.actions[0].start();
     }
-    this.addAction(newAction, name);
-    return this;
   },
-  addAction: function(newAction, name) {
+  add: function(newAction, name) {
     if (!newAction.target && this.target) {
       newAction.target = this.target;
     }
@@ -38,21 +28,45 @@ var $ActionChain = ActionChain;
     }
     return this;
   },
-  start: function() {
-    this.reset();
-    this.running = true;
-    if (this.actions[0]) {
-      this.actions[0].start();
+  then: function(newAction) {
+    var name = arguments[1] !== (void 0) ? arguments[1] : null;
+    if (typeof(newAction) == 'function') {
+      newAction = new MethodAction(newAction);
     }
+    if (this.actions.length > 0) {
+      var previousAction = this.actions[this.actions.length - 1];
+      if (previousAction) {
+        var nextAction = newAction;
+        previousAction.onFinish(function() {
+          nextAction.start();
+        });
+      }
+    }
+    this.add(newAction, name);
+    return this;
+  },
+  wait: function(seconds) {
+    this.then(new WaitAction(seconds));
+    return this;
+  },
+  loop: function() {
+    var times = arguments[0] !== (void 0) ? arguments[0] : 0;
+    this.then(new LoopAction(times));
+    return this;
+  },
+  goTo: function(label) {
+    var times = arguments[1] !== (void 0) ? arguments[1] : 0;
+    this.then(new GoToAction(label, times));
+    return this;
   },
   update: function() {
     if (this.running) {
-      for (var index in this.actions) {
-        var action = this.actions[index];
-        if (action.running) {
-          action.update();
+      for (var i = 0; i < this.actions.length; i++) {
+        if (this.actions[i].running) {
+          this.actions[i].update();
         }
       }
+      ;
     }
   },
   stopAll: function() {
@@ -72,6 +86,10 @@ var $ActionChain = ActionChain;
     this.actions.forEach(function(action) {
       action.init();
     }, this);
+  },
+  restart: function() {
+    this.reset();
+    this.start();
   },
   getAction: function(actionName) {
     if (this.actionRegistry[actionName] != null) {

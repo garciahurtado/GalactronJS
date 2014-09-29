@@ -18,17 +18,17 @@ class Snake extends Enemy {
 
 		// actions
 		this.actions
-			.addAction(new WaveMotionAction(this, 1.5, 5, 2))
-			.chainAction(new CircleMotionAction(2, 1))
-			.chainAction(new CircleMotionAction(2, 0.5, -1))
-			.chainAction(new MethodAction(function(){
+			.add(new WaveMotionAction(this, 1.5, 5, 2))
+			.then(new CircleMotionAction(2, 1))
+			.then(new CircleMotionAction(2, 0.5, -1))
+			.then(new MethodAction(function(){
 				this.body.velocity.x = 100;
 				this.body.velocity.y = 0;
 			}))
-			.chainAction(new WaitAction(1.5))
-			.chainAction(new CircleMotionAction(2, 0.25, -1))
-			.chainAction(new WaitAction(1))
-			.chainAction(new CircleMotionAction(2, 0.25))
+			.then(new WaitAction(1.5))
+			.then(new CircleMotionAction(2, 0.25, -1))
+			.then(new WaitAction(1))
+			.then(new CircleMotionAction(2, 0.25))
 			.start();
 	}
 

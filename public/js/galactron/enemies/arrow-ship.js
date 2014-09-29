@@ -19,10 +19,16 @@ class ArrowShip extends Enemy
 		
 		this.body.velocity.x = -100;
 
+		var chain = this.actions;
+
 		this.actions
-			.chainAction(new WaitAction(0.5), 'start')
-			.chainAction(new MethodAction(this.shoot))
-			.chainAction(new GoToAction('start', 3))
+				.wait(0.4)
+				.then(this.shoot)
+				.loop(4)
+				.then(function(){
+					this.body.velocity.x = 50;
+					this.body.velocity.y = -10;
+				})
 			.start();
 	}
 	

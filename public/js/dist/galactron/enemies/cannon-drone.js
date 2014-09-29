@@ -13,7 +13,7 @@ var CannonDrone = function CannonDrone(game) {
   this.laser = this.createBullet(BlueLaserBeam);
   this.laser.x = -533;
   this.laser.y = -1000;
-  this.actions.addAction(new TweenAction(this, {x: 310}, 1000, Phaser.Easing.Sinusoidal.Out)).chainAction(new WaitAction(0.5)).chainAction(new StopMotionAction()).chainAction(new AnimationAction("open"), "openLaser").chainAction(new WaitAction(0.5)).chainAction(new MethodAction(this.laserOn)).chainAction(new WaitAction(2)).chainAction(new MethodAction(this.laserOff)).chainAction(new AnimationAction("close"), "close").chainAction(new WaitAction(1)).chainAction(new GoToAction("openLaser", 2)).chainAction(new TweenAction(this, {x: -50}, 2000, Phaser.Easing.Sinusoidal.In));
+  this.actions.add(new TweenAction(this, {x: 310}, 1000, Phaser.Easing.Sinusoidal.Out)).then(new WaitAction(0.5)).then(new StopMotionAction()).then(new AnimationAction("open"), "openLaser").then(new WaitAction(0.5)).then(new MethodAction(this.laserOn)).then(new WaitAction(2)).then(new MethodAction(this.laserOff)).then(new AnimationAction("close"), "close").then(new WaitAction(1)).then(new GoToAction("openLaser", 2)).then(new TweenAction(this, {x: -50}, 2000, Phaser.Easing.Sinusoidal.In));
   ;
 };
 var $CannonDrone = CannonDrone;

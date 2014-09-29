@@ -36,10 +36,11 @@ class FloatingMineSpike extends Enemy {
 		this.health = 10000;
 
 		this.actions
-			.chainAction(new MethodAction(function() {
+			.then(function() {
 				this.body.velocity.x = this.velocityX;
 				this.body.velocity.y = this.velocityY;
-			}))
+			})
+			.then(function(){this.tween.start()})
 			;
 	}
 

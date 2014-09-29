@@ -11,7 +11,7 @@
 		//direction;
 
 		//baseVelocity;
-
+		
 		/**
 		 *
 		 * @param	target Target sprite whose motion will be altered
@@ -21,13 +21,12 @@
 		 */
 		constructor(speed, circles = 0, direction = 1) {
 			super();
+			
 			this.speed = speed;
 			this.circles = circles;
 			this.direction = direction;
 			this.TWO_PI = 2 * Math.PI;
-			this.DIR_CLOCKWISE = 1;
-			this.COUNTER_CLOCKWISE = 2;
-
+			
 			this.init();
 		}
 
@@ -56,7 +55,7 @@
 		update() {
 			var elapsed = this.game.time.elapsed / 1000;
 
-			if (this.direction == this.DIR_CLOCKWISE) {
+			if (this.direction == CircleMotionAction.CLOCKWISE) {
 				this.angle -= (elapsed * this.speed);
 			} else {
 				this.angle += (elapsed * this.speed);
@@ -71,9 +70,12 @@
 			// stop the action if we've reached the maximum number of cycles
 			if (this.circles) {
 				if ((Math.abs(angle) / this.TWO_PI) > this.circles) {
-					this.angle = this.circles * this.TWO_PI; // correct back to max value of angle
+					this.angle = this.circles * this.TWO_PI; // just before finish, correct angle back to max value
 					this.finish();
 				}
 			}
 		}
 	}
+
+CircleMotionAction.CLOCKWISE = 1;
+CircleMotionAction.COUNTERCLOCKWISE = 2;

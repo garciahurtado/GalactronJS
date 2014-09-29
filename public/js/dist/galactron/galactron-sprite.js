@@ -18,7 +18,6 @@ var GalactronSprite = function GalactronSprite(game) {
 var $GalactronSprite = GalactronSprite;
 ($traceurRuntime.createClass)(GalactronSprite, {
   update: function() {
-    $traceurRuntime.superCall(this, $GalactronSprite.prototype, "update", []);
     if (this.debugBody) {
       this.game.debug.body(this, this.debugBodyColor, false);
     }

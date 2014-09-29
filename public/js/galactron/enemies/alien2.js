@@ -13,7 +13,7 @@ class Alien2 extends Alien {
 
 		this.body.velocity.x = -50;
 		this.body.velocity.y = 0;
-		this.actions.addAction(new WaveMotionAction(this, 1, 3));
+		this.actions.add(new WaveMotionAction(this, 1, 3));
 		this.actions.start();
 	}
 }

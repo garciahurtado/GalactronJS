@@ -8,10 +8,10 @@ var $Level3 = Level3;
     $traceurRuntime.superCall(this, $Level3.prototype, "create", []);
     var width = this.game.width;
     this.events = new ActionChain(this.game);
-    this.events.addAction(new WaitAction(0.5)).chainAction(new SpawnWaveAction(ArrowShipGreen, [{
+    this.events.add(new WaitAction(0.5)).then(new SpawnWaveAction(ArrowShipGreen, [{
       x: width,
       y: 150
-    }], 10, 0.5)).chainAction(new WaitAction(6)).chainAction(new SpawnWaveAction(CannonDrone, [{
+    }], 10, 0.5)).then(new WaitAction(20)).then(new SpawnWaveAction(CannonDrone, [{
       x: width,
       y: 100
     }, {

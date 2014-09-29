@@ -8,7 +8,7 @@ class FloatingMine extends Enemy {
 		super(game, x, y);
 		
 		this.init();
-		this.body.setSize(0, 0); // effectively prevents the body from colliding
+		this.body.setSize(0, 0); // effectively excludes the body from collision detection
 
 		// Add core sprite
 		this.core = new FloatingMineCore(this.game, 0, 0);
@@ -68,16 +68,9 @@ class FloatingMine extends Enemy {
 	 */
 	launchSpikes(){
 		this.spikeLeft.actions.start();
-		this.spikeLeft.tween.start();
-
 		this.spikeTop.actions.start();
-		this.spikeTop.tween.start();
-
 		this.spikeRight.actions.start();
-		this.spikeRight.tween.start();
-
 		this.spikeBottom.actions.start();
-		this.spikeBottom.tween.start();
 	}
 
   /** 

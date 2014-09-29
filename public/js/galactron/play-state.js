@@ -161,13 +161,27 @@ class PlayState extends GameState {
 		// // did we pick up a powerup?
 		// FlxG.overlap(player, powerups, powerUp);
 
+		this.checkEnemyHit();
+		this.checkPlayerHit();
+	}
+
+	/**
+	 * Check whether any enemies were hit by the player bullets
+	 */
+	checkEnemyHit() {
 		// Were there any enemies hit by player bullets?
 		// TODO: refactor to iterator or special kind of group
-		for (var i = 0; i < this.enemies.length; i++) {
+		var count = this.enemies.length;
+		
+		for (var i = 0; i < count; i++) {
 			this.game.physics.arcade.overlap(this.playerBullets, this.enemies[i], this.enemyHit, null, this);
 		};
+	}
 
-		// check whether the player was hit by enemies or enemy bullets
+	/** 
+	 * Checks whether the player was hit by enemies or their bullets
+	 */
+	checkPlayerHit(){
 		if(!this.player.immune && this.player.exists){
 			// Check for enemies that hit the player. The children sprites must be iterated as separate
 			// groups, since Arcade.overlap does not do nested collision checks

@@ -8,8 +8,6 @@ var CircleMotionAction = function CircleMotionAction(speed) {
   this.circles = circles;
   this.direction = direction;
   this.TWO_PI = 2 * Math.PI;
-  this.DIR_CLOCKWISE = 1;
-  this.COUNTER_CLOCKWISE = 2;
   this.init();
 };
 var $CircleMotionAction = CircleMotionAction;
@@ -32,7 +30,7 @@ var $CircleMotionAction = CircleMotionAction;
   },
   update: function() {
     var elapsed = this.game.time.elapsed / 1000;
-    if (this.direction == this.DIR_CLOCKWISE) {
+    if (this.direction == $CircleMotionAction.CLOCKWISE) {
       this.angle -= (elapsed * this.speed);
     } else {
       this.angle += (elapsed * this.speed);
@@ -49,5 +47,7 @@ var $CircleMotionAction = CircleMotionAction;
     }
   }
 }, {}, Action);
+CircleMotionAction.CLOCKWISE = 1;
+CircleMotionAction.COUNTERCLOCKWISE = 2;
 
 //# sourceMappingURL=circle-motion-action.js.map

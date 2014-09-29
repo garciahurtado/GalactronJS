@@ -44,13 +44,9 @@ var $FloatingMine = FloatingMine;
   },
   launchSpikes: function() {
     this.spikeLeft.actions.start();
-    this.spikeLeft.tween.start();
     this.spikeTop.actions.start();
-    this.spikeTop.tween.start();
     this.spikeRight.actions.start();
-    this.spikeRight.tween.start();
     this.spikeBottom.actions.start();
-    this.spikeBottom.tween.start();
   },
   deathAnimation: function() {
     return;

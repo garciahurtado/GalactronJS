@@ -1,7 +1,7 @@
 "use strict";
 var __moduleName = "public/js/dist/galactron/galactron";
 (function() {
-  var game = new Phaser.Game(380, 260, Phaser.CANVAS, 'canvasWrapper', {
+  var game = new Phaser.Game(380, 260, Phaser.WEBGL, 'canvasWrapper', {
     preload: preload,
     create: create,
     update: update
@@ -49,7 +49,7 @@ var __moduleName = "public/js/dist/galactron/galactron";
     game.state.add('Level1', Level1);
     game.state.add('Level2', Level2);
     game.state.add('Level3', Level3);
-    game.state.start('MenuState');
+    game.state.start('Level1');
   }
   function addSprite(sprite) {
     game.add.existing(sprite);

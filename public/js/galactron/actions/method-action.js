@@ -1,16 +1,16 @@
 /**
  * This action calls the specified method in the target sprite or an anonymous function.
  *
- * If used to execute an anonymous function, the target sprite can be referenced by the
- * "target" variable.
+ * If used to execute an anonymous function, the target sprite is available via the 
+ * "target" variable (see superclass "Action").
  *
- * Ex. 1 - Calling a method:
+ * Ex. 1 - Calling an existing method:
  *
- * 		var action = new MethodAction(sprite, sprite.shoot);
+ * 		var action = new MethodAction(sprite.shoot);
  *
  * Ex. 2 - Calling an anonymous function:
  *
- * 		var action = new MethodAction(sprite, function(){
+ * 		var action = new MethodAction(function(){
  * 	   		target.velocity.x = 60;
  * 		});
  *
@@ -20,7 +20,7 @@ class MethodAction extends Action {
 	// method;
 	// params;
 
-	constructor(method, target = null, params = null) {
+	constructor(method, params = null) {
 		super();
 		this.method = method;
 		this.params = params;

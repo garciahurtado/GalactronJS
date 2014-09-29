@@ -15,11 +15,10 @@ class GalactronSprite extends Phaser.Sprite {
 	}
 
 	/**
-	 * Overrides parent to add debugging functionality
+	 * Overrides parent to add debugging functionality. Since Phaser.update() does nothing,
+	 * no need to call super.update() and incur traceur perf. penalty.
 	 */
 	update(){
-		super.update();
-
 		if(this.debugBody){
 			this.game.debug.body(this, this.debugBodyColor, false);
 		}

@@ -22,17 +22,54 @@ class ActionChain extends Action {
 		this.running = false;
 	}
 
-	init() {
-		super.init();
+	/**
+	 * Start the chain from the very beginning
+	 */
+	start() {
+		this.running = true;
+		if (this.actions[0]) {
+			this.actions[0].start();
+		}
 	}
 
 	/**
-	 * Adds an action and triggers it when the previous one finishes. If the optional
-	 * name is provided, it also adds it to the named action registry
+	 * Adds an action to the list, without chaining it to the previous one.
+	 * This action will automatically be started with the action chain, provided
+	 * that it is the first action to be added, or it will need to be started
+	 * manually (if a name for the action is provided).
+	 *
+	 * @param	newAction
+	 * @param	name
+	 * @return
+	 */
+	add(newAction, name) {
+		// Only assume the target from the ActionChain if no target was explicitly set in the Action
+		if (!newAction.target && this.target) {
+			newAction.target = this.target;
+		}
+		newAction.game = this.game;
+		newAction.chain = this;
+
+		this.actions.push(newAction);
+
+		if (name) {
+			this.actionRegistry[name] = newAction;
+		}
+
+		return this; // fluent interface
+	}
+
+	/**
+	 * Adds an action to be started when the previous one finishes. If the optional
+	 * name is provided, it also adds it to the named action registry.
 	 * @param	action
 	 * @param	name
 	 */
-	chainAction(newAction, name) {
+	then(newAction, name = null) {
+		// Check for callback type action and wrap it automatically
+		if(typeof(newAction) == 'function'){
+			newAction = new MethodAction(newAction);
+		}
 
 		// Unless this is the first action in the chain, link this new action to the onFinish event
 		// of the previous one, so that it starts as soon as the previous one ends
@@ -47,56 +84,54 @@ class ActionChain extends Action {
 			}
 		}
 
-		this.addAction(newAction, name);
+		this.add(newAction, name);
 
+		return this; // fluent interface
+	}
+
+	/**
+	 * Add a pause before starting the next action. This is a convenience method to make it 
+	 * easier to add a WaitAction to the queue
+	 *
+	 * @param delay Number of seconds to wait before starting the next action.
+	 */
+	wait(seconds){
+		this.then(new WaitAction(seconds));
+		return this; // fluent interface
+	}
+
+	/**
+	 * Adds a pseudo action at this point in the chain which will cause the chain to restart 
+	 * from the beginning 
+	 * this action.
+	 */
+	loop(times = 0){
+		this.then(new LoopAction(times));
 		return this;
 	}
 
 	/**
-	 * Adds an action to the list, without chaining it.
-	 * @param	newAction
-	 * @param	name
-	 * @return
+	 * Convenience method to add a GoToAction at this point in the chain. 
+	 * @param label Required
+	 * @param times Optional. Maximum number of times to execute this goTo Action. Leave
+	 * as the default zero for infinite.
 	 */
-	addAction(newAction, name) {
-		// Only assume the target from the ActionChain if no target was explicitly set in the Action
-		if (!newAction.target && this.target) {
-			newAction.target = this.target;
-		}
-		newAction.game = this.game;
-		newAction.chain = this;
-
-		this.actions.push(newAction);
-
-		if (name) {
-			this.actionRegistry[name] = newAction;
-		}
+	goTo(label, times = 0){
+		this.then(new GoToAction(label, times));
 		return this;
 	}
 
 	/**
-	 * Start the chain from the very beginning
-	 */
-	start() {
-		this.reset();
-		this.running = true;
-		
-		if (this.actions[0]) {
-			this.actions[0].start();
-		}
-	}
-
-	/**
-	 * As long as the Action Chain is running, update all the actions in the chain which are currently running
+	 * As long as the Action Chain is running, we'll run update() all the actions in the chain 
+	 * which are currently running (there could be multiple running at once).
 	 */
 	update() {
 		if (this.running) {
-			for (var index in this.actions) {
-				var action = this.actions[index];
-				if (action.running) {
-					action.update();
+			for (var i = 0; i < this.actions.length; i++) {
+				if (this.actions[i].running) {
+					this.actions[i].update();
 				}
-			}
+			};
 		}
 	}
 
@@ -128,6 +163,14 @@ class ActionChain extends Action {
 		this.actions.forEach(function(action){
 			action.init();
 		}, this);
+	}
+
+	/**
+	 * Resets the state of all actions and starts the chain all over from the start
+	 */
+	restart(){
+		this.reset();
+		this.start();
 	}
 
 	/**

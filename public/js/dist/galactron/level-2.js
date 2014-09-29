@@ -23,7 +23,7 @@ var $Level2 = Level2;
     $traceurRuntime.superCall(this, $Level2.prototype, "create", []);
     this.createBackground();
     var width = this.game.width;
-    this.events.addAction(new WaitAction(0.5)).chainAction(new SpawnWaveAction(CannonDrone, [{
+    this.events.add(new WaitAction(0.5)).then(new SpawnWaveAction(CannonDrone, [{
       x: width,
       y: 100
     }, {
@@ -44,8 +44,8 @@ var $Level2 = Level2;
     }], 6, 0)).start();
   },
   createBackground: function() {
-    var width = this.game.stage.bounds.width;
-    var height = this.game.stage.bounds.height;
+    var width = this.game.stage.width;
+    var height = this.game.stage.height;
     var starfield1 = this.game.add.tileSprite(0, 0, width, height, 'starfield1');
     starfield1.autoScroll(-70, 0);
     var starfield2 = this.game.add.tileSprite(0, 0, width, height, 'starfield2');

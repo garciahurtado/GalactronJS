@@ -40,8 +40,8 @@ class Level2 extends PlayState {
 
 		var width = this.game.width;
 
-		this.events.addAction(new WaitAction(0.5))
-			.chainAction( new SpawnWaveAction(CannonDrone, [
+		this.events.add(new WaitAction(0.5))
+			.then( new SpawnWaveAction(CannonDrone, [
 				{x:width, y:100}, 
 				{x:width, y:120}, 
 				{x:width, y:140}, 
@@ -49,23 +49,23 @@ class Level2 extends PlayState {
 				{x:width, y:180}, 
 				{x:width, y:200}], 6, 0))
 
-		// .chainAction( new SpawnWaveAction(this, Scorpion1, width, 150, 3, 5))
-		// .chainAction( new WaitAction(10) )
-		// .chainAction( new SpawnWaveAction(this, ArrowShipGreen, width, 150, 12, 0.3))
-		// .chainAction( new WaitAction(5) )
-		// .chainAction( new SpawnWaveAction(this, ArrowShipRed1, width, 150, 12, 0.5))
-		// .chainAction( new WaitAction(10) )
-		// .chainAction( new SpawnWaveAction(this, CannonDrone1, width, 40, 1, 0))
-		// .chainAction( new WaitAction(1) )
-		// .chainAction( new SpawnWaveAction(this, CannonDrone1, width, 80, 1, 0))
-		// .chainAction( new WaitAction(1) )
-		// .chainAction( new SpawnWaveAction(this, CannonDrone1, width, 120, 1, 0))
-		// .chainAction( new WaitAction(1) )
-		// .chainAction( new SpawnWaveAction(this, CannonDrone1, width, 160, 1, 0))
-		// .chainAction( new SpawnWaveAction(this, Freighter1, width - 50, -30, 1, 0))
-		// .chainAction( new WaitAction(3) )
-		// .chainAction( new SpawnWaveAction(this, Scorpion1, width, 100, 4, 2))
-		// .chainAction( new WaitAction(2))
+		// .then( new SpawnWaveAction(this, Scorpion1, width, 150, 3, 5))
+		// .then( new WaitAction(10) )
+		// .then( new SpawnWaveAction(this, ArrowShipGreen, width, 150, 12, 0.3))
+		// .then( new WaitAction(5) )
+		// .then( new SpawnWaveAction(this, ArrowShipRed1, width, 150, 12, 0.5))
+		// .then( new WaitAction(10) )
+		// .then( new SpawnWaveAction(this, CannonDrone1, width, 40, 1, 0))
+		// .then( new WaitAction(1) )
+		// .then( new SpawnWaveAction(this, CannonDrone1, width, 80, 1, 0))
+		// .then( new WaitAction(1) )
+		// .then( new SpawnWaveAction(this, CannonDrone1, width, 120, 1, 0))
+		// .then( new WaitAction(1) )
+		// .then( new SpawnWaveAction(this, CannonDrone1, width, 160, 1, 0))
+		// .then( new SpawnWaveAction(this, Freighter1, width - 50, -30, 1, 0))
+		// .then( new WaitAction(3) )
+		// .then( new SpawnWaveAction(this, Scorpion1, width, 100, 4, 2))
+		// .then( new WaitAction(2))
 		.start();
 	}
 
@@ -75,8 +75,8 @@ class Level2 extends PlayState {
 	 * @return
 	 */
 	createBackground() {
-		var width = this.game.stage.bounds.width;
-		var height = this.game.stage.bounds.height;
+		var width = this.game.stage.width;
+		var height = this.game.stage.height;
 
 		// we will use several starfield tileSprites to create a parallax effect
 		var starfield1 = this.game.add.tileSprite(0, 0, width, height, 'starfield1');
