@@ -25,9 +25,6 @@ var $Level1 = Level1;
     var width = this.game.width;
     this.events.add(new WaitAction(1)).then(new SpawnWaveAction(FloatingMine, [{
       x: width,
-      y: 150
-    }], 1, 0)).then(new WaitAction(3)).then(new SpawnWaveAction(FloatingMine, [{
-      x: width,
       y: 30
     }, {
       x: width,
@@ -74,16 +71,16 @@ var $Level1 = Level1;
     }], 20, 0.3)).then(new SpawnWaveAction(Alien1, [{
       x: width,
       y: 200
-    }], 20, 0.3)).then(new WaitAction(5)).then(new SpawnWaveAction(AlienRed, [{
+    }], 20, 0.3)).wait(5).then(new SpawnWaveAction(AlienRed, [{
       x: width,
       y: 150
-    }], 20, 0.3)).then(new WaitAction(5)).then(new SpawnWaveAction(Snake, [{
+    }], 20, 0.3)).wait(5).then(new SpawnWaveAction(Snake, [{
       x: width,
       y: 150
     }], 1)).then(new SpawnWaveAction(Snake, [{
       x: width,
       y: 150
-    }], 1)).then(new WaitAction(10)).then(new SpawnWaveAction(WhiteSnake, [{
+    }], 1)).wait(10).then(new SpawnWaveAction(WhiteSnake, [{
       x: width,
       y: 100
     }], 1)).then(new SpawnWaveAction(WhiteSnake, [{

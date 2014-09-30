@@ -68,6 +68,10 @@ var $GalactronSprite = GalactronSprite;
     this.x -= Math.round(this.width / 2);
     this.y -= Math.round(this.height / 2);
   },
+  turn: function(angle) {
+    angle = angle * (180 / Math.PI);
+    this.game.physics.arcade.velocityFromAngle(angle, this.body.speed, this.body.velocity);
+  },
   doLater: function(millis, action, context) {
     var context = context || this;
     this.game.time.events.add(millis, action, context);

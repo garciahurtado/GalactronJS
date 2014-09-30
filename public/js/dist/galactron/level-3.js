@@ -10,8 +10,8 @@ var $Level3 = Level3;
     this.events = new ActionChain(this.game);
     this.events.add(new WaitAction(0.5)).then(new SpawnWaveAction(ArrowShipGreen, [{
       x: width,
-      y: 150
-    }], 10, 0.5)).then(new WaitAction(20)).then(new SpawnWaveAction(CannonDrone, [{
+      y: 120
+    }], 8, 0.4)).then(new WaitAction(20)).then(new SpawnWaveAction(CannonDrone, [{
       x: width,
       y: 100
     }, {

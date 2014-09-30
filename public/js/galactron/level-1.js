@@ -42,10 +42,6 @@ class Level1 extends PlayState {
 
 		// Define enemy waves and game events chain
 		this.events.add(new WaitAction(1))
-			// .then(new SpawnWaveAction(Alien1, [{x:width, y:150}], 20, 0.2))
-			// .then(new WaitAction(10))
-			.then(new SpawnWaveAction(FloatingMine, [{x:width, y:150}], 1, 0))
-			.then(new WaitAction(3))
 			.then(new SpawnWaveAction(
 				FloatingMine,[
 				{x: width, y: 30},
@@ -66,12 +62,12 @@ class Level1 extends PlayState {
 			.then(new SpawnWaveAction(Alien1, [{x:width, y:100}], 20, 0.3))
 			.then(new SpawnWaveAction(Alien1, [{x:width, y:150}], 20, 0.3))
 			.then(new SpawnWaveAction(Alien1, [{x:width, y:200}], 20, 0.3))
-			.then(new WaitAction(5))
+			.wait(5)
 			.then(new SpawnWaveAction(AlienRed, [{x:width, y:150}], 20, 0.3))
-			.then(new WaitAction(5))
+			.wait(5)
 			.then(new SpawnWaveAction(Snake, [{x:width, y:150}], 1))
 			.then(new SpawnWaveAction(Snake, [{x:width, y:150}], 1))
-			.then(new WaitAction(10))
+			.wait(10)
 			.then(new SpawnWaveAction(WhiteSnake, [{x:width, y:100}], 1))
 			.then(new SpawnWaveAction(WhiteSnake, [{x:width, y:150}], 1))
 			.then(new SpawnWaveAction(WhiteSnake, [{x:width, y:200}], 1))

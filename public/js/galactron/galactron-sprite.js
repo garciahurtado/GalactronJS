@@ -128,6 +128,15 @@ class GalactronSprite extends Phaser.Sprite {
 	}
 
 	/**
+	 * Preserving current velocity magnitude, update the velocity vector to point
+	 * in the specified angle (in radians). Requires physics to be enabled.
+	 */
+	turn(angle){
+		angle = angle * (180 / Math.PI);// convert radians to degrees
+		this.game.physics.arcade.velocityFromAngle(angle, this.body.speed, this.body.velocity);
+	}
+
+	/**
 	 * Convenience method that wraps Phaser.Timer
 	 */
 	doLater(millis, action, context){
