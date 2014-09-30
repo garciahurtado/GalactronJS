@@ -6,15 +6,13 @@
 class Alien1 extends Alien {
 	constructor(game, x, y){
 		super(game, x, y);
-	}
 
-	init(){
-		super();
-
-		this.body.velocity.x = -50;
 		var Circle = CircleMotionAction;
 
 		this.actions
+			.then(function(){ 
+				this.body.velocity.x = -50;
+			})
 			.wait(2)
 			.then(new Circle(1, 1, Circle.COUNTERCLOCKWISE))
 			.wait(1.5)
@@ -25,9 +23,6 @@ class Alien1 extends Alien {
 			})
 			.wait(0.2)
 			.then(new WaveMotionAction(this, 1, 5))
-			;
-			
-		//actions.add(new ShootAction(this), "shoot");
 	}
 }
 

@@ -35,8 +35,8 @@ var $WaveMotionAction = WaveMotionAction;
     }
   },
   finish: function() {
-    $traceurRuntime.superCall(this, $WaveMotionAction.prototype, "finish", []);
     this.target.body.velocity = this.baseVelocity;
+    $traceurRuntime.superCall(this, $WaveMotionAction.prototype, "finish", []);
   }
 }, {}, Action);
 

@@ -16,7 +16,7 @@ class Action extends Phaser.Sprite {
 		this.target = target;
 		this.chain;
 		this.visible = false;
-		this.running;
+		this.running = false;
 		this.finished;
 		this.finishHandler;
 

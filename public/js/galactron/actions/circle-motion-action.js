@@ -1,9 +1,8 @@
 ﻿	/**
 	 * Moves a sprite in a circular motion
-	 *
+	 * @TODO: Fix the constructor parameters so that a radius can be specified
 	 * @author Garcia
 	 */
-
 	class CircleMotionAction extends Action {
 		// angle;
 		//speed;
@@ -13,9 +12,7 @@
 		//baseVelocity;
 		
 		/**
-		 *
-		 * @param	target Target sprite whose motion will be altered
-		 * @param	speed Speed at which the target velocity vector will be rotated
+		 * @param	speed Angular velocity (or how quick the sprite rotates). Higher speed means a tighter circle
 		 * @param	circles Number of circles after which the action will stop. 0 = continue indefinitely
 		 * @param	direction Either CLOCKWISE or COUNTERCLOCKWISE
 		 */

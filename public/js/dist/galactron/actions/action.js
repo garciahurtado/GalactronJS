@@ -6,7 +6,7 @@ var Action = function Action() {
   this.target = target;
   this.chain;
   this.visible = false;
-  this.running;
+  this.running = false;
   this.finished;
   this.finishHandler;
   this.init();

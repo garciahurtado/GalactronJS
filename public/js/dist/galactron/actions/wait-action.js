@@ -7,8 +7,8 @@ var WaitAction = function WaitAction() {
 };
 var $WaitAction = WaitAction;
 ($traceurRuntime.createClass)(WaitAction, {
-  init: function() {
-    $traceurRuntime.superCall(this, $WaitAction.prototype, "init", []);
+  start: function() {
+    $traceurRuntime.superCall(this, $WaitAction.prototype, "start", []);
     this.timer = 0;
   },
   update: function() {

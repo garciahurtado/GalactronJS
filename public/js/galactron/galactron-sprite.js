@@ -28,7 +28,7 @@ class GalactronSprite extends Phaser.Sprite {
 	}
 
 	/**
-	 * Refactor: combine with init?
+	 * @TODO: Refactor / combine with init?
 	 */
 	reset(x, y) {
 		super(x, y, this.health);

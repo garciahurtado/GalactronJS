@@ -11,7 +11,7 @@ class WaitAction extends Action {
 		this.timeout = timeout;
 	}
 	
-	init()	{
+	start()	{
 		super();
 		this.timer = 0;
 	}
@@ -25,6 +25,5 @@ class WaitAction extends Action {
 			this.finish();
 		}
 	}
-	
 }
 

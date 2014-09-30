@@ -11,7 +11,7 @@ var ActionChain = function ActionChain(game) {
 var $ActionChain = ActionChain;
 ($traceurRuntime.createClass)(ActionChain, {
   start: function() {
-    this.running = true;
+    $traceurRuntime.superCall(this, $ActionChain.prototype, "start", []);
     if (this.actions[0]) {
       this.actions[0].start();
     }

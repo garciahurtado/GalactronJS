@@ -41,7 +41,7 @@ class WaveMotionAction extends Action
 	 * Stores the original velocity of the target sprite before starting to change it
 	 */
 	start() {
-		super.start();
+		super();
 		this.currentAngle = 0;
 
 		this.baseVelocity = {
@@ -75,10 +75,12 @@ class WaveMotionAction extends Action
 	}
 	
 	/**
-	 * Overrides parent method to restore the velocity vector of the affected sprite to its original values
+	 * Overrides parent method to restore the velocity vector of the affected sprite to its original values.
+	 * super() must happen last in order to avoid a potential bug where the following action modifies the
+	 * velocity, but the WaveMotionAction overrides it right after.
 	 */
 	finish() {
-		super();		
 		this.target.body.velocity = this.baseVelocity;
+		super();
 	}
 }

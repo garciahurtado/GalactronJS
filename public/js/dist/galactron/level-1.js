@@ -23,64 +23,13 @@ var $Level1 = Level1;
     $traceurRuntime.superCall(this, $Level1.prototype, "create", []);
     this.createBackground();
     var width = this.game.width;
-    this.events.add(new WaitAction(1)).then(new SpawnWaveAction(FloatingMine, [{
+    this.events.then(new SpawnWaveAction(Snake, [{
       x: width,
-      y: 30
-    }, {
-      x: width,
-      y: 50
-    }, {
-      x: width,
-      y: 70
-    }, {
-      x: width,
-      y: 90
-    }, {
-      x: width,
-      y: 110
-    }, {
-      x: width,
-      y: 130
-    }, {
-      x: width,
-      y: 150
-    }, {
-      x: width,
-      y: 130
-    }, {
-      x: width,
-      y: 110
-    }, {
-      x: width,
-      y: 90
-    }, {
-      x: width,
-      y: 70
-    }, {
-      x: width,
-      y: 50
-    }], 10, 0.5)).then(new SpawnWaveAction(Alien1, [{
-      x: width,
-      y: 50
-    }], 20, 0.3)).then(new SpawnWaveAction(Alien1, [{
-      x: width,
-      y: 100
-    }], 20, 0.3)).then(new SpawnWaveAction(Alien1, [{
-      x: width,
-      y: 150
-    }], 20, 0.3)).then(new SpawnWaveAction(Alien1, [{
-      x: width,
-      y: 200
-    }], 20, 0.3)).wait(5).then(new SpawnWaveAction(AlienRed, [{
-      x: width,
-      y: 150
-    }], 20, 0.3)).wait(5).then(new SpawnWaveAction(Snake, [{
-      x: width,
-      y: 150
+      y: 120
     }], 1)).then(new SpawnWaveAction(Snake, [{
       x: width,
-      y: 150
-    }], 1)).wait(10).then(new SpawnWaveAction(WhiteSnake, [{
+      y: 220
+    }], 1)).wait(20).then(new SpawnWaveAction(WhiteSnake, [{
       x: width,
       y: 100
     }], 1)).then(new SpawnWaveAction(WhiteSnake, [{

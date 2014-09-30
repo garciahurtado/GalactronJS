@@ -12,10 +12,12 @@ var $Snake = Snake;
     this.score = 100;
     this.health = 10;
     this.body.velocity.x = -100;
-    this.actions.add(new WaveMotionAction(this, 1.5, 5, 2)).then(new CircleMotionAction(2, 1)).then(new CircleMotionAction(2, 0.5, -1)).then(new MethodAction(function() {
-      this.body.velocity.x = 100;
-      this.body.velocity.y = 0;
-    })).then(new WaitAction(1.5)).then(new CircleMotionAction(2, 0.25, -1)).then(new WaitAction(1)).then(new CircleMotionAction(2, 0.25)).start();
+    this.actions.then(new WaveMotionAction(this, 1.5, 5, 1)).then(new MethodAction(function() {
+      this.body.velocity = {
+        x: -200,
+        y: 0
+      };
+    })).then(new CircleMotionAction(4, 10)).start();
   },
   kill: function() {
     $traceurRuntime.superCall(this, $Snake.prototype, "kill", []);

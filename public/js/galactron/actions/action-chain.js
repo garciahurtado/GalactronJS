@@ -26,7 +26,7 @@ class ActionChain extends Action {
 	 * Start the chain from the very beginning
 	 */
 	start() {
-		this.running = true;
+		super();
 		if (this.actions[0]) {
 			this.actions[0].start();
 		}
@@ -122,8 +122,8 @@ class ActionChain extends Action {
 	}
 
 	/**
-	 * As long as the Action Chain is running, we'll run update() all the actions in the chain 
-	 * which are currently running (there could be multiple running at once).
+	 * As long as the Action Chain is running, we'll run update() on all the actions in the chain 
+	 * which are also running (there could be multiple running at once).
 	 */
 	update() {
 		if (this.running) {
