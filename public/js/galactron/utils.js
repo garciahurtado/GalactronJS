@@ -41,3 +41,5 @@ Utils.padString = function(str, len, pad, dir) {
 
     return str;
 }
+
+export {Utils};

@@ -16,8 +16,9 @@
  *
  * @author Garcia Hurtado <ghurtado@gmail.com>
  */
+import {GalactronSprite} from '../galactron-sprite';
 
-class EnemyWave extends GalactronSprite {
+export class EnemyWave extends GalactronSprite {
 	// spawnDelay; // number of seconds to wait between enemy spawns
 	// spawnTimer; // keep track of the last time we spawned an enemy in this wave
 	// spawnCounter; // how many enemies have spawned in this wave so far

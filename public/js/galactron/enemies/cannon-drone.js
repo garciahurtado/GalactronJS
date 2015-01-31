@@ -3,7 +3,17 @@
  * its laser eye, which shoots a large constant laser beam
  * @author Garcia
  */
-class CannonDrone extends Enemy {
+import {Enemy} from './enemy';
+import {BlueLaserBeam} from '../fx/blue-laser-beam';
+import {TweenAction} from '../actions/tween-action';
+import {StopMotionAction} from '../actions/stop-motion-action';
+import {AnimationAction} from '../actions/animation-action';
+import {WaitAction} from '../actions/wait-action';
+import {GoToAction} from '../actions/go-to-action';
+import {MethodAction} from '../actions/method-action';
+import {TweenAction} from '../actions/tween-action';
+
+export class CannonDrone extends Enemy {
 	constructor(game, x = 0, y = 0) {
 		super(game, x, y, 'cannon_drone');
     this.animations.add('open', [0, 1, 2], 3, false);

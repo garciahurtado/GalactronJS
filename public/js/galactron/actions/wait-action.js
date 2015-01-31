@@ -4,7 +4,9 @@
  * 
  * @author Garcia Hurtado
  */
-class WaitAction extends Action {
+import {Action} from './action';
+
+export class WaitAction extends Action {
 	
 	constructor(timeout = 0){
 		super();
@@ -12,7 +14,7 @@ class WaitAction extends Action {
 	}
 	
 	start()	{
-		super();
+		super.start();
 		this.timer = 0;
 	}
 	

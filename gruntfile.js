@@ -1,4 +1,5 @@
 'use strict';
+var to5ify = require('6to5ify');
 
 module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt);
@@ -14,7 +15,7 @@ module.exports = function(grunt) {
       },
       js: {
         files: ['public/js/galactron/**/*.js'],
-        tasks: ['traceur']
+        tasks: ['browserify']
       },
       options: {
         spawn: false
@@ -29,18 +30,6 @@ module.exports = function(grunt) {
           imagesDir: 'public/images'
         }
       }
-    },
-
-    traceur: {
-      custom: {
-        files:[{
-          expand: true,
-          cwd: 'public/js/',
-          src: ['galactron/**/*.js'],
-          dest: 'public/js/dist/',
-          ext: '.js'
-        }]
-      },
     },
 
     uglify: {
@@ -110,16 +99,26 @@ module.exports = function(grunt) {
       }
     },
 
+    browserify: {
+      dist: {
+        src: ['public/js/galactron/galactron.js'],
+        dest: 'public/js/dist/module.js',
+        options: {
+          debug: true,
+          external: [
+            'public/js/lib/phaser/phaser.js'
+          ],
+          transform: ['6to5ify']
+        },
+        expose: 'modules'
+      }
+    },
+
     env: {
       test: {
         NODE_ENV: 'test'
       }
     }
-  });
-
-  // Force Traceur to only update changed JS files
-  grunt.event.on('watch', function(action, filepath) {
-    grunt.config('traceur.custom.files.src', filepath);
   });
 
   //Default task(s).
@@ -128,6 +127,7 @@ module.exports = function(grunt) {
   } else {
     grunt.registerTask('default', ['concurrent:server', 'uglify']);
   }
+  grunt.loadNpmTasks('grunt-browserify');
 
   //Test task.
   grunt.registerTask('test', ['env:test', 'mochaTest']);

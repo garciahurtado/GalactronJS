@@ -3,7 +3,9 @@
  * 
  * @author Garcia Hurtado
  */
-class Explosion extends GalactronSprite {
+import {GalactronSprite} from '../galactron-sprite';
+
+export class Explosion extends GalactronSprite {
 	constructor(game, x, y) {
 		super(game, x, y, 'explosion');
 	  this.animations.add('explode', [1,2,3,4,5], 8);

@@ -1,7 +1,9 @@
 /**
  * Spike of the proximity mine which explodes upon contact
  */
-class FloatingMineSpike extends Enemy {
+import {Enemy} from './enemy';
+
+export class FloatingMineSpike extends Enemy {
 	constructor(game, x, y, sprite) {
 		sprite = sprite || 'floating_mine_spike';
 		super(game, x, y, sprite);
@@ -32,7 +34,7 @@ class FloatingMineSpike extends Enemy {
 	}
 
 	init() {
-		super();
+		super.init();
 		this.health = 10000;
 
 		this.actions

@@ -3,7 +3,9 @@
  *
  * @author Garcia Hurtado
  */
-class MenuState extends GameState {
+import {GameState} from './game-state';
+
+export class MenuState extends GameState {
 	constructor(game){
 		this.arrowIndex = 0;
 		this.levelList = ['Level1', 'Level2',  'Level3'];
@@ -14,20 +16,20 @@ class MenuState extends GameState {
 	 * Lay out the text for the menus of the home screen
 	 */
 	create(){
-		super();
+		super.create();
 		this.game.stage.smoothed = false;
 		this.enableInput();
 
-		this.createText("GALACTRON", 190, 60, 32, 'FirewireBlack', '#FFFFFF', 'center');
+		super.createText("GALACTRON", 190, 60, 32, 'FirewireBlack', '#FFFFFF', 'center');
 
-		this.createText("LEVEL 1", 160, 140, 8, 'FirewireBlack', '#FFFFFF', 'left');
-		this.createText("LEVEL 2", 160, 160, 8, 'FirewireBlack', '#FFFFFF', 'left');
-		this.createText("LEVEL 3", 160, 180, 8, 'FirewireBlack', '#FFFFFF', 'left');
+		super.createText("LEVEL 1", 160, 140, 8, 'FirewireBlack', '#FFFFFF', 'left');
+		super.createText("LEVEL 2", 160, 160, 8, 'FirewireBlack', '#FFFFFF', 'left');
+		super.createText("LEVEL 3", 160, 180, 8, 'FirewireBlack', '#FFFFFF', 'left');
 
-		this.arrow = this.createText(">", 150, 140, 8, 'FirewireBlack', '#FFFFFF', 'left');
+		this.arrow = super.createText(">", 150, 140, 8, 'FirewireBlack', '#FFFFFF', 'left');
 		this.arrow.flicker();
 
-		this.pressEnter = this.createText("PRESS ENTER TO START", 190, 240, 8, 'FirewireBlack', '#FFFFFF', 'center');
+		this.pressEnter = super.createText("PRESS ENTER TO START", 190, 240, 8, 'FirewireBlack', '#FFFFFF', 'center');
 		this.pressEnter.flicker(1.42);
 		
 		this.configInput();

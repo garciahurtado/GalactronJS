@@ -3,7 +3,9 @@
  *
  * @TODO: Refactor this class to extend a "ContainerEnemy" which has the "onChildKilled" method
  */
-class FloatingMine extends Enemy {
+import {Enemy} from './enemy';
+
+export class FloatingMine extends Enemy {
 	constructor(game, x, y) {
 		super(game, x, y);
 		

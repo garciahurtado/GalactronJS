@@ -6,7 +6,9 @@
  *
  * @author Garcia Hurtado
  */
-class GoToAction extends Action {
+import {Action} from './action';
+
+export class GoToAction extends Action {
 	// actionNam
 	// repeat; // False for infinite repeats, int for running the specified number of loops
 	// loopCounter;

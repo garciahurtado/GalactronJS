@@ -10,8 +10,11 @@
  *
  * @author Garcia Hurtado
  */
+import {Action} from './action';
+import {WaitAction} from './wait-action';
+import {MethodAction} from './method-action';
 
-class ActionChain extends Action {
+export class ActionChain extends Action {
 	constructor(game, target = null) {
 		super(target);
 
@@ -26,7 +29,7 @@ class ActionChain extends Action {
 	 * Start the chain from the very beginning
 	 */
 	start() {
-		super();
+		super.start();
 		if (this.actions[0]) {
 			this.actions[0].start();
 		}

@@ -6,7 +6,13 @@
  *
  * @author Garcia Hurtado
  */
-class Level2 extends PlayState {
+import {PlayState} from './play-state';
+import {SlidingBackground} from './sliding-background';
+import {WaitAction} from './actions/wait-action';
+import {SpawnWaveAction} from './actions/spawn-wave-action';
+import {CannonDrone} from './enemies/cannon-drone';
+
+export class Level2 extends PlayState {
 	constructor(game) {
 		super(game);
 
@@ -17,7 +23,7 @@ class Level2 extends PlayState {
 	}
 
 	preload() {
-		super();
+		super.preload();
 
 		// [Embed(source = "../../../assets/terrain.png")] var groundSprite;
 		// [Embed(source = "../../../assets/data/level1_ground.csv", mimeType="application/octet-stream")] var groundTilemap;
@@ -35,7 +41,7 @@ class Level2 extends PlayState {
 	}
 
 	create() {
-		super();
+		super.create();
 		this.createBackground();
 
 		var width = this.game.width;

@@ -3,7 +3,12 @@
  * 
  * @author Garcia Hurtado
  */
-class Alien1 extends Alien {
+import {Alien} from './alien';
+import {CircleMotionAction} from '../actions/circle-motion-action';
+import {StopMotionAction} from '../actions/stop-motion-action';
+import {WaveMotionAction} from '../actions/wave-motion-action';
+
+export class Alien1 extends Alien {
 	constructor(game, x, y){
 		super(game, x, y);
 

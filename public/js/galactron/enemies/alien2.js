@@ -3,13 +3,15 @@
  * 
  * @author Garcia Hurtado
  */
-class Alien2 extends Alien {
+import {Alien} from './alien';
+
+export class Alien2 extends Alien {
 	constructor(game, x, y, sprite){
 		super(game, x, y, sprite);
 	}
 
 	init(){
-		super();
+		super.init();
 
 		this.body.velocity.x = -50;
 		this.body.velocity.y = 0;

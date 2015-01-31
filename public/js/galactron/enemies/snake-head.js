@@ -1,7 +1,9 @@
 /**
  * Head sprite of the Snake type enemy. There should only be one.
  */
-class SnakeHead extends Enemy {
+import {Enemy} from './enemy';
+
+export class SnakeHead extends Enemy {
 	constructor(game, x, y, sprite) {
 		sprite = sprite || 'red_snake_head';
 		super(game, x, y, sprite);

@@ -1,7 +1,11 @@
 /**
  * Player spaceship
  */
-class PlayerShip extends GalactronSprite {
+import {GalactronSprite} from './galactron-sprite';
+import {BlueLaser} from './fx/blue-laser';
+import {Explosion} from './fx/explosion';
+
+export class PlayerShip extends GalactronSprite {
   constructor(game, x, y){
     super(game, x, y, 'player');
     this.x = x;

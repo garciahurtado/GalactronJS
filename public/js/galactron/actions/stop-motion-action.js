@@ -2,7 +2,9 @@
  * ...
  * @author Garcia Hurtado
  */
-class StopMotionAction extends Action {
+import {Action} from './action';
+
+export class StopMotionAction extends Action {
 	constructor() {
 		super();
 	}

@@ -3,7 +3,9 @@
  *
  * @author Garcia Hurtado
  */
-class AnimationAction extends Action {
+import {Action} from './action';
+
+export class AnimationAction extends Action {
 	constructor(animationName, wait = true) {
 		super();
 		this.animationName = animationName;

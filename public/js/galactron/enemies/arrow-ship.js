@@ -3,7 +3,9 @@
  *
  * @author Garcia
  */
-class ArrowShip extends Enemy
+import {Enemy} from './enemy';
+
+export class ArrowShip extends Enemy
 {
 	constructor(game, x, y, sprite) {
 		super(game, x, y, sprite);
@@ -12,7 +14,7 @@ class ArrowShip extends Enemy
 	
 	init() 
 	{
-		super();
+		super.init();
 		this.bulletSpeed = 100;
 		this.score = 250;
 		this.health = 20;

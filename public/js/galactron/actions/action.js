@@ -10,7 +10,7 @@
  *
  * @author Garcia
  */
-class Action extends Phaser.Sprite {
+export class Action extends Phaser.Sprite {
 	constructor(target = null) {
 		super();
 		this.target = target;

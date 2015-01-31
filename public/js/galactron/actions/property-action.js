@@ -5,7 +5,9 @@
  *
  * @author Garcia Hurtado
  */
-class PropertyAction extends Action {
+import {Action} from './action';
+
+export class PropertyAction extends Action {
 	// properties;
 
 	constructor(target, properties) {
@@ -15,7 +17,7 @@ class PropertyAction extends Action {
 	}
 
 	start() {
-		super();
+		super.start();
 
 		for (var name in properties) {
 			this.target[name] = properties[name];

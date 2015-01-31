@@ -1,7 +1,9 @@
 /**
  * Green alien enemy with the wiggly tentacles (inherits from Phaser Sprite)
  */
-class Alien extends Enemy {
+import {Enemy} from './enemy';
+
+export class Alien extends Enemy {
 	constructor(game, x, y, sprite) {
 		sprite = sprite || 'alien';
 		super(game, x, y, sprite);

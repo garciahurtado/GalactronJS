@@ -8,7 +8,9 @@
  * 
  * @author Garcia
  */
-class WaveMotionAction extends Action
+import {Action} from './action';
+
+export class WaveMotionAction extends Action
 {
 	// currentAngle; // keep track of the current angle for up and down motion (radians)
 	// speed; // how fast to complete a wave cycle
@@ -41,7 +43,7 @@ class WaveMotionAction extends Action
 	 * Stores the original velocity of the target sprite before starting to change it
 	 */
 	start() {
-		super();
+		super.start();
 		this.currentAngle = 0;
 
 		this.baseVelocity = {
@@ -81,6 +83,6 @@ class WaveMotionAction extends Action
 	 */
 	finish() {
 		this.target.body.velocity = this.baseVelocity;
-		super();
+		super.finish();
 	}
 }

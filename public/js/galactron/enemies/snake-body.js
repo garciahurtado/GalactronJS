@@ -1,7 +1,9 @@
 /**
  * Body part of the Snake type enemy. There should be several of these.
  */
-class SnakeBody extends Enemy {
+import {Enemy} from './enemy';
+
+export class SnakeBody extends Enemy {
 	constructor(game, x, y, sprite) {
 		sprite = sprite || 'red_snake_body';
 		super(game, x, y, sprite);

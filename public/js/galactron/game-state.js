@@ -1,7 +1,7 @@
 /**
  * Base Game State class intended to be extended by all the other states, whether playable or not (such as menus)
  */
-class GameState {
+export class GameState {
 
 	/**
 	 * Add dynamic text to the screen in a specified position, and return it

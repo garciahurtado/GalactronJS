@@ -1,7 +1,7 @@
 "use strict";
 var __moduleName = "public/js/dist/galactron/play-state";
 var PlayState = function PlayState(game) {
-  this.camera;
+  this.game = game;
   this.player;
   this.playerLayer;
   this.playerBullets;
@@ -19,7 +19,6 @@ var PlayState = function PlayState(game) {
   this.livesSprites;
   this.scoreDisplay;
   this.controls;
-  this.game = game;
   game.plugins.add(new Phaser.Plugin.Flicker());
 };
 ($traceurRuntime.createClass)(PlayState, {

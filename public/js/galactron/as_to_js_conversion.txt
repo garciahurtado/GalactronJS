@@ -1,5 +1,4 @@
-== Remove package and import
-\{*\s*(import|package)\s(.*)(\n\s)*$
+== Remove package and import {}\{*\s*(import|package)\s(.*)(\n\s)*$
 
 == Remove visibility keywords
 (override\s)|(public\s)|(private\s)|(protected\s)

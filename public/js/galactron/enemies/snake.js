@@ -1,7 +1,14 @@
 /**
  * Snake-like spaceship with several segments as subsprites
  */
-class Snake extends Enemy {
+import {Enemy} from './enemy';
+import {SnakeHead} from './snake-head';
+import {SnakeBody} from './snake-body';
+import {WaveMotionAction} from '../actions/wave-motion-action';
+import {MethodAction} from '../actions/method-action';
+import {CircleMotionAction} from '../actions/circle-motion-action';
+
+export class Snake extends Enemy {
 	constructor(game, x, y) {
 		super(game, x, y);
 
@@ -10,7 +17,7 @@ class Snake extends Enemy {
 	}
 
 	init() {
-		super();
+		super.init();
 
 		this.score = 100;
 		this.health = 10;
@@ -105,7 +112,7 @@ class Snake extends Enemy {
 	 * Overrides parent
 	 */
 	reset(x, y){
-		super(x, y);
+		super.reset(x, y);
 		var part;
 		for (var i = 0; i < this.parts.length; i++) {
 			part = this.parts.getAt(i);

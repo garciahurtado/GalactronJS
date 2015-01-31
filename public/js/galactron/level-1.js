@@ -6,7 +6,14 @@
  *
  * @author Garcia Hurtado
  */
-class Level1 extends PlayState {
+import {PlayState} from './play-state';
+import {SlidingBackground} from './sliding-background';
+import {SpawnWaveAction} from './actions/spawn-wave-action';
+import {Alien1} from './enemies/alien1';
+import {Snake} from './enemies/snake';
+import {WhiteSnake} from './enemies/white-snake';
+
+export class Level1 extends PlayState {
 	constructor(game) {
 		super(game);
 
@@ -17,7 +24,7 @@ class Level1 extends PlayState {
 	}
 
 	preload() {
-		super();
+		super.preload();
 
 		// [Embed(source = "../../../assets/terrain.png")] var groundSprite;
 		// [Embed(source = "../../../assets/data/level1_ground.csv", mimeType="application/octet-stream")] var groundTilemap;
@@ -35,7 +42,7 @@ class Level1 extends PlayState {
 	}
 
 	create() {
-		super();
+		super.create();
 		this.createBackground();
 
 		var width = this.game.width;
@@ -59,13 +66,13 @@ class Level1 extends PlayState {
 			// 	{x: width, y: 50}
 			// 	],
 			// 	10, 0.5))
-			// .then(new SpawnWaveAction(Alien1, [{x:width, y:50}], 20, 0.3))
+			.then(new SpawnWaveAction(Alien1, [{x:width, y:130}], 30, 0.3))
 			// .then(new SpawnWaveAction(Alien1, [{x:width, y:100}], 20, 0.3))
 			// .then(new SpawnWaveAction(Alien1, [{x:width, y:150}], 20, 0.3))
 			// .then(new SpawnWaveAction(Alien1, [{x:width, y:200}], 20, 0.3))
 			// .wait(5)
 			// .then(new SpawnWaveAction(AlienRed, [{x:width, y:150}], 20, 0.3))
-			// .wait(5)
+			.wait(10)
 			.then(new SpawnWaveAction(Snake, [{x:width, y:120}], 1))
 			.then(new SpawnWaveAction(Snake, [{x:width, y:220}], 1))
 			.wait(20)

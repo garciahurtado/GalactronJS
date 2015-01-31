@@ -1,4 +1,6 @@
-class GalactronSprite extends Phaser.Sprite {
+import {ActionChain} from './actions/action-chain';
+
+export class GalactronSprite extends Phaser.Sprite {
 	constructor(game, x = 0, y = 0, graphic) {
 		this.math = game.math; // convenience
 		this.immune = false;
@@ -15,8 +17,8 @@ class GalactronSprite extends Phaser.Sprite {
 	}
 
 	/**
-	 * Overrides parent to add debugging functionality. Since Phaser.update() does nothing,
-	 * no need to call super.update() and incur traceur perf. penalty.
+	 * Overrides parent to add debugging functionality. Since Phaser.update() is an empty method,
+	 * there is no need to call super.update() and incur traceur perf. penalty.
 	 */
 	update(){
 		if(this.debugBody){
@@ -25,13 +27,18 @@ class GalactronSprite extends Phaser.Sprite {
 		if(this.debugSprite){
 			this.game.debug.spriteBounds(this, this.debugSpriteColor, false);
 		}
+
+		if(this.body){
+			this.body.position.x = Math.floor(this.body.position.x);
+    	this.body.position.y = Math.floor(this.body.position.y);
+    }
 	}
 
 	/**
 	 * @TODO: Refactor / combine with init?
 	 */
 	reset(x, y) {
-		super(x, y, this.health);
+		super.reset(x, y, this.health);
 		this.init();
 	}
 
@@ -92,7 +99,7 @@ class GalactronSprite extends Phaser.Sprite {
 	}
 
 	revive(){
-		super(this.health);
+		super.revive(this.health);
 	}
 
 	/* ------------- PHYSICS --------------------*/
@@ -119,8 +126,8 @@ class GalactronSprite extends Phaser.Sprite {
 	 * @param target Phaser.Sprite
 	 */
 	centerAt(target) {
-		this.x = target.world.x + Math.round(target.width * .5);
-		this.y = target.world.y + Math.round(target.height * .5);
+		this.x = target.world.x + Math.round(target.width * 0.5);
+		this.y = target.world.y + Math.round(target.height * 0.5);
 
 		// substract half the width and height of this sprite from x,y to finish centering it
 		this.x -= Math.round(this.width / 2);
@@ -140,7 +147,7 @@ class GalactronSprite extends Phaser.Sprite {
 	 * Convenience method that wraps Phaser.Timer
 	 */
 	doLater(millis, action, context){
-		var context = context || this;
+		context = context || this;
 		this.game.time.events.add(millis, action, context);
   }
 }

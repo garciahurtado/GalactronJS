@@ -3,7 +3,9 @@
  *
  * @author Garcia Hurtado
  */
-class SpawnWaveAction extends Action {
+import {Action} from './action';
+
+export class SpawnWaveAction extends Action {
 	constructor(enemyClass, spawnCoords, waveSize = 1, delay = 0) {
 		super(null);
 		this.enemyClass = enemyClass;

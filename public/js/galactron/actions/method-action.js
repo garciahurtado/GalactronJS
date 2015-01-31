@@ -16,7 +16,9 @@
  *
  * @author Garcia Hurtado
  */
-class MethodAction extends Action {
+import {Action} from './action';
+
+export class MethodAction extends Action {
 	// method;
 	// params;
 
@@ -27,7 +29,7 @@ class MethodAction extends Action {
 	}
 
 	start() {
-		super();
+		super.start();
 
 		// Binding this actions' target object to the "this" ref used in the context of the 
 		// callback allows us to refer to "this" within the callback and access the object that 

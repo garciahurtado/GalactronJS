@@ -2,7 +2,9 @@
  * ...
  * @author Garcia
  */
-class ArrowShipRed extends ArrowShip
+import {ArrowShip} from './arrow-ship';
+
+export class ArrowShipRed extends ArrowShip
 {
 	constructor(game, x, y)	{
 		super(game, x, y, 'arrow_ship_red');

@@ -1,7 +1,9 @@
 /**
  * Core of the proximity mine which explodes upon contact
  */
-class FloatingMineCore extends Enemy {
+import {Enemy} from './enemy';
+
+export class FloatingMineCore extends Enemy {
 	constructor(game, x, y, sprite) {
 		sprite = sprite || 'floating_mine';
 		super(game, x, y, sprite);
@@ -17,7 +19,7 @@ class FloatingMineCore extends Enemy {
 	}
 
 	init(){
-		super();
+		super.init();
 		this.health = 40;
 	}
 }

@@ -23,7 +23,10 @@ var $Level1 = Level1;
     $traceurRuntime.superCall(this, $Level1.prototype, "create", []);
     this.createBackground();
     var width = this.game.width;
-    this.events.then(new SpawnWaveAction(Snake, [{
+    this.events.then(new SpawnWaveAction(Alien1, [{
+      x: width,
+      y: 130
+    }], 30, 0.3)).wait(10).then(new SpawnWaveAction(Snake, [{
       x: width,
       y: 120
     }], 1)).then(new SpawnWaveAction(Snake, [{

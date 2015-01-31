@@ -8,10 +8,17 @@
  * 
  * @author Garcia Hurtado
  */
-class PlayState extends GameState {
+import {Utils} from './utils';
+import {GameState} from './game-state';
+import {ActionChain} from './actions/action-chain';
+import {PlayerShip} from './player-ship';
+import {SlidingBackground} from './sliding-background';
+import {EnemyWave} from './enemies/enemy-wave';
+
+export class PlayState extends GameState {
 
 	constructor(game){
-		this.camera;
+		this.game = game;
 		this.player;
 		this.playerLayer;
 		this.playerBullets;
@@ -41,8 +48,6 @@ class PlayState extends GameState {
 		this.scoreDisplay;
 		this.controls;
 
-		this.game = game;
-
 		// Plugins
 		game.plugins.add(new Phaser.Plugin.Flicker());
 	}
@@ -66,8 +71,7 @@ class PlayState extends GameState {
 		this.lives = 3;
 		this.isGameOver = false;
 		
-		// create sprite groups / layers in order of Z display (background layers first)
-		// spriteFactory = new SpriteFactory();
+		// Create layers in order of Z-index (background layers first)
 		this.background = this.game.add.group();
 		this.waves = this.game.add.group();
 

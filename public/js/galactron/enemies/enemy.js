@@ -2,7 +2,10 @@
  * Represents a generic type of enemy which has a life meter and can be programmed to follow paths and attack the player.
  * @author Garcia
  */
-class Enemy extends GalactronSprite {
+import {GalactronSprite} from '../galactron-sprite';
+import {Explosion} from '../fx/explosion';
+
+export class Enemy extends GalactronSprite {
 	/*
 	bullets;
 	player;

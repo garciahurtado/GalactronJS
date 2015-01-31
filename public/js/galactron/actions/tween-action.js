@@ -10,7 +10,9 @@
  * 
  * @author Garcia Hurtado
  */
-class TweenAction extends Action 
+import {Action} from './action';
+
+export class TweenAction extends Action 
 {
 	constructor(subject, properties, time, transition = null)	{
 		super();

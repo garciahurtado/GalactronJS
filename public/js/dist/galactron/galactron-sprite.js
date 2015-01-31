@@ -24,6 +24,10 @@ var $GalactronSprite = GalactronSprite;
     if (this.debugSprite) {
       this.game.debug.spriteBounds(this, this.debugSpriteColor, false);
     }
+    if (this.body) {
+      this.body.position.x = Math.floor(this.body.position.x);
+      this.body.position.y = Math.floor(this.body.position.y);
+    }
   },
   reset: function(x, y) {
     $traceurRuntime.superCall(this, $GalactronSprite.prototype, "reset", [x, y, this.health]);
@@ -63,8 +67,8 @@ var $GalactronSprite = GalactronSprite;
     return this.math.distance(this.x, this.y, target.x, target.y);
   },
   centerAt: function(target) {
-    this.x = target.world.x + Math.round(target.width * .5);
-    this.y = target.world.y + Math.round(target.height * .5);
+    this.x = target.world.x + Math.round(target.width * 0.5);
+    this.y = target.world.y + Math.round(target.height * 0.5);
     this.x -= Math.round(this.width / 2);
     this.y -= Math.round(this.height / 2);
   },
@@ -73,7 +77,7 @@ var $GalactronSprite = GalactronSprite;
     this.game.physics.arcade.velocityFromAngle(angle, this.body.speed, this.body.velocity);
   },
   doLater: function(millis, action, context) {
-    var context = context || this;
+    context = context || this;
     this.game.time.events.add(millis, action, context);
   }
 }, {}, Phaser.Sprite);

@@ -3,7 +3,9 @@
  *
  * @author Garcia Hurtado
  */
-class LoopAction extends Action {
+import {Action} from './action';
+
+export class LoopAction extends Action {
 
 	constructor(limit, label = null) {
 		super();

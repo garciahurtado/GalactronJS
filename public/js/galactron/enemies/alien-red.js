@@ -1,7 +1,9 @@
 /**
  * Red alien enemy with the wiggly tentacles and twinkly eyes
  */
-class AlienRed extends Alien2 {
+import {Alien2} from './alien2';
+
+export class AlienRed extends Alien2 {
 	constructor(game, x, y) {
 		super(game, x, y, 'alien_red');
 

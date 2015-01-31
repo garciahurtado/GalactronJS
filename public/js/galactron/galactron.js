@@ -1,4 +1,12 @@
+require('./phaser-group.js');
+
+import {MenuState} from './menu-state';
+import {Level1} from './level-1';
+import {Level2} from './level-2';
+import {Level3} from './level-3';
+
 (function () {
+
 	var game = new Phaser.Game(
 		380,
 		260,
@@ -6,6 +14,9 @@
 		'canvasWrapper',
 		{ preload: preload, create: create, update: update }
 	);
+
+	 // @TODO: Figure out how to make this work with WebGL
+	 // Phaser.Canvas.setSmoothingEnabled(game.context, false);
 
 	var controls; // keep track of the cursor keys
 
@@ -65,7 +76,7 @@
 		game.state.add('Level2', Level2);
 		game.state.add('Level3', Level3);
 
-	 	game.state.start('Level1');
+	 	game.state.start('MenuState');
 	}
 
 	/**
